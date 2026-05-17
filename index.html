@@ -1076,8 +1076,10 @@ function itemEffective(g, s, it){
   return { qty: Number(qty)||0, price: Number(price)||0 };
 }
 function itemAmount(g,s,it){ const v=itemEffective(g,s,it); return v.qty*v.price; }
-function sectionTotal(g,s){ let t=0; s.items.forEach(it=>t+=itemAmount(g,s,it)); // add derived
-  if(s.id==="OL_DER"){ getDerivedItems().forEach(d=>{ t+=d.price; }); }
+function isDerivedSection(s){ return s.id === "OL_DER"; }
+function sectionTotal(g,s){
+  if(isDerivedSection(s)) return getDerivedItems().filter(d=>d.group===g.id).reduce((a,d)=>a+d.price,0);
+  let t=0; s.items.forEach(it=>t+=itemAmount(g,s,it));
   return t;
 }
 function getDerivedItems(){
@@ -1093,7 +1095,18 @@ function getDerivedItems(){
   });
   return list;
 }
-function groupTotal(g){ let t=0; g.sections.forEach(s=>t+=sectionTotal(g,s)); return t; }
+function groupDerivedTotal(g){ return getDerivedItems().filter(d=>d.group===g.id).reduce((a,d)=>a+d.price,0); }
+function groupOwnTotal(g){
+  let t=0;
+  g.sections.forEach(s=>{ if(!isDerivedSection(s)) s.items.forEach(it=>t+=itemAmount(g,s,it)); });
+  return t;
+}
+/* groupTotal = contributo EFFETTIVO al totale generale.
+   - Se gruppo ON: voci proprie + derivate
+   - Se gruppo OFF: solo derivate (sono scelte del Configuratore, sempre contate) */
+function groupTotal(g){
+  return state.groupsActive[g.id] ? (groupOwnTotal(g) + groupDerivedTotal(g)) : groupDerivedTotal(g);
+}
 function ivaOf(g){ return Number(state.ivaOverrides[g.id]); }
 
 /* ============================================================
@@ -1348,12 +1361,15 @@ function renderGroups(){
 
       if(s.id === "OL_DER"){
         const derived = getDerivedItems().filter(d=>d.group===g.id);
+        // override section head text per chiarezza
+        const sh = sec.querySelector(".section-head h4");
+        if(sh) sh.innerHTML = `Voci derivate dal Configuratore <span style="font-size:10px;font-weight:700;background:#ede9fe;color:#5b21b6;padding:2px 7px;border-radius:999px;margin-left:6px;text-transform:none;letter-spacing:0;">sempre nel totale</span>`;
         derived.forEach(d=>{
           const row = document.createElement("div");
-          row.className = "item derived" + (!state.groupsActive[g.id]?" off":"");
+          row.className = "item derived";  // mai .off: contano sempre nel totale
           row.innerHTML = `
             <div class="cod">${d.altIcon}</div>
-            <div class="desc">${escapeHTML(d.desc)}<span class="small">Voce derivata dal Configuratore — modifica nella scheda <b>${escapeHTML(d.altTitle)}</b><span class="pill">CONFIG</span></span></div>
+            <div class="desc">${escapeHTML(d.desc)}<span class="small">Voce derivata dal Configuratore — modifica nella scheda <b>${escapeHTML(d.altTitle)}</b> · <b>conta sempre nel totale</b> anche se il gruppo è OFF<span class="pill">CONFIG</span></span></div>
             <div class="imp">${eur(d.price)}<small>auto</small></div>
           `;
           sec.appendChild(row);
@@ -1414,7 +1430,7 @@ function bindGroupInputs(){
     inp.addEventListener("change",()=>{
       state.groupsActive[inp.dataset.group] = inp.checked;
       saveState();
-      document.querySelectorAll(`#group-${inp.dataset.group} .item`).forEach(r=>r.classList.toggle("off", !inp.checked));
+      document.querySelectorAll(`#group-${inp.dataset.group} .item:not(.derived)`).forEach(r=>r.classList.toggle("off", !inp.checked));
       updateTotals(true);
       renderSummary();
     });
@@ -1474,10 +1490,11 @@ function recomputeItem(k){
 function computeTotals(){
   let imp=0, iva=0;
   DATA.groups.forEach(g=>{
-    if(!state.groupsActive[g.id]) return;
-    const sub = groupTotal(g);
-    imp += sub;
-    iva += sub * ivaOf(g)/100;
+    const own = groupOwnTotal(g);
+    const der = groupDerivedTotal(g);
+    const contrib = state.groupsActive[g.id] ? (own + der) : der;  // i derivati restano sempre
+    imp += contrib;
+    iva += contrib * ivaOf(g)/100;
   });
   const reb = state.rebateActive ? DATA.rebate.amount : 0;
   const tot = imp + iva - reb;
@@ -1488,19 +1505,21 @@ function renderSummary(){
   const totals = computeTotals();
   let html = "";
   DATA.groups.forEach(g=>{
-    const sub = groupTotal(g);
+    const sub = groupTotal(g);  // include sempre derivati
     const iva = ivaOf(g);
     const ivaAmt = sub*iva/100;
     const tot = sub+ivaAmt;
     const active = state.groupsActive[g.id];
-    html += `<div class="sumrow ${active?"":"off"}">
+    const der = groupDerivedTotal(g);
+    const offTag = (!active && der>0) ? ' <span style="font-size:10px;font-weight:700;background:#ede9fe;color:#5b21b6;padding:1px 5px;border-radius:4px;margin-left:4px;">+CONFIG</span>' : '';
+    html += `<div class="sumrow ${active||der>0?"":"off"}">
       <div class="nm">
-        <div><span class="group-dot" style="background:var(--c-${g.color})"></span><b>${g.title}</b></div>
-        <small>${g.subtitle}</small>
+        <div><span class="group-dot" style="background:var(--c-${g.color})"></span><b>${g.title}</b>${offTag}</div>
+        <small>${g.subtitle}${!active && der>0?` · solo voci dal Configuratore (${eur(der)})`:''}</small>
         <a class="sum-cta" href="#group-${g.id}" data-jump="${g.id}">Modifica →</a>
       </div>
       <div class="vals">
-        <div class="b" id="sumtot_${g.id}">${eur(active?tot:0)}</div>
+        <div class="b" id="sumtot_${g.id}">${eur(tot)}</div>
         <div class="s">imp. ${eur(sub)} · <span class="iva-control">IVA <input type="number" min="0" max="50" step="1" value="${iva}" data-iva="${g.id}">%</span> = ${eur(ivaAmt)}</div>
       </div>
     </div>`;
@@ -1562,10 +1581,10 @@ function renderSummary(){
 function renderSummaryTotalsOnly(){
   const totals = computeTotals();
   DATA.groups.forEach(g=>{
-    const sub = groupTotal(g);
+    const sub = groupTotal(g);  // include derivati anche se gruppo OFF
     const totG = sub + sub*ivaOf(g)/100;
     const el = document.getElementById("sumtot_"+g.id);
-    if(el) el.textContent = state.groupsActive[g.id] ? eur(totG) : eur(0);
+    if(el) el.textContent = eur(totG);
   });
   const gel = document.getElementById("sumGrand"); if(gel) gel.textContent = eur(totals.tot);
   const mel = document.getElementById("sumMq"); if(mel) mel.textContent = eur(totals.tot/DATA.project.mq)+" / m²";
