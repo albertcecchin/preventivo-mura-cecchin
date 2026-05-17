@@ -1006,6 +1006,20 @@ const PRESET_SCENARIOS = [
       groupsActive:{ computo:true, materiali:true, massetto:true, serramenti:true, autoscale:false, tapparelle:false, arredi:true, opzionali_lavori:true, opzionali_arredi:false },
       priceOverrides:{}, qtyOverrides:{}, rebateActive:true
     }
+  },
+  {
+    id:"max_clm",
+    icon:"🏰",
+    color:"#991b1b",
+    name:"Tutto opzionale CLM (max) — €362k",
+    target:"€362.297,13 IVA incl",
+    desc:"Versione MASSIMA preventivata da CLM: tutti i gruppi opzionali ON (autoscale + tapparelle + arredi + opzionali_lavori + opzionali_arredi) e scelte Configuratore ai valori marcati nei fogli Opzionali Excel — parquet Alpaca spina italiana, CDZ canalizzato Samsung, porta rasomuro Woodco Alpaca. Brand sanitari/rubinetterie/armadi/faretti ai default originali (Globo, Gessi, Pianca, Oty). Nessun DIY, nessuna negoziazione. È il tetto massimo di spesa preventivato da CLM.",
+    apply:{
+      alternatives:{ parquet:"alpaca_spina", cdz:"canalizzato", brand_canalizzato:"samsung", porta_soggiorno:"rasomuro", brand_serramenti:"internorm", brand_faretti:"oty", brand_sanitari:"globo", brand_rubinetteria:"gessi", armadio_ingresso:"pianca_setamatt", armadi_camera:"pianca_plana" },
+      swaps:{}, diyScenario:"none",
+      groupsActive:{ computo:true, materiali:true, massetto:true, serramenti:true, autoscale:true, tapparelle:true, arredi:true, opzionali_lavori:true, opzionali_arredi:true },
+      priceOverrides:{}, qtyOverrides:{}, rebateActive:true
+    }
   }
 ];
 
