@@ -1854,6 +1854,7 @@ function smoothScrollTo(targetY, duration){
   requestAnimationFrame(step);
 }
 function getSectionEl(id){
+  if(id==="presets") return document.getElementById("presets");
   if(id==="configurator") return document.getElementById("configurator");
   if(id==="riepilogo") return document.getElementById("riepilogo");
   if(id==="optimizations") return document.getElementById("optimizations");
@@ -1881,7 +1882,7 @@ function setActiveTab(id){
 }
 function initScrollSpy(){
   const tabs = Array.from(document.querySelectorAll(".tab"));
-  const sectionIds = ["configurator","riepilogo","optimizations","fiscal","diy", ...DATA.groups.map(g=>g.id), "approfondimenti"];
+  const sectionIds = ["presets","configurator","riepilogo","optimizations","fiscal","diy", ...DATA.groups.map(g=>g.id), "approfondimenti"];
   const sectionEls = sectionIds.map(id=>({id, el:getSectionEl(id)})).filter(s=>s.el);
 
   tabs.forEach(t=>{
