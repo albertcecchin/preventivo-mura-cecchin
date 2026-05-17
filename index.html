@@ -7,35 +7,25 @@
 <title>Preventivo MURA/CECCHIN — Piattaforma Interattiva</title>
 <style>
   :root{
-    --bg:#f4f5f8;
-    --card:#ffffff;
-    --ink:#0f172a;
-    --ink-2:#334155;
-    --muted:#64748b;
-    --line:#e6e8ee;
-    --line-2:#cbd5e1;
-    --accent:#0f766e;
+    --bg:#f4f5f8; --card:#ffffff; --ink:#0f172a; --ink-2:#334155; --muted:#64748b;
+    --line:#e6e8ee; --line-2:#cbd5e1; --accent:#0f766e;
     --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px rgba(15,23,42,.06);
     --shadow-sm:0 1px 2px rgba(15,23,42,.06);
-    --radius:14px;
-    --radius-sm:10px;
-    /* group palette */
-    --c-computo:#1d4ed8;     --c-computo-bg:#eff6ff;
-    --c-materiali:#9a3412;   --c-materiali-bg:#fff7ed;
-    --c-massetto:#92400e;    --c-massetto-bg:#fefce8;
-    --c-serramenti:#0e7490;  --c-serramenti-bg:#ecfeff;
-    --c-autoscale:#7c2d12;   --c-autoscale-bg:#fff1f2;
-    --c-tapparelle:#475569;  --c-tapparelle-bg:#f1f5f9;
-    --c-arredi:#6d28d9;      --c-arredi-bg:#f5f3ff;
-    --c-opz_lavori:#0f766e;  --c-opz_lavori-bg:#ecfdf5;
-    --c-opz_arredi:#a21caf;  --c-opz_arredi-bg:#fdf4ff;
+    --radius:14px; --radius-sm:10px;
+    --c-computo:#1d4ed8;     --c-materiali:#9a3412;
+    --c-massetto:#92400e;    --c-serramenti:#0e7490;
+    --c-autoscale:#7c2d12;   --c-tapparelle:#475569;
+    --c-arredi:#6d28d9;      --c-opz_lavori:#0f766e;
+    --c-opz_arredi:#a21caf;
+    --c-config:#7c3aed;      --c-optim:#b45309;
+    --c-fiscal:#15803d;      --c-diy:#dc2626;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Inter,system-ui,sans-serif;font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
   body{padding-bottom:210px}
   a{color:var(--accent)}
 
-  /* ============== TOP BAR ============== */
+  /* TOP BAR */
   .topbar{position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(10px);background:rgba(255,255,255,.92);border-bottom:1px solid var(--line)}
   .topbar-inner{max-width:1080px;margin:0 auto;padding:9px 12px;display:flex;align-items:center;gap:10px}
   .brand{font-weight:700;letter-spacing:.2px;font-size:13px}
@@ -47,7 +37,7 @@
   .btn.danger{color:#b91c1c;border-color:#fecaca}
   .btn.sm{padding:5px 9px;font-size:11.5px}
 
-  /* ============== TAB NAV ============== */
+  /* TAB NAV */
   .tabnav{position:sticky;top:46px;z-index:49;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);overflow-x:auto;-webkit-overflow-scrolling:touch}
   .tabnav::-webkit-scrollbar{display:none}
   .tabnav-inner{max-width:1080px;margin:0 auto;padding:8px 12px;display:flex;gap:6px;white-space:nowrap}
@@ -55,9 +45,8 @@
   .tab .dot{width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.9}
   .tab:hover{background:#e2e8f0}
   .tab.active{background:var(--ink);color:#fff}
-  .tab.active .dot{opacity:1}
 
-  /* ============== HERO ============== */
+  /* HERO */
   .hero{max-width:1080px;margin:0 auto;padding:14px 14px 0}
   .hero h1{font-size:22px;margin:0 0 4px;letter-spacing:-.2px}
   .hero p.lead{margin:0;color:var(--muted);font-size:13.5px}
@@ -65,20 +54,71 @@
   .chip{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;color:#3730a3;padding:4px 9px;border-radius:999px;font-size:11.5px;font-weight:600}
   .chip.g{background:#ecfdf5;color:#065f46}
   .chip.b{background:#fff7ed;color:#9a3412}
+  .chip.p{background:#f5f3ff;color:#5b21b6}
 
-  /* ============== SUMMARY ============== */
   .container{max-width:1080px;margin:0 auto;padding:14px}
-  .summary{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;margin-bottom:14px}
-  .summary h2{margin:0 0 10px;font-size:16px;display:flex;align-items:center;gap:8px}
-  .summary h2 .pill{font-size:11px;font-weight:600;background:#f1f5f9;color:var(--ink-2);padding:3px 8px;border-radius:999px}
+
+  /* PANEL = generic card for configurator / summary / optim / insights */
+  .panel{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--line);margin-bottom:14px;overflow:hidden}
+  .panel-head{padding:14px;color:#fff;display:flex;align-items:center;gap:10px}
+  .panel-head .ico{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.18);display:grid;place-items:center;font-size:16px;flex:none}
+  .panel-head .ti{flex:1;min-width:0}
+  .panel-head h2{margin:0;font-size:17px;font-weight:700;letter-spacing:-.2px}
+  .panel-head .sub{font-size:11.5px;opacity:.85;margin-top:1px}
+  .panel-body{padding:14px}
+
+  /* CONFIGURATOR cards: each alternative */
+  .alt-card{border-top:1px solid var(--line);padding:14px}
+  .alt-card:first-child{border-top:none;padding-top:0}
+  .alt-card .lbl{display:flex;align-items:center;gap:10px;font-weight:700;font-size:14px;color:var(--ink);margin-bottom:8px}
+  .alt-card .lbl .ti{flex:1}
+  .alt-card .lbl small{color:var(--muted);font-weight:500;display:block;margin-top:2px;font-size:11.5px}
+  .alt-card .lbl .badge{font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:999px;background:#f1f5f9;color:var(--ink-2);white-space:nowrap}
+  .alt-opts{display:flex;flex-direction:column;gap:6px}
+  .alt-opt{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:#f8fafc;border:1.5px solid var(--line);border-radius:10px;cursor:pointer;transition:all .15s;position:relative}
+  .alt-opt:hover{border-color:var(--line-2);background:#f1f5f9}
+  .alt-opt.checked{background:#fff;border-color:var(--c-config);box-shadow:0 0 0 1px var(--c-config) inset}
+  .alt-opt input{margin:2px 0 0 0;accent-color:var(--c-config);flex:none}
+  .alt-opt .opt-text{flex:1;min-width:0}
+  .alt-opt .opt-name{font-weight:600;font-size:13.5px;color:var(--ink)}
+  .alt-opt .opt-sub{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.4}
+  .alt-opt .opt-delta{font-size:12.5px;font-weight:700;color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .alt-opt .opt-delta.neg{color:#15803d}
+  .alt-opt .opt-delta.pos{color:#b45309}
+  .alt-opt .opt-delta.base{color:var(--muted)}
+  .alt-opt.checked::before{content:"✓";position:absolute;top:8px;right:8px;color:var(--c-config);font-weight:800;font-size:14px}
+
+  /* OPTIM (supplier swaps) */
+  .swap-row{display:grid;grid-template-columns:auto 1fr auto auto;gap:10px;align-items:center;padding:10px 12px;background:#f8fafc;border:1px solid var(--line);border-radius:10px;margin-bottom:8px}
+  .swap-row.on{background:#fffbeb;border-color:#fde68a}
+  .swap-row .swap-name{font-weight:600;font-size:13px;color:var(--ink);min-width:0}
+  .swap-row .swap-name small{display:block;color:var(--muted);font-weight:500;font-size:11px;margin-top:1px}
+  .swap-row .swap-pct{display:inline-flex;align-items:center;gap:3px;background:#fff;border:1px solid var(--line);border-radius:6px;padding:3px 6px;font-size:11.5px;font-weight:700;color:var(--ink)}
+  .swap-row .swap-pct input{width:36px;border:none;background:transparent;font-weight:700;color:var(--ink);text-align:right;outline:none;padding:0;font-size:11.5px;font-family:inherit}
+  .swap-row .swap-saving{font-size:12.5px;font-weight:700;color:#15803d;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .swap-row.off .swap-saving{color:var(--muted)}
+  .swap-prio{font-size:10px;font-weight:700;padding:2px 7px;border-radius:999px;text-transform:uppercase;letter-spacing:.04em}
+  .swap-prio.alta{background:#fee2e2;color:#991b1b}
+  .swap-prio.media{background:#fef3c7;color:#92400e}
+  .swap-prio.bassa{background:#dbeafe;color:#1e40af}
+
+  /* Switch */
+  .switch{position:relative;display:inline-block;width:40px;height:22px;flex:none}
+  .switch input{opacity:0;width:0;height:0}
+  .slider{position:absolute;cursor:pointer;inset:0;background:#cbd5e1;transition:.2s;border-radius:999px}
+  .slider:before{content:"";position:absolute;height:18px;width:18px;left:2px;top:2px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+  .switch input:checked + .slider{background:var(--accent)}
+  .switch input:checked + .slider:before{transform:translateX(18px)}
+
+  /* SUMMARY */
   .sumrow{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid var(--line);gap:10px}
   .sumrow:first-of-type{border-top:none}
   .sumrow .nm{font-size:13px;color:var(--ink-2);flex:1;min-width:0}
   .sumrow .nm b{color:var(--ink);font-weight:600}
   .sumrow .nm small{display:block;color:var(--muted);font-size:11.5px;margin-top:2px}
   .sumrow .vals{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:2px}
-  .sumrow .vals .b{font-weight:700;font-size:14px}
-  .sumrow .vals .s{font-size:11px;color:var(--muted)}
+  .sumrow .vals .b{font-weight:700;font-size:14px;font-variant-numeric:tabular-nums}
+  .sumrow .vals .s{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
   .sumrow.off{opacity:.55}
   .sumrow.tot{border-top:2px solid var(--ink)}
   .sumrow.tot .nm{font-weight:700;color:var(--ink);font-size:14px}
@@ -90,7 +130,7 @@
   .iva-control{display:inline-flex;align-items:center;gap:4px;background:#f1f5f9;border-radius:6px;padding:1px 5px;font-size:11px;font-weight:600;color:var(--ink-2)}
   .iva-control input{width:34px;border:none;background:transparent;font-size:11px;font-weight:700;color:var(--ink);text-align:right;outline:none;padding:0;font-family:inherit}
 
-  /* ============== GROUP CARD ============== */
+  /* GROUP */
   .group{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:18px;overflow:hidden;border:1px solid var(--line)}
   .group-cover{padding:14px;color:#fff;display:grid;grid-template-columns:auto 1fr auto auto;gap:10px;align-items:center;cursor:pointer;user-select:none;position:relative}
   .group-cover::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .15s}
@@ -99,39 +139,33 @@
   .group-cover .idx{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:rgba(255,255,255,.18);padding:3px 8px;border-radius:6px}
   .group-cover .ti h3{margin:0;font-size:17px;font-weight:700;letter-spacing:-.2px}
   .group-cover .ti .sub{font-size:11.5px;opacity:.85;margin-top:2px}
-  .group-cover .amt{font-weight:800;font-size:17px;white-space:nowrap}
+  .group-cover .amt{font-weight:800;font-size:17px;white-space:nowrap;font-variant-numeric:tabular-nums}
   .group-cover .arrow{transition:transform .2s;font-size:14px;opacity:.85}
   .group.collapsed .group-cover .arrow{transform:rotate(-90deg)}
   .group.collapsed .group-body{display:none}
-  .switch{position:relative;display:inline-block;width:40px;height:22px;flex:none}
-  .switch input{opacity:0;width:0;height:0}
-  .slider{position:absolute;cursor:pointer;inset:0;background:rgba(255,255,255,.3);transition:.2s;border-radius:999px}
-  .slider:before{content:"";position:absolute;height:18px;width:18px;left:2px;top:2px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 2px rgba(0,0,0,.15)}
-  .switch input:checked + .slider{background:rgba(255,255,255,.55)}
-  .switch input:checked + .slider:before{transform:translateX(18px)}
-  /* dark switch (inside white) */
-  .switch.dark .slider{background:#cbd5e1}
-  .switch.dark input:checked + .slider{background:var(--accent)}
+  .switch.lite .slider{background:rgba(255,255,255,.3)}
+  .switch.lite input:checked + .slider{background:rgba(255,255,255,.55)}
 
   .group-body{background:#fff}
-
-  /* section heading inside group */
   .section{padding:4px 0 8px}
   .section-head{display:flex;align-items:center;gap:10px;padding:12px 14px 8px;border-top:1px solid var(--line)}
   .section-head:first-child{border-top:none}
   .section-head h4{margin:0;font-size:12.5px;font-weight:700;color:var(--ink-2);text-transform:uppercase;letter-spacing:.06em;flex:1}
-  .section-head .stot{font-size:13px;font-weight:700;color:var(--ink)}
+  .section-head .stot{font-size:13px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
 
   .item{padding:10px 14px;border-top:1px dashed var(--line);display:grid;grid-template-columns:auto 1fr auto;gap:8px 12px;align-items:flex-start}
+  .item.derived{background:#faf5ff;border-left:3px solid var(--c-config);padding-left:11px}
   .item .cod{font-size:11px;font-weight:700;color:#fff;background:#475569;border-radius:6px;padding:3px 7px;align-self:center;white-space:nowrap}
+  .item.derived .cod{background:var(--c-config)}
   .item .desc{font-size:13.5px;color:var(--ink);line-height:1.45;min-width:0;word-wrap:break-word}
   .item .desc .small{font-size:11.5px;color:var(--muted);display:block;margin-top:3px}
-  .item .imp{font-weight:700;font-size:14px;white-space:nowrap;align-self:center;text-align:right}
+  .item .desc .pill{display:inline-block;font-size:10px;font-weight:700;background:#ede9fe;color:#5b21b6;padding:2px 6px;border-radius:4px;margin-left:6px;vertical-align:1px}
+  .item .imp{font-weight:700;font-size:14px;white-space:nowrap;align-self:center;text-align:right;font-variant-numeric:tabular-nums}
   .item .imp small{display:block;font-weight:500;color:var(--muted);font-size:11px;margin-top:2px}
   .controls{grid-column:1 / -1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:6px}
   .ctrl{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:5px 8px}
   .ctrl label{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:700;margin-bottom:2px}
-  .ctrl input,.ctrl select{width:100%;border:none;background:transparent;font-size:14px;font-weight:600;color:var(--ink);font-family:inherit;outline:none;padding:0}
+  .ctrl input{width:100%;border:none;background:transparent;font-size:14px;font-weight:600;color:var(--ink);font-family:inherit;outline:none;padding:0;font-variant-numeric:tabular-nums}
   .ctrl input[readonly]{color:var(--muted)}
   .ctrl.disabled{opacity:.6}
   .item.off{opacity:.45}
@@ -141,12 +175,11 @@
 
   .note-toggle{grid-column:1 / -1;font-size:11.5px;color:var(--muted);background:none;border:none;text-align:left;padding:0;cursor:pointer;font-family:inherit;font-weight:600;margin-top:2px}
   .note-toggle:hover{color:var(--ink-2)}
-  .note-toggle .dot-note{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--c-arredi);margin-right:4px;vertical-align:1px;opacity:0}
-  .note-toggle.has-note .dot-note{opacity:1}
+  .note-toggle.has-note{color:#7c3aed}
   .note-wrap{grid-column:1 / -1;display:none;margin-top:2px}
   .note-wrap.open{display:block}
   .note-wrap textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:inherit;font-size:13px;color:var(--ink);background:#fffef7;resize:vertical;min-height:60px;outline:none}
-  .note-wrap textarea:focus{border-color:var(--c-arredi)}
+  .note-wrap textarea:focus{border-color:#7c3aed}
 
   @media (min-width: 700px){
     .item{grid-template-columns:auto 1fr 150px 130px 130px}
@@ -155,22 +188,32 @@
     .item .note-wrap{grid-column:1 / -1}
   }
 
-  /* ============== TOTAL BAR ============== */
+  /* TOTAL BAR */
   .totalbar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:#0f172a;color:#fff;border-top:1px solid #1e293b}
   .totalbar-inner{max-width:1080px;margin:0 auto;padding:11px 14px 13px;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
   .totalbar .lbl{font-size:10.5px;text-transform:uppercase;letter-spacing:.12em;color:#94a3b8}
-  .totalbar .imp{font-size:12.5px;color:#cbd5e1;margin-top:2px}
-  .totalbar .tot{font-size:25px;font-weight:800;letter-spacing:-.5px;line-height:1.1;margin-top:2px}
-  .totalbar .delta{font-size:11.5px;color:#a7f3d0;margin-top:1px}
+  .totalbar .imp{font-size:12.5px;color:#cbd5e1;margin-top:2px;font-variant-numeric:tabular-nums}
+  .totalbar .tot{font-size:25px;font-weight:800;letter-spacing:-.5px;line-height:1.1;margin-top:2px;font-variant-numeric:tabular-nums}
+  .totalbar .delta{font-size:11.5px;color:#a7f3d0;margin-top:1px;font-variant-numeric:tabular-nums}
   .totalbar .delta.neg{color:#fecaca}
   .totalbar .right .btn{background:#fff;color:#0f172a;border-color:#fff}
   .progress{height:5px;background:#1e293b;border-radius:999px;overflow:hidden;margin-top:7px}
   .progress > div{height:100%;background:linear-gradient(90deg,#34d399,#10b981);width:0%;transition:width .3s}
 
-  /* ============== APPROFONDIMENTI ============== */
-  .insights{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;margin-bottom:14px;border:1px solid var(--line)}
-  .insights h2{margin:0 0 4px;font-size:18px;letter-spacing:-.2px}
-  .insights p.lead{margin:0 0 12px;color:var(--muted);font-size:13px}
+  /* FISCAL */
+  .fiscal-grid{display:flex;flex-direction:column;gap:10px}
+  .fiscal-card{padding:12px;background:#f8fafc;border:1.5px solid var(--line);border-radius:10px;cursor:pointer;display:flex;align-items:flex-start;gap:10px}
+  .fiscal-card.checked{background:#ecfdf5;border-color:#15803d;box-shadow:0 0 0 1px #15803d inset}
+  .fiscal-card input{margin:2px 0 0;accent-color:#15803d;flex:none}
+  .fiscal-card .opt-name{font-weight:700;font-size:13.5px}
+  .fiscal-card .opt-sub{font-size:11.5px;color:var(--muted);margin-top:2px}
+  .fiscal-card .opt-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;font-size:11.5px}
+  .fiscal-card .opt-stats .k{color:var(--muted)}
+  .fiscal-card .opt-stats .v{font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+  .warn{background:#fef3c7;color:#92400e;border:1px solid #fde68a;padding:8px 10px;border-radius:8px;font-size:12px;margin-top:8px;display:none}
+  .warn.show{display:block}
+
+  /* INSIGHTS */
   .insight{border-top:1px solid var(--line)}
   .insight summary{cursor:pointer;list-style:none;padding:12px 4px;display:flex;align-items:center;gap:10px;font-weight:600;color:var(--ink);font-size:14px}
   .insight summary::-webkit-details-marker{display:none}
@@ -196,19 +239,15 @@
   .insight-body .pill.info{background:#dbeafe;color:#1e40af}
   .insight-body .keynum{display:inline-block;background:#0f172a;color:#fff;padding:3px 10px;border-radius:8px;font-weight:700;font-variant-numeric:tabular-nums}
 
-  /* ============== MISC ============== */
   .footer{max-width:1080px;margin:0 auto;padding:6px 14px 30px;color:var(--muted);font-size:11.5px;text-align:center}
   @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.04)}100%{transform:scale(1)}}
   .pulse{animation:pulse .25s ease}
 
-  /* PRINT */
   @media print{
     .topbar,.tabnav,.totalbar,.btn,.switch,.note-toggle,.note-wrap{display:none !important}
     body{background:#fff;padding-bottom:0}
-    html{scroll-padding-top:0}
-    .group{box-shadow:none;break-inside:avoid;border:1px solid #ddd}
-    .item{break-inside:avoid}
-    .insight{break-inside:avoid}
+    .group,.panel{box-shadow:none;break-inside:avoid;border:1px solid #ddd}
+    .item,.insight{break-inside:avoid}
   }
 </style>
 </head>
@@ -218,15 +257,19 @@
   <div class="topbar-inner">
     <div class="brand">CLM Design & Contract<small>Simulatore preventivo</small></div>
     <div class="right">
-      <button class="btn sm" id="btnExport" title="Stampa / PDF">Stampa</button>
-      <button class="btn sm danger" id="btnReset" title="Reimposta">Reset</button>
+      <button class="btn sm" id="btnExport">Stampa</button>
+      <button class="btn sm danger" id="btnReset">Reset</button>
     </div>
   </div>
 </header>
 
 <nav class="tabnav" id="tabnav">
   <div class="tabnav-inner">
-    <a href="#riepilogo" class="tab" data-tab="riepilogo"><span class="dot" style="background:#0f172a"></span>Riepilogo</a>
+    <a href="#configurator" class="tab" data-tab="configurator"><span class="dot" style="background:var(--c-config)"></span>⚙️ Configuratore</a>
+    <a href="#riepilogo" class="tab" data-tab="riepilogo"><span class="dot" style="background:#0f172a"></span>📋 Riepilogo</a>
+    <a href="#optimizations" class="tab" data-tab="optimizations"><span class="dot" style="background:var(--c-optim)"></span>💰 Ottimizzazioni</a>
+    <a href="#fiscal" class="tab" data-tab="fiscal"><span class="dot" style="background:var(--c-fiscal)"></span>🏛️ Fiscale</a>
+    <a href="#diy" class="tab" data-tab="diy"><span class="dot" style="background:var(--c-diy)"></span>🔨 Fai-da-te</a>
     <a href="#group-computo" class="tab" data-tab="computo"><span class="dot" style="background:var(--c-computo)"></span>Lavori</a>
     <a href="#group-materiali" class="tab" data-tab="materiali"><span class="dot" style="background:var(--c-materiali)"></span>Materiali</a>
     <a href="#group-massetto" class="tab" data-tab="massetto"><span class="dot" style="background:var(--c-massetto)"></span>Massetto</a>
@@ -236,7 +279,7 @@
     <a href="#group-arredi" class="tab" data-tab="arredi"><span class="dot" style="background:var(--c-arredi)"></span>Arredi</a>
     <a href="#group-opzionali_lavori" class="tab" data-tab="opzionali_lavori"><span class="dot" style="background:var(--c-opz_lavori)"></span>Opz. Lavori</a>
     <a href="#group-opzionali_arredi" class="tab" data-tab="opzionali_arredi"><span class="dot" style="background:var(--c-opz_arredi)"></span>Opz. Arredi</a>
-    <a href="#approfondimenti" class="tab" data-tab="approfondimenti"><span class="dot" style="background:#6366f1"></span>Approfondimenti</a>
+    <a href="#approfondimenti" class="tab" data-tab="approfondimenti"><span class="dot" style="background:#6366f1"></span>📚 Approfondimenti</a>
   </div>
 </nav>
 
@@ -244,20 +287,89 @@
   <h1>Preventivo MURA / CECCHIN</h1>
   <p class="lead">Via Europa, 7 — San Donato Milanese (MI) · 120 m² · CLM Design & Contract · 14/05/2026</p>
   <div class="meta">
-    <span class="chip">Modifica quantità, prezzi e note</span>
-    <span class="chip g">Totale IVA sempre aggiornato in basso</span>
-    <span class="chip b">9 sezioni di approfondimento</span>
+    <span class="chip p">⚙️ Configura alternative principali</span>
+    <span class="chip g">💰 Ottimizza con swap fornitori</span>
+    <span class="chip b">🏛️ Simula strategie fiscali</span>
   </div>
 </section>
 
 <main class="container">
-  <section id="riepilogo" class="summary" aria-label="Riepilogo"></section>
-  <div id="groups"></div>
-  <section id="approfondimenti" class="insights" aria-label="Approfondimenti">
-    <h2>📚 Approfondimenti</h2>
-    <p class="lead">Analisi tecniche ed economiche per ogni capitolo del preventivo — apri ogni voce per dettagli, confronti e strategie.</p>
-    <div id="insights-list"></div>
+
+  <!-- CONFIGURATORE -->
+  <section id="configurator" class="panel">
+    <div class="panel-head" style="background:linear-gradient(135deg,var(--c-config),#5b21b6)">
+      <div class="ico">⚙️</div>
+      <div class="ti">
+        <h2>Configuratore</h2>
+        <div class="sub">Scelte principali con voci alternative — modifica e vedi il totale in basso</div>
+      </div>
+    </div>
+    <div class="panel-body" id="configurator-body"></div>
   </section>
+
+  <!-- RIEPILOGO -->
+  <section id="riepilogo" class="panel">
+    <div class="panel-head" style="background:linear-gradient(135deg,#0f172a,#334155)">
+      <div class="ico">📋</div>
+      <div class="ti">
+        <h2>Riepilogo</h2>
+        <div class="sub">Tutti i gruppi · clicca "Modifica" per saltare alla voce</div>
+      </div>
+    </div>
+    <div class="panel-body" id="summary-body"></div>
+  </section>
+
+  <!-- OTTIMIZZAZIONI -->
+  <section id="optimizations" class="panel">
+    <div class="panel-head" style="background:linear-gradient(135deg,var(--c-optim),#92400e)">
+      <div class="ico">💰</div>
+      <div class="ti">
+        <h2>Ottimizzazioni — Swap fornitori</h2>
+        <div class="sub">10 sostituzioni indipendenti con % di sconto modificabile</div>
+      </div>
+    </div>
+    <div class="panel-body" id="optim-body"></div>
+  </section>
+
+  <!-- STRATEGIA FISCALE -->
+  <section id="fiscal" class="panel">
+    <div class="panel-head" style="background:linear-gradient(135deg,var(--c-fiscal),#166534)">
+      <div class="ico">🏛️</div>
+      <div class="ti">
+        <h2>Strategia fiscale</h2>
+        <div class="sub">3 scenari di cumulo bonus 2026 · 10 anni di detrazione</div>
+      </div>
+    </div>
+    <div class="panel-body" id="fiscal-body"></div>
+  </section>
+
+  <!-- DEMOLIZIONI FDT -->
+  <section id="diy" class="panel">
+    <div class="panel-head" style="background:linear-gradient(135deg,var(--c-diy),#991b1b)">
+      <div class="ico">🔨</div>
+      <div class="ti">
+        <h2>Demolizioni fai-da-te</h2>
+        <div class="sub">4 scenari · scegli quali voci scorporare da CLM e fare in autonomia</div>
+      </div>
+    </div>
+    <div class="panel-body" id="diy-body"></div>
+  </section>
+
+  <!-- GRUPPI -->
+  <div id="groups"></div>
+
+  <!-- APPROFONDIMENTI -->
+  <section id="approfondimenti" class="panel">
+    <div class="panel-head" style="background:linear-gradient(135deg,#6366f1,#4338ca)">
+      <div class="ico">📚</div>
+      <div class="ti">
+        <h2>Approfondimenti</h2>
+        <div class="sub">Analisi tecniche ed economiche per ogni capitolo</div>
+      </div>
+    </div>
+    <div class="panel-body" id="insights-list"></div>
+  </section>
+
 </main>
 
 <footer class="footer">Simulatore preventivo interattivo · I valori sono modificabili e salvati solo su questo dispositivo · Riferimento ufficiale: foglio Excel originale CLM Design &amp; Contract.</footer>
@@ -279,7 +391,7 @@
 
 <script>
 /* ============================================================
-   DATI PREVENTIVO — Preventivo_MURA_CECCHIN.xlsx
+   DATI PREVENTIVO
    ============================================================ */
 const DATA = {
   project:{ studio:"CLM Design & Contract", client:"MURA / CECCHIN", address:"Via Europa, 7 — San Donato Milanese (MI)", date:"14/05/2026", mq:120 },
@@ -324,7 +436,7 @@ const DATA = {
         {cod:"5.1", desc:"Posa battiscopa perimetrale legno laccato opaco bianco H7 cm.", um:"m", qty:88, price:18},
         {cod:"5.2", desc:"Posa pavimento + rivestimento gres ≤ 60x120 cm — rivestimento h240 — Bagno1.", um:"ac", qty:1, price:2700},
         {cod:"5.3", desc:"Posa pavimento + rivestimento gres ≤ 60x120 cm — rivestimento h240 — Bagno2.", um:"ac", qty:1, price:2700},
-        {cod:"5.4", desc:"Posa parquet prefinito incollato a correre (esclusa fornitura, primer e prep. fondo).", um:"mq", qty:95, price:46},
+        {cod:"5.4", desc:"Posa parquet prefinito incollato (modalità definita dal Configuratore).", um:"mq", qty:95, price:46, _altKey:"parquet_posa_price"},
         {cod:"5.5", desc:"Copertura parquet post posa.", um:"ac", qty:1, price:500}
       ]},
       {id:"6", name:"6. Intonaci, Rappezzi e Rasature", items:[
@@ -349,10 +461,10 @@ const DATA = {
         {cod:"8.3", desc:"Smontaggio e rimontaggio radiatori con valvole (2 soggiorno + 1 camera1).", um:"nr", qty:3, price:160},
         {cod:"8.4", desc:"Nuovi attacchi radiatori (2 scaldasalviette, 1 nicchia soggiorno, 2 camerette).", um:"nr", qty:5, price:420},
         {cod:"8.5", desc:"CDZ Split: smontaggio e smaltimento.", um:"nr", qty:1, price:825},
-        {cod:"8.6", desc:"Nuovi punti CDZ.", um:"nr", qty:7, price:420}
+        {cod:"8.6", desc:"Nuovi punti CDZ (predisposizione).", um:"nr", qty:7, price:420}
       ]},
       {id:"9", name:"9. Impianto Elettrico", items:[
-        {cod:"9.1", desc:"Serie civile Vimar Plana — impianto sottotraccia a norma: nuovo quadro 12 linee, colonna montante, punti come da tavola, linea diretta piano induzione, 5 punti split + 1 esterno, predisposizioni TV, campanello, citofono.", um:"nr", qty:1, price:13811.82},
+        {cod:"9.1", desc:"Serie civile Vimar Plana — impianto sottotraccia a norma: nuovo quadro 12 linee, colonna montante, punti, linea induzione, 5 split + 1 esterno, predisposizioni TV, campanello, citofono.", um:"nr", qty:1, price:13811.82},
         {cod:"9.2", desc:"Allacci cucina, luci LED sottopensile, 2 specchi retroilluminati, aspiratore bagno cieco, allaccio quadro di cantiere.", um:"nr", qty:1, price:825}
       ]},
       {id:"10", name:"10. Assistenza muraria", items:[
@@ -370,10 +482,10 @@ const DATA = {
         {cod:"1.4", desc:"BAGNO2 — Rivestimento gres Keope Log Icon Oak 60x60 silky (AX4O).", um:"ac", qty:1, price:570.24}
       ]},
       {id:"M1A", name:"1A. Pavimenti altri ambienti", items:[
-        {cod:"1A", desc:"Parquet Woodco Slim sp.10mm rovere naturale, vernice spazzolata extra opaca, scelta Natural 120x80-1200.", um:"ac", qty:1, price:10679.19}
+        {cod:"1A", desc:"Parquet Woodco (modello e finitura definiti dal Configuratore).", um:"ac", qty:1, price:10679.19, _altKey:"parquet_price"}
       ]},
       {id:"M2", name:"2. Porte", items:[
-        {cod:"2.1", desc:"Porta battente Pivato Innova mod.114 Vivace bianco 80x210.", um:"nr", qty:5, price:444},
+        {cod:"2.1", desc:"Porta battente Pivato Innova mod.114 Vivace bianco 80x210 (n. definito dal Configuratore).", um:"nr", qty:5, price:444, _altKey:"porte_qty"},
         {cod:"2.2", desc:"Porta scorrevole Pivato Innova mod.114 Vivace bianco 80x210.", um:"nr", qty:1, price:444}
       ]},
       {id:"M3", name:"3. Termoarredi", items:[
@@ -401,12 +513,12 @@ const DATA = {
         {cod:"11.5", desc:"Realizzazione gradino in Leca per la parte interessata.", um:"mq", qty:53.8, price:55}
       ]}
     ]},
-    { id:"serramenti", title:"Serramenti e Cassonetti", subtitle:"Portoncino blindato + finestre Internorm", color:"serramenti", iva:10, active:true, sections:[
+    { id:"serramenti", title:"Serramenti e Cassonetti", subtitle:"Portoncino blindato + finestre (brand dal Configuratore)", color:"serramenti", iva:10, active:true, sections:[
       {id:"S1", name:"1. Portoncino Blindato", items:[
         {cod:"1.1", desc:"Portoncino blindato Stark Style classe 3, interno laccato bianco, coprifili in tinta, pannello esterno liscio, maniglia interna cromo / esterna ottone lucido.", um:"ac", qty:1, price:1985}
       ]},
       {id:"S2", name:"2. Serramenti", items:[
-        {cod:"2.1", desc:"F.P. serramenti Internorm KF310 pvc-alluminio doppio vetro, interno bianco / esterno effetto rovere, coperchio cassonetto bilaminato o MDF.", um:"ac", qty:1, price:25530}
+        {cod:"2.1", desc:"F.P. serramenti (brand e modello definiti dal Configuratore) PVC-alluminio, interno bianco / esterno effetto rovere, coperchio cassonetto bilaminato o MDF.", um:"ac", qty:1, price:25530, _altKey:"serramenti_price"}
       ]}
     ]},
     { id:"autoscale", title:"Autoscale (n.6 ipotizzate)", subtitle:"IVA 22% — voce a consuntivo, non in contratto base", color:"autoscale", iva:22, active:false, optional:true, sections:[
@@ -451,31 +563,51 @@ const DATA = {
         {cod:"7.3", desc:"Armadio Pianca Plana 2 moduli 45cm + 1 modulo 25cm, push-pull, Seta Matt H280.", um:"nr", qty:1, price:2973}
       ]}
     ]},
-    { id:"opzionali_lavori", title:"Opzionali — Lavori", subtitle:"Pacchetto opere opzionali (foglio Opzionali)", color:"opz_lavori", iva:10, active:false, optional:true, sections:[
-      {id:"OL", name:"Opere opzionali (aggregato €43.822)", items:[
-        {cod:"OL.A", desc:"Parquet spina italiana ALPACA 12mm (sostituisce parquet a correre) — sezioni A+B+C/D Opzionali.", um:"ac", qty:1, price:2951.55},
-        {cod:"OL.E", desc:"Porta rasomuro soggiorno Woodco spina Alpaca (sostituisce porta Pivato).", um:"ac", qty:1, price:675},
-        {cod:"OL.F", desc:"Nicchia doccia BAGNO2 (controparete + nicchia 80xH20).", um:"ac", qty:1, price:1055},
-        {cod:"OL.G", desc:"Controsoffitto + faretti Oty BAGNO1 (n.6 faretti).", um:"ac", qty:1, price:2208},
-        {cod:"OL.H", desc:"Controsoffitto + faretti Oty BAGNO2 (n.7 faretti).", um:"ac", qty:1, price:2960},
-        {cod:"OL.I", desc:"Controsoffitto + faretti Oty DIS/LAVANDERIA (n.7 faretti).", um:"ac", qty:1, price:3264},
-        {cod:"OL.L", desc:"Faretti Oty INGRESSO (n.6 faretti + impianto).", um:"ac", qty:1, price:2142},
-        {cod:"OL.M", desc:"Applique Oty Microbox SOGGIORNO (n.14).", um:"ac", qty:1, price:2200.6},
-        {cod:"OL.N", desc:"Strip LED SOGGIORNO (6 m + profilo + posa).", um:"ac", qty:1, price:1829.6},
-        {cod:"OL.P", desc:"CDZ canalizzato Samsung 7kw + 5 bocchette + termostati radio + progetto termotecnico (-€4.635 split).", um:"ac", qty:1, price:14053.75},
-        {cod:"OL.Q", desc:"Spostamento radiatore soggiorno + assistenza muraria.", um:"ac", qty:1, price:630},
-        {cod:"OL.R", desc:"n.3 parapetti vetro stratificato 5+5.", um:"ac", qty:1, price:1820},
-        {cod:"OL.R2", desc:"Motorizzazione tapparelle (kit + centralizzazione + assistenza muraria).", um:"ac", qty:1, price:7222.5},
-        {cod:"OL.S", desc:"Illuminazione esterna (4 applique + prese + ass. muraria).", um:"ac", qty:1, price:810}
+    { id:"opzionali_lavori", title:"Opzionali — Lavori", subtitle:"Voci derivate dal Configuratore + 11 toggle indipendenti", color:"opz_lavori", iva:10, active:false, optional:true, sections:[
+      {id:"OL_DER", name:"Voci derivate dal Configuratore", items:[]},
+      {id:"OL_F", name:"Nicchia doccia BAGNO2", items:[
+        {cod:"OL.F", desc:"Controparete predisposizione (3,5mq) + nicchia 80×H20cm.", um:"ac", qty:1, price:1055}
+      ]},
+      {id:"OL_G", name:"Controsoffitto + faretti BAGNO 1 (5 corpi)", items:[
+        {cod:"OL.G1", desc:"Controsoffitto + casseformi + impianto + ass. muraria (esclusi faretti).", um:"ac", qty:1, price:1218},
+        {cod:"OL.G2", desc:"Fornitura faretti BAGNO 1 (brand dal Configuratore).", um:"nr", qty:5, price:198, _altKey:"faretti_cad"}
+      ]},
+      {id:"OL_H", name:"Controsoffitto + faretti BAGNO 2 (7 corpi)", items:[
+        {cod:"OL.H1", desc:"Controsoffitto + casseformi + impianto + ass. muraria.", um:"ac", qty:1, price:1640},
+        {cod:"OL.H2", desc:"Fornitura faretti BAGNO 2 (brand dal Configuratore).", um:"nr", qty:7, price:188.57, _altKey:"faretti_cad"}
+      ]},
+      {id:"OL_I", name:"Controsoffitto + faretti DIS / LAVANDERIA (7 corpi)", items:[
+        {cod:"OL.I1", desc:"Controsoffitto + casseformi + impianto + ass. muraria.", um:"ac", qty:1, price:1944},
+        {cod:"OL.I2", desc:"Fornitura faretti DIS/LAV (brand dal Configuratore).", um:"nr", qty:7, price:188.57, _altKey:"faretti_cad"}
+      ]},
+      {id:"OL_L", name:"Faretti INGRESSO (6 corpi)", items:[
+        {cod:"OL.L1", desc:"Casseformi + impianto + ass. muraria.", um:"ac", qty:1, price:1152},
+        {cod:"OL.L2", desc:"Fornitura faretti INGRESSO (brand dal Configuratore).", um:"nr", qty:6, price:165, _altKey:"faretti_cad"}
+      ]},
+      {id:"OL_M", name:"Applique SOGGIORNO", items:[
+        {cod:"OL.M", desc:"14 applique Oty Microbox biemissive + punti filo + collegamento + ass. muraria.", um:"ac", qty:1, price:2200.6}
+      ]},
+      {id:"OL_N", name:"Strip LED SOGGIORNO", items:[
+        {cod:"OL.N", desc:"Strip LED 6m + profilo + posa + interruttore + collegamento.", um:"ac", qty:1, price:1829.6}
+      ]},
+      {id:"OL_Q", name:"Spostamento radiatore SOGGIORNO", items:[
+        {cod:"OL.Q", desc:"Nuovi attacchi radiatori + assistenza muraria 50%.", um:"ac", qty:1, price:630}
+      ]},
+      {id:"OL_R", name:"Parapetti vetro stratificato", items:[
+        {cod:"OL.R", desc:"3 parapetti vetro stratificato 5+5.", um:"ac", qty:1, price:1820}
+      ]},
+      {id:"OL_R2", name:"Motorizzazione tapparelle", items:[
+        {cod:"OL.R2", desc:"Kit motorizzazione 9 tapparelle + centralizzazione + ass. muraria.", um:"ac", qty:1, price:7222.5}
+      ]},
+      {id:"OL_S", name:"Illuminazione esterna", items:[
+        {cod:"OL.S", desc:"4 punti filo applique + prese esterne + assistenza muraria.", um:"ac", qty:1, price:810}
       ]}
     ]},
-    { id:"opzionali_arredi", title:"Opzionali — Arredi", subtitle:"Arredi aggiuntivi opzionali — IVA 22%", color:"opz_arredi", iva:22, active:false, optional:true, sections:[
-      {id:"OA", name:"Arredi opzionali", items:[
-        {cod:"OA.1", desc:"Pouf Le Comfort mod. Wilson.", um:"nr", qty:1, price:285},
-        {cod:"OA.2", desc:"Tavolo Pianca DELTA 190x90 marmo fior di pesco.", um:"nr", qty:1, price:3124},
-        {cod:"OA.3", desc:"Armadio lavanderia Cinquanta3 Uniko.", um:"nr", qty:1, price:1940},
-        {cod:"OA.4", desc:"Cameretta NIDI Nuvola+Nocciolo (2 letti, 2 scrivanie, 2 comodini, 2 armadi).", um:"nr", qty:1, price:9468}
-      ]}
+    { id:"opzionali_arredi", title:"Opzionali — Arredi", subtitle:"4 arredi aggiuntivi opzionali — IVA 22%", color:"opz_arredi", iva:22, active:false, optional:true, sections:[
+      {id:"OA_1", name:"Pouf Le Comfort Wilson", items:[{cod:"OA.1", desc:"Pouf Le Comfort mod. Wilson.", um:"nr", qty:1, price:285}]},
+      {id:"OA_2", name:"Tavolo Pianca DELTA", items:[{cod:"OA.2", desc:"Tavolo Pianca DELTA 190x90 marmo fior di pesco.", um:"nr", qty:1, price:3124}]},
+      {id:"OA_3", name:"Armadio lavanderia Cinquanta3", items:[{cod:"OA.3", desc:"Armadio lavanderia Cinquanta3 Uniko.", um:"nr", qty:1, price:1940}]},
+      {id:"OA_4", name:"Cameretta NIDI Nuvola+Nocciolo", items:[{cod:"OA.4", desc:"Cameretta NIDI Nuvola+Nocciolo (2 letti, 2 scrivanie, 2 comodini, 2 armadi).", um:"nr", qty:1, price:9468}]}
     ]}
   ],
   rebate:{ label:"Rimborso progettazione", amount:7076 }
@@ -485,423 +617,276 @@ const REF_TOTAL_GROSS = 227276.87;
 const REF_TOTAL_GROSS_WITH_REBATE = REF_TOTAL_GROSS - DATA.rebate.amount;
 
 /* ============================================================
-   INSIGHTS — Approfondimenti dai fogli Excel
+   ALTERNATIVES (selettori che modificano voci esistenti)
+   Ciascuna opzione ha "effects" che impongono valori a campi specifici
+   via _altKey nelle voci, oppure aggiungono extra alle "derived items".
+   ============================================================ */
+const ALTERNATIVES = [
+  {
+    id:"parquet",
+    icon:"🪵",
+    title:"Parquet — finitura e modalità di posa",
+    sub:"4 combinazioni (2 finiture × 2 pose) — modifica posa (Computo 5.4) e fornitura (Materiali 1A)",
+    options:[
+      { id:"naturale_correre", name:"Woodco 10mm Naturale, a correre ⭐", sub:"Default contratto base · parquet 10.679 € + posa 46 €/m²", default:true, delta:0,
+        effects:{ alt:{ parquet_posa_price:46, parquet_price:10679.19 }, derived:[]}
+      },
+      { id:"alpaca_correre", name:"Woodco 10mm Alpaca, a correre", sub:"Stessa posa, finitura scura (12.722 €) · +€2.043", delta:2042.97,
+        effects:{ alt:{ parquet_posa_price:46, parquet_price:12722.16 }, derived:[]}
+      },
+      { id:"naturale_spina", name:"Woodco 12mm Naturale, spina italiana", sub:"Spina italiana (54 €/m²) + parquet 12mm naturale (10.215 €) · +€296", delta:295.69,
+        effects:{ alt:{ parquet_posa_price:54, parquet_price:10214.88 }, derived:[]}
+      },
+      { id:"alpaca_spina", name:"Woodco 12mm Alpaca, spina italiana 🟣 attivo nei tuoi opzionali", sub:"Combinazione attualmente attivata nel foglio Opzionali · +€2.952", delta:2951.55,
+        effects:{ alt:{ parquet_posa_price:54, parquet_price:12870.74 }, derived:[]}
+      }
+    ]
+  },
+  {
+    id:"cdz",
+    icon:"❄️",
+    title:"CDZ — tipologia di climatizzazione",
+    sub:"Predisposizione (base), split premium Daikin o canalizzato Samsung",
+    options:[
+      { id:"predisposizione", name:"Solo predisposizione punti split ⭐", sub:"Default contratto base · Computo 8.6, nessun macchinario", default:true, delta:0,
+        effects:{ alt:{}, derived:[]}
+      },
+      { id:"daikin_premium", name:"Daikin Trial+dual split premium", sub:"Sostituisce predisposizione · +€9.900", delta:9900,
+        effects:{ alt:{}, derived:[
+          { id:"cdz_daikin", desc:"CDZ Daikin Trial+dual split premium (alternativa O1)", price:9900, group:"opzionali_lavori"}
+        ]}
+      },
+      { id:"canalizzato", name:"Canalizzato Samsung 7kw — pacchetto P 🟣 attivo nei tuoi opzionali", sub:"Controsoffitto + impianto + botole + ass. muraria + progetto -€4.635 · +€14.054", delta:14053.75,
+        effects:{ alt:{}, derived:[
+          { id:"cdz_canalizzato", desc:"CDZ canalizzato Samsung 7kw (pacchetto P)", price:14053.75, group:"opzionali_lavori"}
+        ]}
+      }
+    ]
+  },
+  {
+    id:"porta_soggiorno",
+    icon:"🚪",
+    title:"Porta soggiorno",
+    sub:"5 porte Pivato (base) oppure 4 Pivato + 1 rasomuro Woodco Alpaca",
+    options:[
+      { id:"pivato", name:"Pivato Linea Innova (5 porte battenti) ⭐", sub:"Default contratto base · qty Materiali 2.1 = 5", default:true, delta:0,
+        effects:{ alt:{ porte_qty:5 }, derived:[]}
+      },
+      { id:"rasomuro", name:"Rasomuro Woodco Alpaca 🟣 attivo nei tuoi opzionali", sub:"4 Pivato + 1 rasomuro (anta €750 + posa €100 + imbiancatura €300, -1 Pivato -€444) · +€706", delta:706,
+        effects:{ alt:{ porte_qty:4 }, derived:[
+          { id:"porta_rasomuro", desc:"Porta rasomuro Woodco Alpaca soggiorno: anta €750 + posa nucleo €100 + imbiancatura €300", price:1150, group:"opzionali_lavori"}
+        ]}
+      }
+    ]
+  },
+  {
+    id:"brand_serramenti",
+    icon:"🪟",
+    title:"Brand serramenti (15 m²)",
+    sub:"5 modelli a parità di configurazione triplo vetro",
+    options:[
+      { id:"internorm", name:"Internorm KF310", sub:"Default preventivo · Austria, triplo vetro Eclaz", default:true, delta:0,
+        effects:{ alt:{ serramenti_price:25530 }, derived:[]}
+      },
+      { id:"finstral", name:"Finstral Top72", sub:"IT, garanzia 30 anni", delta:-2843,
+        effects:{ alt:{ serramenti_price:22680 }, derived:[]}
+      },
+      { id:"schuco", name:"Schuco LivIng MD", sub:"DE, 7 camere, acustica 47 dB", delta:-4060,
+        effects:{ alt:{ serramenti_price:21470 }, derived:[]}
+      },
+      { id:"oknoplast", name:"Oknoplast Prolux Evolution", sub:"PL, maniglia centrale, vetri extra-light +22% luce", delta:-6630,
+        effects:{ alt:{ serramenti_price:18900 }, derived:[]}
+      },
+      { id:"aluplast", name:"Aluplast Energeto 8000", sub:"DE, Powerdur no-acciaio, Uf 0,94", delta:-8142,
+        effects:{ alt:{ serramenti_price:17388 }, derived:[]}
+      }
+    ]
+  },
+  {
+    id:"brand_faretti",
+    icon:"💡",
+    title:"Brand faretti (25 corpi totali)",
+    sub:"€/cad applicato a tutte le 4 voci faretti (Bagno 1, Bagno 2, DIS/Lav, Ingresso)",
+    options:[
+      { id:"oty", name:"Oty Light POP/BIC ⭐", sub:"Default · italiano alto di gamma · ~€185/cad · 25 pz = €4.620", default:true, delta:0,
+        effects:{ alt:{ faretti_cad:185 }, derived:[]}
+      },
+      { id:"groppi", name:"Davide Groppi NULLA — upgrade luxury", sub:"€450/cad · 25 pz = €11.250 (+€6.630)", delta:6630,
+        effects:{ alt:{ faretti_cad:450 }, derived:[]}
+      },
+      { id:"flos", name:"FLOS Find Me / Easy Kap", sub:"€220/cad · 25 pz = €5.500 (+€880)", delta:880,
+        effects:{ alt:{ faretti_cad:220 }, derived:[]}
+      },
+      { id:"linea_light", name:"Linea Light Gypsum", sub:"€150/cad · 25 pz = €3.750", delta:-870,
+        effects:{ alt:{ faretti_cad:150 }, derived:[]}
+      },
+      { id:"lucifero", name:"Lucifero's / Atelier Sedap (gesso)", sub:"€130/cad · 25 pz = €3.250", delta:-1370,
+        effects:{ alt:{ faretti_cad:130 }, derived:[]}
+      },
+      { id:"targetti", name:"Targetti CCT Tek", sub:"€120/cad · 25 pz = €3.000", delta:-1620,
+        effects:{ alt:{ faretti_cad:120 }, derived:[]}
+      },
+      { id:"astro", name:"Astro Lighting Minima Round", sub:"€110/cad · 25 pz = €2.750", delta:-1870,
+        effects:{ alt:{ faretti_cad:110 }, derived:[]}
+      },
+      { id:"reggiani", name:"Reggiani Mood Mini / iGuzzini Reflex", sub:"€95/cad · 25 pz = €2.375", delta:-2245,
+        effects:{ alt:{ faretti_cad:95 }, derived:[]}
+      },
+      { id:"easycard", name:"Linea Light EasyCard / Beneito Faure", sub:"€55/cad · 25 pz = €1.375", delta:-3245,
+        effects:{ alt:{ faretti_cad:55 }, derived:[]}
+      },
+      { id:"philips", name:"Philips Hue Centura / WiZ — smart", sub:"€40/cad · 25 pz = €1.000", delta:-3620,
+        effects:{ alt:{ faretti_cad:40 }, derived:[]}
+      }
+    ]
+  }
+];
+
+/* ============================================================
+   SUPPLIER SWAPS (toggle + % editabile)
+   ============================================================ */
+const SUPPLIER_SWAPS = [
+  { id:"assistenza", label:"Assistenza muraria 50% → 35%", sub:"Negoziazione sezione 10 Computo", prio:"alta", discount:0.30,
+    targets:["computo|10|10.1","computo|10|10.2","computo|10|10.3","computo|10|10.4"]},
+  { id:"rubinetteria", label:"Rubinetteria Gessi → Paini/Fantini", sub:"Materiali N.5", prio:"alta", discount:0.30,
+    targets:["materiali|M5|5.1","materiali|M5|5.2","materiali|M5|5.3"]},
+  { id:"sanitari", label:"Sanitari Globo → Hatria/Catalano", sub:"Materiali N.4", prio:"alta", discount:0.25,
+    targets:["materiali|M4|4.1","materiali|M4|4.2","materiali|M4|4.3","materiali|M4|4.4"]},
+  { id:"parquet", label:"Parquet Woodco → marca italiana media", sub:"Materiali 1A", prio:"alta", discount:0.25,
+    targets:["materiali|M1A|1A"]},
+  { id:"tavolati", label:"Tavolati cartongesso 119 → 100 €/m²", sub:"Computo 3.3", prio:"alta", discount:0.16,
+    targets:["computo|3|3.3"]},
+  { id:"gres", label:"Gres Keope 60×120 → Ragno/Marazzi 60×60", sub:"Materiali N.1", prio:"media", discount:0.20,
+    targets:["materiali|M1|1.1","materiali|M1|1.2","materiali|M1|1.3","materiali|M1|1.4"]},
+  { id:"picozzatura", label:"Intonaci picozzatura ridotta", sub:"Computo 6.4-6.6", prio:"media", discount:0.20,
+    targets:["computo|6|6.4","computo|6|6.5","computo|6|6.6"]},
+  { id:"posa_parquet", label:"Posa parquet 54/46 → 37 €/m²", sub:"Computo 5.4", prio:"media", discount:0.20,
+    targets:["computo|5|5.4"]},
+  { id:"elettrico", label:"Elettrico Vimar → BTicino Living Light", sub:"Computo 9.1", prio:"bassa", discount:0.10,
+    targets:["computo|9|9.1"]},
+  { id:"termoarredi", label:"Termoarredi Start → Irsap/Tubes", sub:"Materiali N.3", prio:"bassa", discount:0.25,
+    targets:["materiali|M3|3.1","materiali|M3|3.2"]}
+];
+
+/* ============================================================
+   FISCAL SCENARIOS (Strategia Fiscale 2026)
+   ============================================================ */
+const FISCAL_SCENARIOS = [
+  { id:"A", name:"A — Tutto sotto Bonus Ristrutturazione 50%", sub:"Soluzione semplice, sfrutta solo 1 bonus", detrazione:48000, note:"Eccedenza oltre tetto €96k non detratta"},
+  { id:"B", name:"B — Split su 3 bonus (Ristrutturazione + Ecobonus Serramenti + Bonus Mobili)", sub:"Richiede fatture separate + bonifici distinti", detrazione:63265, note:"+€15.265 detrazioni vs scenario A"},
+  { id:"C", name:"C — Combo 4 bonus (B + Ecobonus pompa di calore)", sub:"Massima detrazione · richiede CDZ canalizzato attivo + asseverazione tecnica", detrazione:70292, note:"+€7.027 extra rispetto a B grazie al CDZ canalizzato"}
+];
+
+/* ============================================================
+   DIY (Demolizioni fai-da-te) SCENARIOS
+   Voci scorporate: si forzano a qty = 0
+   ============================================================ */
+const DIY_SCENARIOS = [
+  { id:"none", name:"Nessuno — tutto a CLM", sub:"Default · risparmio €0", scorporate:[], risparmio:0 },
+  { id:"min", name:"Minimo — porte + battiscopa", sub:"Solo voci facilissime · 1-2 weekend · risparmio netto ~€952", scorporate:["computo|2|2.4","computo|2|2.8"], risparmio:952 },
+  { id:"med", name:"Medio — consigliato ⭐", sub:"Arredi + sanitari + porte + battiscopa + boiserie 138 m² · 2-3 settimane · risparmio netto ~€7.234", scorporate:["computo|2|2.2","computo|2|2.3","computo|2|2.4","computo|2|2.8","computo|2|2.9"], risparmio:7234 },
+  { id:"max", name:"Massimo — include ceramica e abbassamenti", sub:"Più impegnativo · 3-4 settimane · risparmio netto ~€8.763", scorporate:["computo|2|2.2","computo|2|2.3","computo|2|2.4","computo|2|2.7","computo|2|2.8","computo|2|2.9","computo|2|2.10"], risparmio:8763 }
+];
+
+/* ============================================================
+   INSIGHTS (riassunti)
    ============================================================ */
 const INSIGHTS = [
-  {
-    id:"insight-costi",
-    icon:"📊",
-    color:"#0f766e",
-    title:"Analisi Costi vs benchmark Milano 2026",
-    sub:"Posizionamento del preventivo e 12 leve di risparmio",
-    body:`
-      <p>Costo lavori a <span class="keynum">€1.722/m²</span> — fascia "completa chiavi in mano premium" (range Milano 2026: 700-900 medio, 1.100-1.500 completa, 1.500-2.000 profonda con finiture pregio).</p>
-
+  { id:"i-costi", icon:"📊", color:"#0f766e", title:"Analisi Costi vs benchmark Milano 2026", sub:"Posizionamento del preventivo e 12 leve di risparmio",
+    body:`<p>Costo lavori a <span class="keynum">€1.722/m²</span> — fascia "completa chiavi in mano premium" (range Milano 2026: 700-900 medio, 1.100-1.500 completa, 1.500-2.000 profonda con finiture pregio).</p>
       <h5>Voci sopra benchmark</h5>
-      <table>
-        <thead><tr><th>Voce</th><th class="num">€/m²</th><th>Range bench.</th><th>Posiz.</th></tr></thead>
-        <tbody>
-          <tr><td>Assistenza muraria impianti</td><td class="num">131,90</td><td>60-110</td><td><span class="pill hi">Fuori range</span></td></tr>
-          <tr><td>Intonaci e rasature</td><td class="num">199,67</td><td>130-220</td><td><span class="pill md">Alto</span></td></tr>
-          <tr><td>Demolizioni</td><td class="num">157,60</td><td>100-180</td><td><span class="pill md">Alto</span></td></tr>
-          <tr><td>Impianto idraulico</td><td class="num">153,41</td><td>100-180</td><td><span class="pill md">Alto</span></td></tr>
-          <tr><td>Massetti e sottofondi</td><td class="num">138,26</td><td>80-140</td><td><span class="pill md">Alto</span></td></tr>
-          <tr><td>Costruzione tavolati</td><td class="num">133,47</td><td>80-140</td><td><span class="pill md">Alto</span></td></tr>
-          <tr><td>Materiali (gres/parquet/sanit.)</td><td class="num">211,11</td><td>130-250</td><td><span class="pill md">Alto</span></td></tr>
-          <tr><td>Allestimento cantiere</td><td class="num">51,67</td><td>30-60</td><td><span class="pill md">Alto</span></td></tr>
-        </tbody>
-      </table>
-
-      <h5>Top 12 leve di risparmio</h5>
-      <table>
-        <thead><tr><th>Azione</th><th class="num">Risparmio</th><th>Priorità</th></tr></thead>
-        <tbody>
-          <tr><td>1. Negoziare assistenza muraria 50% → 35%</td><td class="num">€4.748</td><td><span class="pill hi">Alta</span></td></tr>
-          <tr><td>2. Serramenti Internorm → Oknoplast/Schuco</td><td class="num">€4.595</td><td><span class="pill hi">Alta</span></td></tr>
-          <tr><td>3. Escludere tapparelle opzionali</td><td class="num">€3.200</td><td><span class="pill md">Media</span></td></tr>
-          <tr><td>4. Parquet Woodco → marca media italiana</td><td class="num">€2.670</td><td><span class="pill hi">Alta</span></td></tr>
-          <tr><td>5. Ridurre picozzatura 140 → 80 m²</td><td class="num">€2.296</td><td><span class="pill md">Media</span></td></tr>
-          <tr><td>6. Tavolati cartongesso 119 → 95-100 €/m²</td><td class="num">€1.607</td><td><span class="pill hi">Alta</span></td></tr>
-          <tr><td>7. Impianto elettrico Vimar → BTicino</td><td class="num">€1.381</td><td><span class="pill info">Bassa</span></td></tr>
-          <tr><td>8. Gres Keope 60x120 → 60x60 o Ragno/Marazzi</td><td class="num">€932</td><td><span class="pill md">Media</span></td></tr>
-          <tr><td>9. Rubinetteria Gessi → Cromo/Paini/Fantini</td><td class="num">€878</td><td><span class="pill hi">Alta</span></td></tr>
-          <tr><td>10. Posa parquet 46 → 25-35 €/m²</td><td class="num">€874</td><td><span class="pill md">Media</span></td></tr>
-          <tr><td>11. Sanitari Globo → Hatria/Catalano</td><td class="num">€696</td><td><span class="pill hi">Alta</span></td></tr>
-          <tr><td>12. Termoarredi Start → Irsap/Tubes base</td><td class="num">€183</td><td><span class="pill info">Bassa</span></td></tr>
-          <tr><td><b>Solo priorità ALTA</b></td><td class="num"><b>€15.195</b></td><td></td></tr>
-          <tr><td><b>Tutte le ottimizzazioni</b></td><td class="num"><b>€24.060</b></td><td></td></tr>
-        </tbody>
-      </table>
-
-      <h5>Simulazione</h5>
-      <table>
-        <thead><tr><th>Scenario</th><th class="num">Tot IVA incl.</th><th class="num">Netto con bonus</th></tr></thead>
-        <tbody>
-          <tr><td>A) Originale</td><td class="num">227.277</td><td class="num">179.277</td></tr>
-          <tr><td>B) Priorità Alta</td><td class="num">210.563</td><td class="num">162.563</td></tr>
-          <tr><td>C) Tutte le ottimizzazioni</td><td class="num">200.811</td><td class="num">152.811</td></tr>
-        </tbody>
-      </table>
-    `
-  },
-  {
-    id:"insight-fiscale",
-    icon:"💰",
-    color:"#15803d",
-    title:"Strategia Fiscale — Cumulo bonus 2026",
-    sub:"Bonus Ristrutturazione + Ecobonus + Bonus Mobili + Pompe di Calore",
-    body:`
-      <p>Strategia ottimale: <b>4 bonus cumulabili</b> applicati a voci SEPARATE (richiede fatturazione e bonifici distinti).</p>
-
-      <h5>I 4 bonus 2026</h5>
+      <table><thead><tr><th>Voce</th><th class="num">€/m²</th><th>Posiz.</th></tr></thead><tbody>
+      <tr><td>Assistenza muraria impianti</td><td class="num">131,90</td><td><span class="pill hi">Fuori range</span></td></tr>
+      <tr><td>Intonaci e rasature</td><td class="num">199,67</td><td><span class="pill md">Alto</span></td></tr>
+      <tr><td>Demolizioni</td><td class="num">157,60</td><td><span class="pill md">Alto</span></td></tr>
+      <tr><td>Idraulico</td><td class="num">153,41</td><td><span class="pill md">Alto</span></td></tr>
+      <tr><td>Massetti</td><td class="num">138,26</td><td><span class="pill md">Alto</span></td></tr>
+      <tr><td>Materiali (gres/parquet/sanit.)</td><td class="num">211,11</td><td><span class="pill md">Alto</span></td></tr>
+      </tbody></table>
+      <p>Le 10 leve di risparmio sono ora attivabili dal pannello <b>💰 Ottimizzazioni</b>. Risparmio potenziale totale: <span class="pill ok">€24.060</span> con tutte attive, <span class="pill md">€15.195</span> solo priorità ALTA.</p>`},
+  { id:"i-fiscale", icon:"💰", color:"#15803d", title:"Strategia Fiscale — Cumulo bonus 2026", sub:"Bonus Ristrutturazione + Ecobonus + Bonus Mobili + Pompe di Calore",
+    body:`<p>I 4 bonus 2026 sono cumulabili su voci SEPARATE (richiede fatturazione e bonifici distinti):</p>
       <ul>
-        <li><b>Bonus Ristrutturazione 50%</b> — tetto €96.000 (lavori + materiali + portoncino).</li>
-        <li><b>Ecobonus Serramenti 50%</b> — tetto €120.000 di spesa, Uw ≤ 1,4 W/m²K zona E Milano (KF310 → 0,8-1,0 → ok).</li>
-        <li><b>Ecobonus Pompe di Calore 50%</b> — tetto €30.000 (CDZ canalizzato Samsung 7kw).</li>
-        <li><b>Bonus Mobili 50%</b> — tetto €5.000 di spesa (€2.500 detrazione max, elettrodomestici Siemens).</li>
+        <li><b>Bonus Ristrutturazione 50%</b> — tetto €96.000 (lavori + materiali + portoncino)</li>
+        <li><b>Ecobonus Serramenti 50%</b> — tetto €120k spesa, Uw ≤ 1,4 W/m²K (KF310 → 0,8-1,0 → ok)</li>
+        <li><b>Ecobonus Pompe di Calore 50%</b> — tetto €30k (CDZ canalizzato Samsung)</li>
+        <li><b>Bonus Mobili 50%</b> — tetto €5k (€2.500 detrazione max, elettrodomestici Siemens)</li>
       </ul>
-
-      <h5>Confronto scenari di detrazione</h5>
-      <table>
-        <thead><tr><th>Scenario</th><th class="num">Detrazione 10 anni</th><th class="num">Costo netto</th></tr></thead>
-        <tbody>
-          <tr><td>A) Tutto sotto Bonus Ristrutturazione</td><td class="num">€48.000</td><td class="num">€184.767</td></tr>
-          <tr><td>B) Cumulato (3 bonus)</td><td class="num">€63.265</td><td class="num">€174.502</td></tr>
-          <tr><td>C) Cumulato (4 bonus + CDZ)</td><td class="num"><b>€70.292</b></td><td class="num"><b>oltre €15k in più</b></td></tr>
-        </tbody>
-      </table>
-
+      <p>Scegli lo scenario nel pannello <b>🏛️ Strategia fiscale</b> sopra per vedere la detrazione e il costo netto aggiornati.</p>
       <h5>Avvertenze operative</h5>
       <ul>
-        <li><b>Fatture separate</b> (lavori+materiali / serramenti / CDZ / elettrodomestici) — negoziare con CLM PRIMA della firma.</li>
-        <li><b>Bonifici parlanti distinti</b> con causali specifiche (art. 16-bis DPR 917/86, art. 14 DL 63/2013).</li>
-        <li><b>Asseverazione ENEA serramenti</b> entro 90 gg dalla fine lavori.</li>
-        <li><b>Bonus Mobili</b>: acquisti SUCCESSIVI a CILA/SCIA.</li>
-        <li><b>Limite reddito 75k</b> (art. 16-ter TUIR L.207/2024) — verificare capienza IRPEF.</li>
-      </ul>
-    `
-  },
-  {
-    id:"insight-serramenti",
-    icon:"🪟",
-    color:"#0e7490",
-    title:"Analisi Serramenti — Internorm KF310 vs alternative",
-    sub:"Posizionamento, prezzi €/m² e modelli alternativi",
-    body:`
-      <p>KF310 è il modello <b>entry-level Internorm</b> (premium sono KF410 e KV440). Prezzo <span class="keynum">€1.688/m²</span> in linea con listino: non gonfiato ma non economico.</p>
-
-      <h5>⚠️ Punto critico</h5>
-      <p>Il preventivo cita "doppio vetro" ma KF310 ha <b>triplo vetro Eclaz® di serie</b>. Da chiarire con CLM: errore di trascrizione o downgrade?</p>
-
-      <h5>Confronto €/m² sul mercato</h5>
-      <table>
-        <thead><tr><th>Segmento</th><th>Modello</th><th class="num">€/m²</th></tr></thead>
-        <tbody>
-          <tr><td><span class="pill hi">Luxury</span></td><td>Legno-allu artigianale</td><td class="num">2.500-4.000</td></tr>
-          <tr><td><span class="pill md">Premium</span></td><td>Internorm KF410, KV440, Finstral Top72</td><td class="num">1.800-2.500</td></tr>
-          <tr><td><span class="pill md">High</span></td><td><b>Internorm KF310 (preventivo)</b></td><td class="num"><b>1.500-1.900</b></td></tr>
-          <tr><td><span class="pill ok">Mid-high</span></td><td>Schuco Living, Oknoplast Prolux</td><td class="num">600-900</td></tr>
-          <tr><td><span class="pill info">Mid</span></td><td>Finstral PVC, Oknoplast Pixel</td><td class="num">400-600</td></tr>
-        </tbody>
-      </table>
-
-      <h5>Alternative concrete (15 m² — 9 finestre)</h5>
-      <table>
-        <thead><tr><th>Modello</th><th class="num">€/m²</th><th class="num">Risparmio</th></tr></thead>
-        <tbody>
-          <tr><td>Internorm KF310 (riferimento)</td><td class="num">1.688</td><td class="num">—</td></tr>
-          <tr><td>Finstral Top72 PVC-Allu</td><td class="num">1.500</td><td class="num">€2.843</td></tr>
-          <tr><td>Schuco LivIng MD (DE)</td><td class="num">1.400</td><td class="num">€4.355</td></tr>
-          <tr><td>Internorm KF200 (vecchio mod.)</td><td class="num">1.400</td><td class="num">€4.355</td></tr>
-          <tr><td>Oknoplast Prolux Evolution (PL)</td><td class="num">1.100</td><td class="num">€8.891</td></tr>
-          <tr><td>Aluplast Energeto 8000 (DE)</td><td class="num">1.000</td><td class="num">€10.403</td></tr>
-        </tbody>
-      </table>
-
-      <h5>Punti da negoziare con CLM</h5>
-      <ul>
-        <li>VETRO: doppio o triplo? (CRITICO)</li>
-        <li>Uw certificata, classe RC1N vs RC2</li>
-        <li>Maniglie Secustik (+€20-40/finestra)</li>
-        <li>Ferramenta a scomparsa (+€50-100/finestra)</li>
-        <li>Promo Internorm 23/3-22/5/2026</li>
-        <li>Richiedere 2 preventivi alternativi (Finstral + Schuco/Oknoplast)</li>
-      </ul>
-
-      <h5>Portoncino Stark Style classe 3 — €1.985</h5>
-      <p>STARK è gruppo Internorm Italia, classe 3 = standard residenziale, prezzo <b>coerente</b> con mercato (range €1.800-2.500). Alternative: Dierre Atlas, Gardesa Quadra, Securemme Smart (€1.600-2.400).</p>
-    `
-  },
-  {
-    id:"insight-confronto-serramenti",
-    icon:"⚖️",
-    color:"#0891b2",
-    title:"Confronto Dettagliato Serramenti (4 modelli)",
-    sub:"KF310 vs Schuco LivIng vs Oknoplast Prolux vs Aluplast Energeto",
-    body:`
-      <h5>Scheda tecnica affiancata</h5>
-      <table>
-        <thead><tr><th></th><th>KF310</th><th>Schuco LivIng MD</th><th>Oknoplast Prolux</th><th>Aluplast Energeto</th></tr></thead>
-        <tbody>
-          <tr><td><b>Posizionamento</b></td><td>Premium (entry)</td><td>Mid-high</td><td>Mid-high</td><td>Mid-high innovativo</td></tr>
-          <tr><td><b>Camere</b></td><td>6</td><td>7</td><td>6</td><td>6</td></tr>
-          <tr><td><b>Profondità</b></td><td>71 mm</td><td>82 mm</td><td>70/74 mm</td><td>85 mm</td></tr>
-          <tr><td><b>Vetro standard</b></td><td>TRIPLO Eclaz</td><td>Doppio</td><td>Doppio</td><td>Doppio</td></tr>
-          <tr><td><b>Uw min triplo</b></td><td>0,69</td><td>0,76</td><td>0,80</td><td>0,74-0,76</td></tr>
-          <tr><td><b>Uf telaio</b></td><td>1,1</td><td>0,96-1,0</td><td>1,0-1,1</td><td><b>0,94 (best)</b></td></tr>
-          <tr><td><b>Acustica</b></td><td>45 dB</td><td>47 dB (top)</td><td>45 dB</td><td>45 dB</td></tr>
-          <tr><td><b>Origine</b></td><td>Austria</td><td>Germania</td><td>Polonia</td><td>Germania</td></tr>
-          <tr><td><b>Garanzia profili</b></td><td>10 anni</td><td>10 anni</td><td>5/10 anni</td><td>10 anni</td></tr>
-        </tbody>
-      </table>
-
-      <h5>Costo totale 15,12 m² (configurazione confrontabile)</h5>
-      <table>
-        <thead><tr><th>Brand</th><th class="num">Tot triplo vetro</th><th class="num">Risparmio</th></tr></thead>
-        <tbody>
-          <tr><td>Internorm KF310</td><td class="num"><b>€25.523</b></td><td class="num">—</td></tr>
-          <tr><td>Schuco LivIng MD</td><td class="num">€21.470</td><td class="num">-€4.060 (-16%)</td></tr>
-          <tr><td>Oknoplast Prolux Evolution</td><td class="num">€18.900</td><td class="num">-€6.630 (-26%)</td></tr>
-          <tr><td>Aluplast Energeto 8000</td><td class="num">€17.388</td><td class="num">-€8.142 (-32%)</td></tr>
-        </tbody>
-      </table>
-
-      <h5>Matrice decisionale</h5>
-      <ul>
-        <li>Max prestazioni termiche: <b>Internorm KF310</b> / Aluplast Energeto</li>
-        <li>Brand riconosciuto Milano: <b>Internorm KF310</b> / Schuco</li>
-        <li>Design moderno distintivo: <b>Oknoplast Prolux</b></li>
-        <li>Miglior rapporto qualità/prezzo: <b>Aluplast Energeto</b> / Oknoplast</li>
-        <li>Acustica massima: <b>Schuco LivIng MD</b></li>
-        <li>Casa Passiva / Clima Oro: <b>Internorm KF310</b> / Aluplast</li>
-      </ul>
-    `
-  },
-  {
-    id:"insight-luce",
-    icon:"☀️",
-    color:"#f59e0b",
-    title:"Analisi Luce Naturale — Quale serramento illumina di più?",
-    sub:"Confronto area vetrata / area foro su 10 modelli",
-    body:`
-      <p>I 3 fattori della luce naturale: <b>A)</b> sezione profili (telaio sottile = vetro più ampio), <b>B)</b> trasmissione luminosa vetro (extra-light = +5/22%), <b>C)</b> design percettivo.</p>
-
-      <h5>Simulazione su foro 1.200×1.400 mm (1,68 m²)</h5>
-      <table>
-        <thead><tr><th>Pos.</th><th>Modello</th><th class="num">Vetro netto</th><th class="num">% Vetro/Foro</th><th class="num">vs KF310</th></tr></thead>
-        <tbody>
-          <tr><td>🥇</td><td>Oknoplast Futural OC</td><td class="num">1,35 m²</td><td class="num">81%</td><td class="num"><b>+59%</b></td></tr>
-          <tr><td>🥈</td><td>Internorm HF520 legno-allu</td><td class="num">1,01 m²</td><td class="num">60%</td><td class="num">+13%</td></tr>
-          <tr><td>🥉</td><td>Internorm KF510 premium</td><td class="num">0,99 m²</td><td class="num">59%</td><td class="num">+11%</td></tr>
-          <tr><td>4°</td><td>Oknoplast Prolux Evolution</td><td class="num">0,93 m²</td><td class="num">56%</td><td class="num">+10%</td></tr>
-          <tr><td>5°</td><td>Schuco AS70 SLIM</td><td class="num">0,97 m²</td><td class="num">58%</td><td class="num">+3%</td></tr>
-          <tr><td>6°</td><td>Schuco LivIng Total Light</td><td class="num">0,97 m²</td><td class="num">58%</td><td class="num">+3%</td></tr>
-          <tr><td>7°</td><td><b>Internorm KF310 (riferimento)</b></td><td class="num"><b>0,89 m²</b></td><td class="num"><b>53%</b></td><td class="num">—</td></tr>
-          <tr><td>8°</td><td>Finstral Top72</td><td class="num">0,91 m²</td><td class="num">54%</td><td class="num">-3%</td></tr>
-          <tr><td>9°</td><td>Aluplast Energeto 8000</td><td class="num">0,89 m²</td><td class="num">53%</td><td class="num">-5%</td></tr>
-          <tr><td>10°</td><td>Schuco LivIng 82 MD std</td><td class="num">0,89 m²</td><td class="num">53%</td><td class="num">-6%</td></tr>
-        </tbody>
-      </table>
-
-      <h5>Trade-off serramenti "alta luce"</h5>
-      <ul>
-        <li>Prezzo +15/40% (+€4.000-10.000)</li>
-        <li>Compatibilità falsi telai (Schuco/Aluplast 82-85 mm critici in ristrutturazione)</li>
-        <li>Estetica meno tradizionale</li>
-      </ul>
-
-      <h5>Raccomandazione</h5>
-      <p><b>Chiedere showroom con finestre fianco a fianco</b> — l'occhio percepisce la differenza in modo non lineare. Almeno 3 modelli (KF510, Prolux Evolution, LivIng Total Light) offrono +10% a +50% di luce vs KF310.</p>
-    `
-  },
-  {
-    id:"insight-faretti",
-    icon:"💡",
-    color:"#a855f7",
-    title:"Analisi Faretti — Oty Light vs alternative",
-    sub:"25 corpi · €4.620 fornitura · €184,80/cad medio",
-    body:`
-      <p>Faretti <b>Oty Light Ø 4 cm</b> (probabile mod. POP P04 o BIC micro, trimless LED 13,4W). Marchio italiano alto di gamma. Prezzo in linea con listino — non gonfiato, ma 5-8× sopra un LED generico equivalente.</p>
-
-      <h5>Distribuzione faretti</h5>
-      <table>
-        <thead><tr><th>Ambiente</th><th class="num">n.</th><th class="num">Fornitura</th><th class="num">€/cad</th></tr></thead>
-        <tbody>
-          <tr><td>Bagno 1</td><td class="num">5</td><td class="num">€990</td><td class="num">198,00</td></tr>
-          <tr><td>Bagno 2</td><td class="num">7</td><td class="num">€1.320</td><td class="num">188,57</td></tr>
-          <tr><td>Disimpegno / Lavanderia</td><td class="num">7</td><td class="num">€1.320</td><td class="num">188,57</td></tr>
-          <tr><td>Ingresso</td><td class="num">6</td><td class="num">€990</td><td class="num">165,00</td></tr>
-          <tr><td><b>TOTALE</b></td><td class="num"><b>25</b></td><td class="num"><b>€4.620</b></td><td class="num"><b>184,80</b></td></tr>
-        </tbody>
-      </table>
-
-      <h5>Alternative per i 25 pezzi</h5>
-      <table>
-        <thead><tr><th>Brand / Modello</th><th class="num">€/cad</th><th class="num">Risparmio tot</th><th>Stile</th></tr></thead>
-        <tbody>
-          <tr><td>FLOS Find Me / Easy Kap 80</td><td class="num">220</td><td class="num">-€1.375</td><td>Upgrade</td></tr>
-          <tr><td><b>Oty Light (preventivo)</b></td><td class="num"><b>~185</b></td><td class="num">—</td><td>High</td></tr>
-          <tr><td>Linea Light Gypsum</td><td class="num">150</td><td class="num">€375</td><td>Pari livello</td></tr>
-          <tr><td>Astro Lighting Minima</td><td class="num">110</td><td class="num">€1.375</td><td>Mid-high</td></tr>
-          <tr><td>Targetti CCT Tek</td><td class="num">120</td><td class="num">€1.125</td><td>Mid-high</td></tr>
-          <tr><td>Reggiani Mood Mini</td><td class="num">95</td><td class="num">€1.750</td><td>Mid</td></tr>
-          <tr><td>Linea Light EasyCard</td><td class="num">55</td><td class="num">€2.750</td><td>Mid-low</td></tr>
-          <tr><td>Philips Hue Centura / WiZ</td><td class="num">40</td><td class="num">€3.125</td><td>Smart</td></tr>
-        </tbody>
-      </table>
-
-      <h5>Strategia mix consigliata (risparmio ~€1.000)</h5>
+        <li>Fatture separate (lavori+materiali / serramenti / CDZ / elettrodomestici) — negoziare con CLM PRIMA della firma</li>
+        <li>Bonifici parlanti distinti con causali specifiche</li>
+        <li>Asseverazione ENEA serramenti entro 90 gg</li>
+        <li>Bonus Mobili: acquisti SUCCESSIVI a CILA/SCIA</li>
+        <li>Limite reddito 75k — verificare capienza IRPEF</li>
+      </ul>`},
+  { id:"i-serramenti", icon:"🪟", color:"#0e7490", title:"Analisi Serramenti — confronto brand", sub:"Internorm KF310 vs Finstral, Schuco, Oknoplast, Aluplast",
+    body:`<p>KF310 è il modello <b>entry-level Internorm</b>. Prezzo €1.688/m² in linea con listino.</p>
+      <p><b>⚠️ Punto critico:</b> il preventivo cita "doppio vetro" ma KF310 ha <b>triplo vetro Eclaz® di serie</b>. Da chiarire con CLM.</p>
+      <h5>Confronto 15 m² triplo vetro (selettore Configuratore)</h5>
+      <table><thead><tr><th>Brand</th><th class="num">Totale</th><th class="num">Risparmio</th></tr></thead><tbody>
+      <tr><td>Internorm KF310 (riferimento)</td><td class="num">€25.530</td><td class="num">—</td></tr>
+      <tr><td>Finstral Top72 (IT)</td><td class="num">€22.680</td><td class="num">-€2.843</td></tr>
+      <tr><td>Schuco LivIng MD</td><td class="num">€21.470</td><td class="num">-€4.060</td></tr>
+      <tr><td>Oknoplast Prolux Evolution</td><td class="num">€18.900</td><td class="num">-€6.630</td></tr>
+      <tr><td>Aluplast Energeto 8000</td><td class="num">€17.388</td><td class="num">-€8.142</td></tr>
+      </tbody></table>
+      <p>Internorm conserva l'Ecobonus serramenti grazie a Uw certificata.</p>`},
+  { id:"i-luce", icon:"☀️", color:"#f59e0b", title:"Analisi Luce Naturale", sub:"Quale serramento illumina di più — confronto vetro/foro",
+    body:`<p>I 3 fattori: <b>A)</b> sezione profili (telaio sottile = vetro più ampio), <b>B)</b> trasmissione luminosa vetro (extra-light +5/22%), <b>C)</b> design percettivo.</p>
+      <h5>Top 5 (vs KF310 = 53% vetro/foro)</h5>
+      <table><thead><tr><th>Pos.</th><th>Modello</th><th class="num">% vetro/foro</th><th class="num">vs KF310</th></tr></thead><tbody>
+      <tr><td>🥇</td><td>Oknoplast Futural OC</td><td class="num">81%</td><td class="num"><b>+59%</b></td></tr>
+      <tr><td>🥈</td><td>Internorm HF520 legno-allu</td><td class="num">60%</td><td class="num">+13%</td></tr>
+      <tr><td>🥉</td><td>Internorm KF510 premium</td><td class="num">59%</td><td class="num">+11%</td></tr>
+      <tr><td>4°</td><td>Oknoplast Prolux Evolution</td><td class="num">56%</td><td class="num">+10%</td></tr>
+      <tr><td>5°</td><td>Schuco LivIng Total Light</td><td class="num">58%</td><td class="num">+3%</td></tr>
+      </tbody></table>
+      <p>Trade-off: prezzo +15/40%, compatibilità falsi telai, estetica meno tradizionale. <b>Chiedere showroom fianco a fianco</b>.</p>`},
+  { id:"i-faretti", icon:"💡", color:"#a855f7", title:"Analisi Faretti — 10 alternative", sub:"Da Philips Hue smart a Davide Groppi luxury",
+    body:`<p>Faretti <b>Oty Light Ø 4 cm</b> POP/BIC: italiano alto di gamma. 25 corpi a €185 medi = €4.620.</p>
+      <p>Tutte le 10 alternative sono selezionabili dal <b>Configuratore</b>: il prezzo si applica simultaneamente alle 4 voci faretti (Bagno 1, Bagno 2, DIS/Lav, Ingresso).</p>
+      <h5>Strategia mix consigliata (~€1.000 risparmio)</h5>
       <ul>
         <li><b>Ingresso + Bagno 1</b>: mantenere Oty (alta visibilità)</li>
         <li><b>Bagno 2</b>: scendere a Linea Light Gypsum o Targetti</li>
         <li><b>Disimpegno/Lavanderia</b>: faretti tecnici Reggiani/Beneito (bassa visibilità)</li>
       </ul>
-
-      <h5>Note tecniche da verificare con CLM</h5>
+      <p>Per il mix per ambiente puoi modificare manualmente il prezzo €/cad nelle 4 voci OL.G2/H2/I2/L2 (gruppo Opzionali Lavori).</p>`},
+  { id:"i-fai-da-te", icon:"🔨", color:"#b45309", title:"Demolizioni Fai-da-Te", sub:"4 scenari attivabili dal pannello dedicato",
+    body:`<p>Pannello <b>🔨 Demolizioni fai-da-te</b> sopra ha 4 scenari preimpostati. Lo scenario MEDIO ⭐ (consigliato) scorpora 5 voci: arredi, sanitari, porte, battiscopa, boiserie 138 m².</p>
+      <p><span class="pill hi">Rischio amianto</span> su canne fumarie e coibentazioni anni '70-'80: voce 2.13 sempre lasciata a CLM o ditta specializzata.</p>
+      <h5>Cosa NON fare in fai-da-te</h5>
       <ul>
-        <li>Cassaforma cartongesso inclusa?</li>
-        <li>Driver: ON-OFF o dimmerabile? (+€15-40)</li>
-        <li>Temperatura colore (3000K consigliato)</li>
-        <li>IP44 zone limitrofe doccia, IP65 sopra doccia</li>
-        <li>CRI &gt; 90 per bagno, UGR &lt; 19</li>
-      </ul>
-    `
-  },
-  {
-    id:"insight-fai-da-te",
-    icon:"🔨",
-    color:"#b45309",
-    title:"Demolizioni Fai-da-Te — risparmio fino a ~€9.000",
-    sub:"Cosa puoi fare in autonomia per ridurre i costi",
-    body:`
-      <p><b>Premessa:</b> mai tagliare voci CLM senza accordo preventivo. Smaltimento vincolato (Piattaforma Ecologica San Donato, FIR per macerie &gt;2 m³). <span class="pill hi">Rischio amianto</span> su canne fumarie e coibentazioni anni '70-'80: fermarsi e chiamare ditta specializzata.</p>
-
-      <h5>Scenario MEDIO consigliato (€7.000 netti)</h5>
-      <table>
-        <thead><tr><th>Cod.</th><th>Voce</th><th class="num">Importo CLM</th><th>Difficoltà</th></tr></thead>
-        <tbody>
-          <tr><td>2.2</td><td>Demolizione arredi e lampade</td><td class="num">—</td><td>1/5 facile</td></tr>
-          <tr><td>2.3</td><td>Sanitari (8 pezzi)</td><td class="num">€560</td><td>2/5 medio</td></tr>
-          <tr><td>2.4</td><td>Porte interne (7)</td><td class="num">€700</td><td>1/5 facile</td></tr>
-          <tr><td>2.8</td><td>Battiscopa legno (75,5 m)</td><td class="num">€302</td><td>1/5 facilissimo</td></tr>
-          <tr><td><b>2.9</b></td><td><b>Boiserie/perlinato 138 m²</b> ⭐</td><td class="num"><b>€6.072</b></td><td>2/5 medio</td></tr>
-          <tr><td colspan="2"><b>Risparmio netto</b> (5-8 giorni distribuiti su 2-3 settimane)</td><td class="num"><b>~€7.000</b></td><td></td></tr>
-        </tbody>
-      </table>
-
-      <h5>Cosa NON fare</h5>
-      <ul>
-        <li><b>NON pareti laterizio (2.12)</b>: 6.500 kg macerie, polvere, container — meglio negoziare prezzo CLM (50 → 35 €/m² = -€1.300-2.500 senza sforzo).</li>
-        <li><b>NON serramenti (2.5)</b>: pericolo 7° piano + rischio meteo.</li>
-        <li><b>NON ceramica (2.7)</b>: sforzo alto per soli €1.000.</li>
-        <li><b>NON impianti (2.1)</b>: difficoltà 4/5.</li>
-        <li><b>NON canna fumaria (2.13)</b>: rischio amianto.</li>
-      </ul>
-
-      <h5>Come negoziare con CLM</h5>
-      <ul>
-        <li>Comunicare PRIMA della firma quali voci si scorporano.</li>
-        <li>Mantenere 1.1 Allestimento (assistenza artigiani).</li>
-        <li>Chiedere sconto esplicito sulle voci scorporate.</li>
-        <li>Verificare impatto su bonus fiscali (voci fai-da-te NON detraibili).</li>
-        <li>Mantenere cronoprogramma (penali €100-300/gg per ritardo).</li>
-      </ul>
-
-      <p><span class="pill ok">Risparmio combinato con altre ottimizzazioni: €19.000-26.000</span></p>
-    `
-  },
-  {
-    id:"insight-punti-aperti",
-    icon:"❗",
-    color:"#dc2626",
-    title:"Punti Aperti — da chiarire prima della firma",
-    sub:"4 verifiche critiche con CLM, commercialista, amministratore",
-    body:`
-      <table>
-        <thead><tr><th>#</th><th>Tema</th><th>Priorità</th><th>Stato</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>Ecobonus CDZ canalizzato</td><td><span class="pill hi">Alta</span></td><td>Da verificare</td></tr>
-          <tr><td>2</td><td>Serramenti — più luce con alternative</td><td><span class="pill md">Media</span></td><td>Da valutare</td></tr>
-          <tr><td>3</td><td>Condominio: decoro architettonico</td><td><span class="pill hi">Alta</span></td><td>Da verificare</td></tr>
-          <tr><td>4</td><td>Condominio: uniformità facciata</td><td><span class="pill hi">Alta</span></td><td>Da fare SUBITO</td></tr>
-        </tbody>
-      </table>
-
-      <h5>1. Ecobonus CDZ — guadagno potenziale €7.027</h5>
-      <ul>
-        <li>Commercialista: regge inquadramento "sostituzione impianto"?</li>
-        <li>CLM: rilascia asseverazione tecnica?</li>
-        <li>CLM: fattura separata con causale Ecobonus (art. 14 DL 63/2013)?</li>
-        <li>APE post-intervento ottenibile?</li>
-      </ul>
-      <p><b>Rischio:</b> se Bonus Ristrutturazione saturo, detrazione marginale = zero.</p>
-
-      <h5>3-4. Decoro architettonico — fare SUBITO</h5>
-      <p>Cassazione 18928/2020: serramenti vincolati al decoro. <b>Effetto rovere esterno KF310</b> potrebbe stonare con facciata.</p>
-      <ul>
-        <li>Scattare 3-4 foto facciata, controllare uniformità colore/materiale/tapparelle.</li>
-        <li>Chiedere all'amministratore copia integrale regolamento (assembleare vs contrattuale).</li>
-        <li>Verificare delibere assembleari pregresse.</li>
-        <li>Presentare scheda tecnica KF310 PRIMA della firma.</li>
-        <li>Rischio: richiesta rimozione/sostituzione con spese a carico.</li>
-      </ul>
-    `
-  },
-  {
-    id:"insight-opzionali",
-    icon:"➕",
-    color:"#7c3aed",
-    title:"Opzionali — composizione del pacchetto €43.822 + €14.817",
-    sub:"Dettaglio delle voci attivate nel foglio Opzionali",
-    body:`
-      <p>Configurazione attiva: <b>parquet spina italiana ROVERE ALPACA 12mm</b>, posa spina italiana, porta soggiorno rasomuro Woodco, CDZ canalizzato.</p>
-
-      <h5>Opzionali Lavori (totale €43.822 imponibile)</h5>
-      <table>
-        <thead><tr><th>Cod.</th><th>Voce</th><th class="num">Importo</th></tr></thead>
-        <tbody>
-          <tr><td>A-X / B / C-D</td><td>Parquet spina alpaca 12mm + posa spina italiana</td><td class="num">€2.951,55</td></tr>
-          <tr><td>E</td><td>Porta rasomuro soggiorno Woodco</td><td class="num">€675</td></tr>
-          <tr><td>F</td><td>Nicchia doccia Bagno 2</td><td class="num">€1.055</td></tr>
-          <tr><td>G</td><td>Controsoffitto + faretti Oty Bagno 1</td><td class="num">€2.208</td></tr>
-          <tr><td>H</td><td>Controsoffitto + faretti Oty Bagno 2</td><td class="num">€2.960</td></tr>
-          <tr><td>I</td><td>Controsoffitto + faretti Oty Disimpegno</td><td class="num">€3.264</td></tr>
-          <tr><td>L</td><td>Faretti Oty Ingresso</td><td class="num">€2.142</td></tr>
-          <tr><td>M</td><td>Applique Oty Microbox Soggiorno (14 pezzi)</td><td class="num">€2.200,60</td></tr>
-          <tr><td>N</td><td>Strip LED Soggiorno (6 m)</td><td class="num">€1.829,60</td></tr>
-          <tr><td><b>P</b></td><td><b>CDZ canalizzato Samsung 7kw</b> (-€4.635 split)</td><td class="num"><b>€14.053,75</b></td></tr>
-          <tr><td>Q</td><td>Spostamento radiatore soggiorno</td><td class="num">€630</td></tr>
-          <tr><td>R</td><td>3 parapetti vetro stratificato</td><td class="num">€1.820</td></tr>
-          <tr><td>R2</td><td>Motorizzazione tapparelle</td><td class="num">€7.222,50</td></tr>
-          <tr><td>S</td><td>Illuminazione esterna</td><td class="num">€810</td></tr>
-        </tbody>
-      </table>
-
-      <h5>Opzionali Arredi (€14.817 imponibile, IVA 22%)</h5>
-      <table>
-        <thead><tr><th>Voce</th><th class="num">Importo</th></tr></thead>
-        <tbody>
-          <tr><td>Pouf Le Comfort Wilson</td><td class="num">€285</td></tr>
-          <tr><td>Tavolo Pianca DELTA 190x90 marmo fior di pesco</td><td class="num">€3.124</td></tr>
-          <tr><td>Armadio lavanderia Cinquanta3 Uniko</td><td class="num">€1.940</td></tr>
-          <tr><td>Cameretta NIDI Nuvola+Nocciolo (2 letti + scrivanie + armadi)</td><td class="num">€9.468</td></tr>
-        </tbody>
-      </table>
-
-      <p><b>Check incompatibilità:</b> con porta rasomuro (E) attiva → ricordare che Materiali 2.1 si riduce a 4 porte invece di 5.</p>
-    `
-  }
+        <li>NON pareti 2.12 (6.500 kg macerie) — meglio negoziare prezzo CLM</li>
+        <li>NON serramenti 2.5 (pericolo 7° piano)</li>
+        <li>NON impianti 2.1 (difficoltà 4/5)</li>
+        <li>NON canna fumaria 2.13 (rischio amianto)</li>
+      </ul>`},
+  { id:"i-punti", icon:"❗", color:"#dc2626", title:"Punti aperti", sub:"4 verifiche critiche prima della firma",
+    body:`<ul>
+      <li><b>Ecobonus CDZ canalizzato</b> — guadagno potenziale €7.027: verificare con commercialista e CLM (asseverazione, fattura separata art. 14 DL 63/2013, APE)</li>
+      <li><b>Decoro architettonico condominio</b> — Cassazione 18928/2020: serramenti esterni effetto rovere potrebbero stonare. Chiedere all'amministratore regolamento e delibere pregresse PRIMA della firma. Foto facciata.</li>
+      <li><b>Più luce con alternative serramenti</b> — fino a +59% (Oknoplast Futural OC)</li>
+      <li><b>Internorm doppio o triplo vetro?</b> — il preventivo dice doppio ma KF310 ha triplo di serie</li>
+      </ul>`}
 ];
 
 /* ============================================================
    STATE
    ============================================================ */
-const STORAGE_KEY = "mura_cecchin_v4";
+const STORAGE_KEY = "mura_cecchin_v5";
 let state = {
   groupsActive:{},
-  overrides:{},
+  qtyOverrides:{},
+  priceOverrides:{},
   ivaOverrides:{},
   notes:{},
+  alternatives:{},        // {parquet:"alpaca_spina", ...}
+  swaps:{},               // {assistenza:{on:false, discount:0.30}, ...}
+  fiscalScenario:"A",
+  diyScenario:"none",
   rebateActive:true,
   collapsed:{}
 };
@@ -911,50 +896,297 @@ function loadState(){
     if(!(g.id in state.groupsActive)) state.groupsActive[g.id] = !!g.active;
     if(!(g.id in state.ivaOverrides)) state.ivaOverrides[g.id] = g.iva;
   });
+  ALTERNATIVES.forEach(a=>{
+    if(!state.alternatives[a.id]){
+      const def = a.options.find(o=>o.default) || a.options[0];
+      state.alternatives[a.id] = def.id;
+    }
+  });
+  SUPPLIER_SWAPS.forEach(sw=>{
+    if(!state.swaps[sw.id]) state.swaps[sw.id] = { on:false, discount:sw.discount };
+  });
 }
 function saveState(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){} }
 function resetState(){
-  if(!confirm("Reimpostare tutti i valori al preventivo originale (incluse le note)?")) return;
+  if(!confirm("Reimpostare tutti i valori al preventivo originale (incluse note, scelte e swap)?")) return;
   localStorage.removeItem(STORAGE_KEY);
-  state = { groupsActive:{}, overrides:{}, ivaOverrides:{}, notes:{}, rebateActive:true, collapsed:{} };
+  state = { groupsActive:{}, qtyOverrides:{}, priceOverrides:{}, ivaOverrides:{}, notes:{}, alternatives:{}, swaps:{}, fiscalScenario:"A", diyScenario:"none", rebateActive:true, collapsed:{} };
   loadState();
   render();
 }
 
 /* ============================================================
-   HELPERS
+   HELPERS / CALC ENGINE
    ============================================================ */
 const fmtEUR = new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR",maximumFractionDigits:2});
-const fmtNum = new Intl.NumberFormat("it-IT",{maximumFractionDigits:2});
 function eur(n){ return fmtEUR.format(Math.round(n*100)/100); }
+function eurSigned(n){ const s = n>0?"+":""; return s + fmtEUR.format(Math.round(n*100)/100); }
 function key(g,s,it){ return g.id+"|"+s.id+"|"+it.cod; }
 function cssId(k){ return k.replace(/[^a-z0-9]/gi,"_"); }
-function escapeHTML(s){ return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function itemValues(g,s,it){
-  const k = key(g,s,it);
-  const o = state.overrides[k] || {};
-  const qty = (o.qty!=null)?o.qty:it.qty;
-  const price = (o.price!=null)?o.price:it.price;
-  return { qty:Number(qty)||0, price:Number(price)||0 };
+function escapeHTML(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+// Mappa _altKey -> { altId, optionId } a runtime
+function altValueForKey(altKey){
+  for(const alt of ALTERNATIVES){
+    const optId = state.alternatives[alt.id];
+    const opt = alt.options.find(o=>o.id===optId);
+    if(opt && opt.effects && opt.effects.alt && opt.effects.alt[altKey] != null) return opt.effects.alt[altKey];
+  }
+  return null;
 }
-function itemAmount(g,s,it){ const v=itemValues(g,s,it); return v.qty*v.price; }
-function sectionTotal(g,s){ return s.items.reduce((a,it)=>a+itemAmount(g,s,it),0); }
-function groupTotal(g){ return g.sections.reduce((a,s)=>a+sectionTotal(g,s),0); }
+
+function itemEffective(g, s, it){
+  const k = key(g,s,it);
+  let qty = it.qty;
+  let price = it.price;
+
+  // 1. price/qty driven by alternatives (via _altKey)
+  if(it._altKey){
+    const v = altValueForKey(it._altKey);
+    if(v != null){
+      // qty key vs price key
+      if(it._altKey.endsWith("_qty")) qty = v;
+      else price = v;
+    }
+  }
+
+  // 2. user overrides
+  if(state.qtyOverrides[k] != null) qty = state.qtyOverrides[k];
+  if(state.priceOverrides[k] != null) price = state.priceOverrides[k];
+
+  // 3. DIY scenario: force qty=0 on scorporate
+  const diy = DIY_SCENARIOS.find(d=>d.id===state.diyScenario);
+  if(diy && diy.scorporate.includes(k)) qty = 0;
+
+  // 4. Supplier swaps (apply discount on price)
+  SUPPLIER_SWAPS.forEach(sw=>{
+    const st = state.swaps[sw.id];
+    if(st && st.on && sw.targets.includes(k)){
+      price = price * (1 - (Number(st.discount)||0));
+    }
+  });
+
+  return { qty: Number(qty)||0, price: Number(price)||0 };
+}
+function itemAmount(g,s,it){ const v=itemEffective(g,s,it); return v.qty*v.price; }
+function sectionTotal(g,s){ let t=0; s.items.forEach(it=>t+=itemAmount(g,s,it)); // add derived
+  if(s.id==="OL_DER"){ getDerivedItems().forEach(d=>{ t+=d.price; }); }
+  return t;
+}
+function getDerivedItems(){
+  const list = [];
+  ALTERNATIVES.forEach(alt=>{
+    const optId = state.alternatives[alt.id];
+    const opt = alt.options.find(o=>o.id===optId);
+    if(opt && opt.effects && opt.effects.derived){
+      opt.effects.derived.forEach(d=>{
+        list.push({ id:d.id, desc:d.desc, price:d.price, group:d.group, altId:alt.id, altIcon:alt.icon, altTitle:alt.title });
+      });
+    }
+  });
+  return list;
+}
+function groupTotal(g){ let t=0; g.sections.forEach(s=>t+=sectionTotal(g,s)); return t; }
 function ivaOf(g){ return Number(state.ivaOverrides[g.id]); }
 
 /* ============================================================
    RENDER
    ============================================================ */
 const groupsRoot = document.getElementById("groups");
-const summaryEl = document.getElementById("riepilogo");
+const summaryBody = document.getElementById("summary-body");
 const insightsListEl = document.getElementById("insights-list");
+const configBody = document.getElementById("configurator-body");
+const optimBody = document.getElementById("optim-body");
+const fiscalBody = document.getElementById("fiscal-body");
+const diyBody = document.getElementById("diy-body");
 
 function render(){
+  renderConfigurator();
+  renderOptim();
+  renderFiscal();
+  renderDiy();
   renderGroups();
   renderInsights();
   renderSummary();
   updateTotals(false);
   initScrollSpy();
+}
+
+function renderConfigurator(){
+  let html = "";
+  ALTERNATIVES.forEach(alt=>{
+    html += `<div class="alt-card" id="alt-${alt.id}">
+      <div class="lbl">
+        <div class="ti">${alt.icon} ${alt.title}<small>${alt.sub}</small></div>
+      </div>
+      <div class="alt-opts">`;
+    alt.options.forEach(opt=>{
+      const checked = state.alternatives[alt.id] === opt.id;
+      const deltaCls = opt.delta === 0 ? "base" : (opt.delta < 0 ? "neg" : "pos");
+      const deltaTxt = opt.delta === 0 ? "= default" : eurSigned(opt.delta);
+      html += `<label class="alt-opt ${checked?"checked":""}" data-alt="${alt.id}" data-opt="${opt.id}">
+        <input type="radio" name="alt-${alt.id}" value="${opt.id}" ${checked?"checked":""}>
+        <div class="opt-text">
+          <div class="opt-name">${escapeHTML(opt.name)}</div>
+          <div class="opt-sub">${escapeHTML(opt.sub)}</div>
+        </div>
+        <div class="opt-delta ${deltaCls}">${deltaTxt}</div>
+      </label>`;
+    });
+    html += `</div></div>`;
+  });
+  configBody.innerHTML = html;
+  configBody.querySelectorAll(".alt-opt").forEach(el=>{
+    el.addEventListener("click",()=>{
+      const altId = el.dataset.alt;
+      const optId = el.dataset.opt;
+      state.alternatives[altId] = optId;
+      saveState();
+      // re-render heavy pieces
+      renderConfigurator();
+      renderGroups();
+      renderSummary();
+      updateTotals(true);
+    });
+  });
+}
+
+function renderOptim(){
+  let html = `<p style="margin:0 0 12px;font-size:12.5px;color:var(--muted);">Ogni swap riduce il prezzo delle voci target del % indicata. <b>%</b> è modificabile.</p>`;
+  let totalSaving = 0;
+  SUPPLIER_SWAPS.forEach(sw=>{
+    const st = state.swaps[sw.id];
+    const on = !!st.on;
+    const pct = Number(st.discount) || 0;
+    // calcola risparmio teorico
+    let baseTotal = 0;
+    sw.targets.forEach(tk=>{
+      const [gid,sid,cod] = tk.split("|");
+      const g = DATA.groups.find(x=>x.id===gid); if(!g) return;
+      const s = g.sections.find(x=>x.id===sid); if(!s) return;
+      const it = s.items.find(x=>x.cod===cod); if(!it) return;
+      // calcola SENZA questo swap (sospendi temporaneamente)
+      const stbak = state.swaps[sw.id].on;
+      state.swaps[sw.id].on = false;
+      const v = itemEffective(g,s,it);
+      state.swaps[sw.id].on = stbak;
+      baseTotal += v.qty*v.price;
+    });
+    const saving = baseTotal * pct;
+    if(on) totalSaving += saving;
+    html += `<div class="swap-row ${on?"on":""}" data-id="${sw.id}">
+      <label class="switch"><input type="checkbox" data-swap-on="${sw.id}" ${on?"checked":""}><span class="slider"></span></label>
+      <div class="swap-name">${escapeHTML(sw.label)}<small>${escapeHTML(sw.sub)}</small></div>
+      <span class="swap-pct"><input type="number" min="0" max="80" step="1" value="${Math.round(pct*100)}" data-swap-pct="${sw.id}">%</span>
+      <span class="swap-saving">${on?("-"+eur(saving)):eur(saving)}</span>
+    </div>`;
+  });
+  html += `<div style="margin-top:12px;padding:10px 12px;background:#0f172a;color:#fff;border-radius:10px;display:flex;justify-content:space-between;align-items:center;">
+    <div style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8;">Risparmio totale dai swap attivi</div>
+    <div style="font-weight:800;font-size:18px;font-variant-numeric:tabular-nums;">-${eur(totalSaving)}</div>
+  </div>`;
+  optimBody.innerHTML = html;
+
+  optimBody.querySelectorAll("input[data-swap-on]").forEach(inp=>{
+    inp.addEventListener("change",()=>{
+      state.swaps[inp.dataset.swapOn].on = inp.checked;
+      saveState();
+      renderOptim();
+      renderGroups();
+      renderSummary();
+      updateTotals(true);
+    });
+  });
+  optimBody.querySelectorAll("input[data-swap-pct]").forEach(inp=>{
+    inp.addEventListener("input",()=>{
+      const v = parseFloat(String(inp.value).replace(",","."));
+      state.swaps[inp.dataset.swapPct].discount = (isNaN(v)?0:v)/100;
+      saveState();
+      renderOptim();
+      renderGroups();
+      renderSummary();
+      updateTotals(true);
+    });
+  });
+}
+
+function renderFiscal(){
+  // calcola imp e iva attuali
+  const totals = computeTotals();
+  let html = `<p style="margin:0 0 12px;font-size:12.5px;color:var(--muted);">Detrazione totale in 10 rate annuali. Costo netto = totale IVA compresa – detrazione.</p>
+    <div class="fiscal-grid">`;
+  FISCAL_SCENARIOS.forEach(sc=>{
+    const checked = state.fiscalScenario === sc.id;
+    const detr = sc.detrazione;
+    const netto = totals.tot - detr - (state.rebateActive?DATA.rebate.amount:0);
+    const annua = detr/10;
+    html += `<label class="fiscal-card ${checked?"checked":""}" data-fiscal="${sc.id}">
+      <input type="radio" name="fiscal" value="${sc.id}" ${checked?"checked":""}>
+      <div style="flex:1;min-width:0;">
+        <div class="opt-name">${escapeHTML(sc.name)}</div>
+        <div class="opt-sub">${escapeHTML(sc.sub)}</div>
+        <div class="opt-stats">
+          <span class="k">Detrazione 10 anni</span><span class="v" style="color:#15803d">${eur(detr)}</span>
+          <span class="k">Rata annua</span><span class="v">${eur(annua)}</span>
+          <span class="k">Costo netto effettivo</span><span class="v" style="color:var(--ink)">${eur(netto)}</span>
+        </div>
+        <div class="opt-sub" style="margin-top:6px;font-style:italic;">${escapeHTML(sc.note)}</div>
+      </div>
+    </label>`;
+  });
+  html += `</div>`;
+  // warning per scenario C senza canalizzato
+  if(state.fiscalScenario === "C" && state.alternatives.cdz !== "canalizzato"){
+    html += `<div class="warn show">⚠️ Lo scenario C richiede il <b>CDZ canalizzato attivo</b> per sfruttare l'Ecobonus pompa di calore. Attivalo dal Configuratore o passa allo scenario B.</div>`;
+  }
+  fiscalBody.innerHTML = html;
+  fiscalBody.querySelectorAll(".fiscal-card").forEach(el=>{
+    el.addEventListener("click",()=>{
+      state.fiscalScenario = el.dataset.fiscal;
+      saveState();
+      renderFiscal();
+      renderSummary();
+    });
+  });
+}
+
+function renderDiy(){
+  let html = `<p style="margin:0 0 12px;font-size:12.5px;color:var(--muted);">Le voci scorporate vengono forzate a qty=0 nel computo. Lo scenario si applica solo al gruppo Lavori (sezione 2 Demolizione).</p>
+    <div class="fiscal-grid">`;
+  DIY_SCENARIOS.forEach(sc=>{
+    const checked = state.diyScenario === sc.id;
+    html += `<label class="fiscal-card ${checked?"checked":""}" data-diy="${sc.id}" style="--c-fiscal:#dc2626;">
+      <input type="radio" name="diy" value="${sc.id}" ${checked?"checked":""}>
+      <div style="flex:1;min-width:0;">
+        <div class="opt-name">${escapeHTML(sc.name)}</div>
+        <div class="opt-sub">${escapeHTML(sc.sub)}</div>
+        <div class="opt-stats">
+          <span class="k">Voci scorporate</span><span class="v">${sc.scorporate.length}</span>
+          <span class="k">Risparmio netto stimato</span><span class="v" style="color:#15803d">${sc.risparmio>0?"-"+eur(sc.risparmio):"€0"}</span>
+        </div>
+      </div>
+    </label>`;
+  });
+  html += `</div>`;
+  diyBody.innerHTML = html;
+  diyBody.querySelectorAll(".fiscal-card").forEach(el=>{
+    el.style.borderColor = "";
+    el.classList.toggle("checked", el.dataset.diy === state.diyScenario);
+    el.addEventListener("click",()=>{
+      state.diyScenario = el.dataset.diy;
+      saveState();
+      renderDiy();
+      renderGroups();
+      renderSummary();
+      updateTotals(true);
+    });
+  });
+  // tematizza i checked card con colore rosso
+  diyBody.querySelectorAll(".fiscal-card.checked").forEach(el=>{
+    el.style.background = "#fef2f2";
+    el.style.borderColor = "#dc2626";
+    el.style.boxShadow = "0 0 0 1px #dc2626 inset";
+  });
 }
 
 function renderGroups(){
@@ -976,7 +1208,7 @@ function renderGroups(){
         <div class="sub">${g.subtitle} · IVA ${ivaOf(g)}%</div>
       </div>
       <div class="amt" id="amt_${g.id}">${eur(groupTotal(g))}</div>
-      <label class="switch" title="Includi nel totale" onclick="event.stopPropagation()">
+      <label class="switch lite" title="Includi nel totale" onclick="event.stopPropagation()">
         <input type="checkbox" ${state.groupsActive[g.id]?"checked":""} data-group="${g.id}" class="grp-switch">
         <span class="slider"></span>
       </label>
@@ -993,6 +1225,11 @@ function renderGroups(){
     const body = document.createElement("div");
     body.className = "group-body";
     g.sections.forEach(s=>{
+      // skip derived placeholder if no derived items for this group
+      if(s.id === "OL_DER"){
+        const derived = getDerivedItems().filter(d=>d.group===g.id);
+        if(derived.length === 0) return;
+      }
       const sec = document.createElement("div");
       sec.className = "section";
       sec.innerHTML = `
@@ -1001,40 +1238,62 @@ function renderGroups(){
           <div class="stot" id="stot_${g.id}_${s.id}">${eur(sectionTotal(g,s))}</div>
         </div>
       `;
-      s.items.forEach(it=>{
-        const k = key(g,s,it);
-        const v = itemValues(g,s,it);
-        const amt = v.qty*v.price;
-        const note = state.notes[k] || "";
-        const row = document.createElement("div");
-        row.className = "item" + (!state.groupsActive[g.id]?" off":"");
-        row.id = "item-"+cssId(k);
-        row.dataset.k = k;
-        row.innerHTML = `
-          <div class="cod">${it.cod}</div>
-          <div class="desc">${escapeHTML(it.desc)}<span class="small">u.m. ${it.um}</span></div>
-          <div class="imp" id="amt_it_${cssId(k)}">${eur(amt)}<small>${eur(it.qty*it.price)} originale</small></div>
-          <div class="controls">
-            <div class="ctrl">
-              <label>Quantità (${it.um})</label>
-              <input type="number" inputmode="decimal" step="any" value="${v.qty}" data-field="qty" data-k="${k}">
+
+      if(s.id === "OL_DER"){
+        const derived = getDerivedItems().filter(d=>d.group===g.id);
+        derived.forEach(d=>{
+          const row = document.createElement("div");
+          row.className = "item derived" + (!state.groupsActive[g.id]?" off":"");
+          row.innerHTML = `
+            <div class="cod">${d.altIcon}</div>
+            <div class="desc">${escapeHTML(d.desc)}<span class="small">Voce derivata dal Configuratore — modifica nella scheda <b>${escapeHTML(d.altTitle)}</b><span class="pill">CONFIG</span></span></div>
+            <div class="imp">${eur(d.price)}<small>auto</small></div>
+          `;
+          sec.appendChild(row);
+        });
+      } else {
+        s.items.forEach(it=>{
+          const k = key(g,s,it);
+          const v = itemEffective(g,s,it);
+          const amt = v.qty*v.price;
+          const note = state.notes[k] || "";
+          const isAltDriven = !!it._altKey;
+          const isSwapped = SUPPLIER_SWAPS.some(sw=>state.swaps[sw.id].on && sw.targets.includes(k));
+          const isDiyOff = DIY_SCENARIOS.find(d=>d.id===state.diyScenario && d.scorporate.includes(k));
+          const row = document.createElement("div");
+          row.className = "item" + (!state.groupsActive[g.id]?" off":"");
+          row.id = "item-"+cssId(k);
+          row.dataset.k = k;
+          const tags = [];
+          if(isAltDriven) tags.push('<span class="pill">CONFIG</span>');
+          if(isSwapped) tags.push('<span class="pill" style="background:#fef3c7;color:#92400e;">SWAP</span>');
+          if(isDiyOff) tags.push('<span class="pill" style="background:#fecaca;color:#991b1b;">DIY scorporata</span>');
+          row.innerHTML = `
+            <div class="cod">${it.cod}</div>
+            <div class="desc">${escapeHTML(it.desc)} ${tags.join(" ")}<span class="small">u.m. ${it.um}${isAltDriven?' · prezzo da Configuratore':''}</span></div>
+            <div class="imp" id="amt_it_${cssId(k)}">${eur(amt)}<small>${eur(it.qty*it.price)} originale</small></div>
+            <div class="controls">
+              <div class="ctrl">
+                <label>Quantità (${it.um})</label>
+                <input type="number" inputmode="decimal" step="any" value="${v.qty}" data-field="qty" data-k="${k}">
+              </div>
+              <div class="ctrl">
+                <label>Prezzo unit. €</label>
+                <input type="number" inputmode="decimal" step="any" value="${v.price.toFixed(2)}" data-field="price" data-k="${k}">
+              </div>
+              <div class="ctrl disabled">
+                <label>Importo €</label>
+                <input type="text" readonly value="${eur(amt)}" id="ro_${cssId(k)}">
+              </div>
             </div>
-            <div class="ctrl">
-              <label>Prezzo unitario €</label>
-              <input type="number" inputmode="decimal" step="any" value="${v.price}" data-field="price" data-k="${k}">
+            <button class="note-toggle ${note?"has-note":""}" data-k="${k}">📝 ${note?"Modifica nota":"Aggiungi nota"}</button>
+            <div class="note-wrap ${note?"open":""}" data-k="${k}">
+              <textarea data-note-k="${k}" placeholder="Annotazioni per questa voce…">${escapeHTML(note)}</textarea>
             </div>
-            <div class="ctrl disabled">
-              <label>Importo €</label>
-              <input type="text" readonly value="${eur(amt)}" id="ro_${cssId(k)}">
-            </div>
-          </div>
-          <button class="note-toggle ${note?"has-note":""}" data-k="${k}"><span class="dot-note"></span>📝 ${note?"Modifica nota":"Aggiungi nota"}</button>
-          <div class="note-wrap ${note?"open":""}" data-k="${k}">
-            <textarea data-note-k="${k}" placeholder="Annotazioni per questa voce…">${escapeHTML(note)}</textarea>
-          </div>
-        `;
-        sec.appendChild(row);
-      });
+          `;
+          sec.appendChild(row);
+        });
+      }
       body.appendChild(sec);
     });
     groupEl.appendChild(body);
@@ -1048,32 +1307,30 @@ function bindGroupInputs(){
     inp.addEventListener("change",()=>{
       state.groupsActive[inp.dataset.group] = inp.checked;
       saveState();
-      document.querySelectorAll(`.item[data-k^="${inp.dataset.group}|"]`).forEach(r=>r.classList.toggle("off", !inp.checked));
+      document.querySelectorAll(`#group-${inp.dataset.group} .item`).forEach(r=>r.classList.toggle("off", !inp.checked));
       updateTotals(true);
       renderSummary();
     });
   });
   document.querySelectorAll('input[data-field]').forEach(inp=>{
-    const handler = ()=>{
+    inp.addEventListener("input",()=>{
       const k = inp.dataset.k;
       const f = inp.dataset.field;
       const val = parseFloat(String(inp.value).replace(",","."));
-      state.overrides[k] = state.overrides[k] || {};
-      state.overrides[k][f] = isNaN(val)?0:val;
+      if(f === "qty") state.qtyOverrides[k] = isNaN(val)?0:val;
+      else state.priceOverrides[k] = isNaN(val)?0:val;
       saveState();
       recomputeItem(k);
       updateTotals(true);
-    };
-    inp.addEventListener("input",handler);
+      renderSummaryTotalsOnly();
+    });
   });
   document.querySelectorAll(".note-toggle").forEach(btn=>{
     btn.addEventListener("click",()=>{
       const k = btn.dataset.k;
       const wrap = document.querySelector(`.note-wrap[data-k="${k}"]`);
       wrap.classList.toggle("open");
-      if(wrap.classList.contains("open")){
-        wrap.querySelector("textarea").focus();
-      }
+      if(wrap.classList.contains("open")) wrap.querySelector("textarea").focus();
     });
   });
   document.querySelectorAll("textarea[data-note-k]").forEach(ta=>{
@@ -1084,7 +1341,7 @@ function bindGroupInputs(){
       const btn = document.querySelector(`.note-toggle[data-k="${k}"]`);
       if(btn){
         btn.classList.toggle("has-note", !!ta.value.trim());
-        btn.innerHTML = `<span class="dot-note"></span>📝 ${ta.value.trim()?"Modifica nota":"Aggiungi nota"}`;
+        btn.innerHTML = `📝 ${ta.value.trim()?"Modifica nota":"Aggiungi nota"}`;
       }
     });
   });
@@ -1095,79 +1352,68 @@ function recomputeItem(k){
   const g = DATA.groups.find(x=>x.id===gid);
   const s = g.sections.find(x=>x.id===sid);
   const it = s.items.find(x=>x.cod===cod);
-  const v = itemValues(g,s,it);
+  const v = itemEffective(g,s,it);
   const amt = v.qty*v.price;
   const elA = document.getElementById("amt_it_"+cssId(k));
   const elRO = document.getElementById("ro_"+cssId(k));
   if(elA) elA.firstChild.nodeValue = eur(amt);
   if(elRO) elRO.value = eur(amt);
-  const sTot = sectionTotal(g,s);
   const sEl = document.getElementById("stot_"+g.id+"_"+s.id);
-  if(sEl) sEl.textContent = eur(sTot);
-  const gTot = groupTotal(g);
+  if(sEl) sEl.textContent = eur(sectionTotal(g,s));
   const gEl = document.getElementById("amt_"+g.id);
-  if(gEl) gEl.textContent = eur(gTot);
+  if(gEl) gEl.textContent = eur(groupTotal(g));
+}
+
+function computeTotals(){
+  let imp=0, iva=0;
+  DATA.groups.forEach(g=>{
+    if(!state.groupsActive[g.id]) return;
+    const sub = groupTotal(g);
+    imp += sub;
+    iva += sub * ivaOf(g)/100;
+  });
+  const reb = state.rebateActive ? DATA.rebate.amount : 0;
+  const tot = imp + iva - reb;
+  return {imp, iva, reb, tot};
 }
 
 function renderSummary(){
-  let impTot=0, ivaTot=0;
-  let html = `<h2>📋 Riepilogo <span class="pill">clicca "Modifica" per saltare alla voce</span></h2>`;
+  const totals = computeTotals();
+  let html = "";
   DATA.groups.forEach(g=>{
     const sub = groupTotal(g);
     const iva = ivaOf(g);
     const ivaAmt = sub*iva/100;
     const tot = sub+ivaAmt;
     const active = state.groupsActive[g.id];
-    if(active){ impTot+=sub; ivaTot+=ivaAmt; }
-    html += `
-      <div class="sumrow ${active?"":"off"}">
-        <div class="nm">
-          <div><span class="group-dot" style="background:var(--c-${g.color})"></span><b>${g.title}</b></div>
-          <small>${g.subtitle}</small>
-          <a class="sum-cta" href="#group-${g.id}" data-jump="${g.id}">Modifica →</a>
-        </div>
-        <div class="vals">
-          <div class="b">${eur(active?tot:0)}</div>
-          <div class="s">imp. ${eur(sub)} ·
-            <span class="iva-control">IVA <input type="number" min="0" max="50" step="1" value="${iva}" data-iva="${g.id}">%</span>
-            = ${eur(ivaAmt)}
-          </div>
-        </div>
-      </div>
-    `;
-  });
-  // rimborso
-  const rebActive = state.rebateActive;
-  html += `
-    <div class="sumrow ${rebActive?"":"off"}">
+    html += `<div class="sumrow ${active?"":"off"}">
       <div class="nm">
-        <div><b>${DATA.rebate.label}</b></div>
-        <small>Rimborso al cliente (nota di credito + bonifico)</small>
+        <div><span class="group-dot" style="background:var(--c-${g.color})"></span><b>${g.title}</b></div>
+        <small>${g.subtitle}</small>
+        <a class="sum-cta" href="#group-${g.id}" data-jump="${g.id}">Modifica →</a>
       </div>
       <div class="vals">
-        <div class="b" style="color:#15803d">- ${eur(DATA.rebate.amount)}</div>
-        <div class="s">Applica <label class="switch dark" style="width:34px;height:18px;"><input type="checkbox" id="rebSwitch" ${rebActive?"checked":""}><span class="slider"></span></label></div>
+        <div class="b" id="sumtot_${g.id}">${eur(active?tot:0)}</div>
+        <div class="s">imp. ${eur(sub)} · <span class="iva-control">IVA <input type="number" min="0" max="50" step="1" value="${iva}" data-iva="${g.id}">%</span> = ${eur(ivaAmt)}</div>
       </div>
-    </div>
-  `;
-  const grand = impTot + ivaTot - (rebActive?DATA.rebate.amount:0);
-  html += `
-    <div class="sumrow tot">
-      <div class="nm">TOTALE COMPLESSIVO · IVA compresa</div>
-      <div class="vals">
-        <div class="b" id="sumGrand">${eur(grand)}</div>
-        <div class="s">Imponibile ${eur(impTot)} · IVA ${eur(ivaTot)}</div>
-      </div>
-    </div>
-    <div class="sumrow">
-      <div class="nm"><b>Incidenza al m²</b><small>${DATA.project.mq} m² di superficie</small></div>
-      <div class="vals"><div class="b" id="sumMq">${eur(grand/DATA.project.mq)} / m²</div><div class="s">imp. ${eur(impTot/DATA.project.mq)}/m²</div></div>
-    </div>
-  `;
-  summaryEl.innerHTML = html;
-
-  // bind
-  summaryEl.querySelectorAll("input[data-iva]").forEach(inp=>{
+    </div>`;
+  });
+  const rebActive = state.rebateActive;
+  html += `<div class="sumrow ${rebActive?"":"off"}">
+    <div class="nm"><div><b>${DATA.rebate.label}</b></div><small>Rimborso al cliente</small></div>
+    <div class="vals"><div class="b" style="color:#15803d">- ${eur(DATA.rebate.amount)}</div>
+      <div class="s">Applica <label class="switch" style="width:34px;height:18px;vertical-align:middle;"><input type="checkbox" id="rebSwitch" ${rebActive?"checked":""}><span class="slider"></span></label></div></div>
+  </div>`;
+  html += `<div class="sumrow tot">
+    <div class="nm">TOTALE COMPLESSIVO · IVA compresa</div>
+    <div class="vals"><div class="b" id="sumGrand">${eur(totals.tot)}</div><div class="s">Imponibile ${eur(totals.imp)} · IVA ${eur(totals.iva)}</div></div>
+  </div>`;
+  html += `<div class="sumrow">
+    <div class="nm"><b>Incidenza al m²</b><small>${DATA.project.mq} m² di superficie</small></div>
+    <div class="vals"><div class="b" id="sumMq">${eur(totals.tot/DATA.project.mq)} / m²</div><div class="s">imp. ${eur(totals.imp/DATA.project.mq)}/m²</div></div>
+  </div>`;
+  summaryBody.innerHTML = html;
+  summaryBody.querySelectorAll("input[data-iva]").forEach(inp=>{
     inp.addEventListener("input",()=>{
       const v = parseFloat(String(inp.value).replace(",","."));
       state.ivaOverrides[inp.dataset.iva] = isNaN(v)?0:v;
@@ -1182,8 +1428,9 @@ function renderSummary(){
     saveState();
     updateTotals(true);
     renderSummary();
+    renderFiscal();
   });
-  summaryEl.querySelectorAll("a[data-jump]").forEach(a=>{
+  summaryBody.querySelectorAll("a[data-jump]").forEach(a=>{
     a.addEventListener("click",(e)=>{
       e.preventDefault();
       const gid = a.dataset.jump;
@@ -1198,93 +1445,94 @@ function renderSummary(){
         scrollToSection(gid);
         setTimeout(()=>{
           const first = gEl.querySelector(".item");
-          if(first){
-            first.classList.remove("flash");
-            void first.offsetWidth;
-            first.classList.add("flash");
-          }
+          if(first){ first.classList.remove("flash"); void first.offsetWidth; first.classList.add("flash"); }
         },500);
       });
     });
   });
 }
 
+function renderSummaryTotalsOnly(){
+  const totals = computeTotals();
+  DATA.groups.forEach(g=>{
+    const sub = groupTotal(g);
+    const totG = sub + sub*ivaOf(g)/100;
+    const el = document.getElementById("sumtot_"+g.id);
+    if(el) el.textContent = state.groupsActive[g.id] ? eur(totG) : eur(0);
+  });
+  const gel = document.getElementById("sumGrand"); if(gel) gel.textContent = eur(totals.tot);
+  const mel = document.getElementById("sumMq"); if(mel) mel.textContent = eur(totals.tot/DATA.project.mq)+" / m²";
+}
+
 function renderInsights(){
   let html = "";
   INSIGHTS.forEach(ins=>{
-    html += `
-      <details class="insight" id="${ins.id}">
-        <summary>
-          <span class="ico" style="background:${ins.color}">${ins.icon}</span>
-          <span class="ttl"><b>${ins.title}</b><small>${ins.sub}</small></span>
-          <span class="chev">›</span>
-        </summary>
-        <div class="insight-body">${ins.body}</div>
-      </details>
-    `;
+    html += `<details class="insight" id="${ins.id}">
+      <summary>
+        <span class="ico" style="background:${ins.color}">${ins.icon}</span>
+        <span class="ttl"><b>${ins.title}</b><small>${ins.sub}</small></span>
+        <span class="chev">›</span>
+      </summary>
+      <div class="insight-body">${ins.body}</div>
+    </details>`;
   });
   insightsListEl.innerHTML = html;
 }
 
 function updateTotals(animate){
-  let imp=0, iva=0;
-  DATA.groups.forEach(g=>{
-    if(!state.groupsActive[g.id]) return;
-    const sub = groupTotal(g);
-    imp += sub;
-    iva += sub * ivaOf(g)/100;
-  });
-  const reb = state.rebateActive ? DATA.rebate.amount : 0;
-  const tot = imp + iva - reb;
+  const totals = computeTotals();
   const elT = document.getElementById("tTot");
   const elI = document.getElementById("tImp");
   const elD = document.getElementById("tDelta");
   const elP = document.getElementById("tProg");
-  if(elT){ elT.textContent = eur(tot); if(animate){ elT.classList.remove("pulse"); void elT.offsetWidth; elT.classList.add("pulse"); } }
-  if(elI) elI.textContent = "Imp. " + eur(imp) + " · IVA " + eur(iva) + (reb?` · rimborso -${eur(reb)}`:"");
+  if(elT){ elT.textContent = eur(totals.tot); if(animate){ elT.classList.remove("pulse"); void elT.offsetWidth; elT.classList.add("pulse"); } }
+  if(elI) elI.textContent = "Imp. " + eur(totals.imp) + " · IVA " + eur(totals.iva) + (totals.reb?` · rimborso -${eur(totals.reb)}`:"");
   const ref = state.rebateActive ? REF_TOTAL_GROSS_WITH_REBATE : REF_TOTAL_GROSS;
   if(elD){
-    const d = tot - ref;
+    const d = totals.tot - ref;
     if(Math.abs(d)<1){ elD.textContent = "= preventivo originale"; elD.className = "delta"; }
     else if(d>0){ elD.textContent = `▲ +${eur(d)} vs originale`; elD.className = "delta neg"; }
     else { elD.textContent = `▼ ${eur(d)} vs originale`; elD.className = "delta"; }
   }
-  if(elP){ const pct = Math.max(0,Math.min(140,(tot/ref)*100)); elP.style.width = pct + "%"; }
-  const gel = document.getElementById("sumGrand"); if(gel) gel.textContent = eur(tot);
-  const mel = document.getElementById("sumMq"); if(mel) mel.textContent = eur(tot/DATA.project.mq)+" / m²";
+  if(elP){ const pct = Math.max(0,Math.min(140,(totals.tot/ref)*100)); elP.style.width = pct + "%"; }
+  renderSummaryTotalsOnly();
 }
 
 /* ============================================================
-   NAVIGATION + SCROLL SPY  (robusto su mobile)
+   NAVIGATION + SCROLL SPY
    ============================================================ */
-let _spyLock = 0; // disabilita momentaneamente lo spy dopo click
+let _spyLock = 0;
 function navOffset(){
   const top = document.querySelector(".topbar");
   const tab = document.querySelector(".tabnav");
   return (top?top.offsetHeight:0) + (tab?tab.offsetHeight:0) + 10;
 }
 function smoothScrollTo(targetY, duration){
-  // implementazione manuale per evitare bug iOS Safari con smooth + sticky
   duration = duration || 450;
   const startY = window.pageYOffset;
   const diff = targetY - startY;
   if(Math.abs(diff) < 4){ window.scrollTo(0, targetY); return; }
   const startT = performance.now();
-  function easeInOutCubic(t){ return t<.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
+  function ease(t){ return t<.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
   function step(now){
     const t = Math.min(1, (now - startT)/duration);
-    window.scrollTo(0, Math.round(startY + diff * easeInOutCubic(t)));
+    window.scrollTo(0, Math.round(startY + diff * ease(t)));
     if(t < 1) requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
 }
-function scrollToSection(id, extraOffset){
-  let el = null;
-  if(id==="riepilogo") el = document.getElementById("riepilogo");
-  else if(id==="approfondimenti") el = document.getElementById("approfondimenti");
-  else el = document.getElementById("group-"+id);
-  if(!el) return;
-  const y = el.getBoundingClientRect().top + window.pageYOffset - navOffset() - (extraOffset||0);
+function getSectionEl(id){
+  if(id==="configurator") return document.getElementById("configurator");
+  if(id==="riepilogo") return document.getElementById("riepilogo");
+  if(id==="optimizations") return document.getElementById("optimizations");
+  if(id==="fiscal") return document.getElementById("fiscal");
+  if(id==="diy") return document.getElementById("diy");
+  if(id==="approfondimenti") return document.getElementById("approfondimenti");
+  return document.getElementById("group-"+id);
+}
+function scrollToSection(id){
+  const el = getSectionEl(id); if(!el) return;
+  const y = el.getBoundingClientRect().top + window.pageYOffset - navOffset();
   _spyLock = Date.now() + 700;
   smoothScrollTo(y, 450);
 }
@@ -1299,21 +1547,15 @@ function setActiveTab(id){
   document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active", t.dataset.tab===id));
   centerTab(id);
 }
-
 function initScrollSpy(){
   const tabs = Array.from(document.querySelectorAll(".tab"));
-  const sectionEls = [
-    {id:"riepilogo", el:document.getElementById("riepilogo")},
-    ...DATA.groups.map(g=>({id:g.id, el:document.getElementById("group-"+g.id)})),
-    {id:"approfondimenti", el:document.getElementById("approfondimenti")}
-  ].filter(s=>s.el);
+  const sectionIds = ["configurator","riepilogo","optimizations","fiscal","diy", ...DATA.groups.map(g=>g.id), "approfondimenti"];
+  const sectionEls = sectionIds.map(id=>({id, el:getSectionEl(id)})).filter(s=>s.el);
 
-  // CLICK su tab: scroll esplicito
   tabs.forEach(t=>{
     t.addEventListener("click",(e)=>{
       e.preventDefault();
       const id = t.dataset.tab;
-      // apri eventuale gruppo collassato
       const gEl = document.getElementById("group-"+id);
       if(gEl && gEl.classList.contains("collapsed")){
         gEl.classList.remove("collapsed");
@@ -1321,12 +1563,10 @@ function initScrollSpy(){
         saveState();
       }
       setActiveTab(id);
-      // piccolo delay per dare tempo al DOM di aggiornarsi se ho appena espanso
       requestAnimationFrame(()=>scrollToSection(id));
     });
   });
 
-  // SCROLL SPY via onScroll
   let ticking = false;
   function onScroll(){
     if(ticking) return;
@@ -1346,23 +1586,15 @@ function initScrollSpy(){
   }
   window.addEventListener("scroll", onScroll, {passive:true});
   window.addEventListener("resize", onScroll, {passive:true});
-  // primo run
   onScroll();
 }
 
-/* ============================================================
-   BUTTONS
-   ============================================================ */
+/* BUTTONS */
 document.getElementById("btnReset").addEventListener("click",resetState);
 document.getElementById("btnExport").addEventListener("click",()=>window.print());
-document.getElementById("btnSummary").addEventListener("click",()=>{
-  setActiveTab("riepilogo");
-  scrollToSection("riepilogo");
-});
+document.getElementById("btnSummary").addEventListener("click",()=>{ setActiveTab("riepilogo"); scrollToSection("riepilogo"); });
 
-/* ============================================================
-   INIT
-   ============================================================ */
+/* INIT */
 loadState();
 render();
 </script>
