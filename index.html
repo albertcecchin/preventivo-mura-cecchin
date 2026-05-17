@@ -493,15 +493,15 @@ const DATA = {
         {cod:"3.2", desc:"BAGNO2 — Termoarredo Start bianco sable SB9016 120x45, valvola termostatica reverse.", um:"nr", qty:1, price:730.55}
       ]},
       {id:"M4", name:"4. Sanitari", items:[
-        {cod:"4.1", desc:"BAGNO1/2 — Vaso sospeso Globo Mode MES02BI bianco lucido (n.2).", um:"nr", qty:2, price:428.4},
-        {cod:"4.2", desc:"BAGNO1/2 — Bidet sospeso Globo Mode MES09BI bianco lucido (n.2).", um:"nr", qty:2, price:293.25},
-        {cod:"4.3", desc:"BAGNO1 — Piatto doccia Globo pietra h3 bianco 80x180 con piletta + copripiletta.", um:"nr", qty:1, price:743.75},
-        {cod:"4.4", desc:"BAGNO2 — Piatto doccia Globo pietra h3 bianco 80x140 (poi 130x80) con piletta + copripiletta.", um:"nr", qty:1, price:598.4}
+        {cod:"4.1", desc:"BAGNO1/2 — Vaso sospeso (brand dal Configuratore Sanitari, n.2).", um:"nr", qty:2, price:428.4, _altKey:"san_vaso_price"},
+        {cod:"4.2", desc:"BAGNO1/2 — Bidet sospeso (brand dal Configuratore Sanitari, n.2).", um:"nr", qty:2, price:293.25, _altKey:"san_bidet_price"},
+        {cod:"4.3", desc:"BAGNO1 — Piatto doccia 80x180 con piletta + copripiletta (brand dal Configuratore Sanitari).", um:"nr", qty:1, price:743.75, _altKey:"san_doccia1_price"},
+        {cod:"4.4", desc:"BAGNO2 — Piatto doccia 80x140 con piletta + copripiletta (brand dal Configuratore Sanitari).", um:"nr", qty:1, price:598.4, _altKey:"san_doccia2_price"}
       ]},
       {id:"M5", name:"5. Rubinetteria", items:[
-        {cod:"5.1", desc:"BAGNO1/2 — Miscelatore lavabo Gessi Via Tortona alto bocca lunga, cromo 031 (Art.18606) (n.2).", um:"nr", qty:2, price:317.05},
-        {cod:"5.2", desc:"BAGNO1/2 — Miscelatore bidet Gessi Via Tortona, cromo 031 (Art.18607) (n.2).", um:"nr", qty:2, price:236.3},
-        {cod:"5.3", desc:"BAGNO1/2 — Set doccia Gessi Via Tortona: soffione Ø20, set doccia, miscelatore 2 vie, cromo 031 (n.2).", um:"nr", qty:2, price:910.35}
+        {cod:"5.1", desc:"BAGNO1/2 — Miscelatore lavabo (brand dal Configuratore Rubinetteria, n.2).", um:"nr", qty:2, price:317.05, _altKey:"rub_lavabo_price"},
+        {cod:"5.2", desc:"BAGNO1/2 — Miscelatore bidet (brand dal Configuratore Rubinetteria, n.2).", um:"nr", qty:2, price:236.3, _altKey:"rub_bidet_price"},
+        {cod:"5.3", desc:"BAGNO1/2 — Set doccia: soffione Ø20, set doccia, miscelatore 2 vie (brand dal Configuratore, n.2).", um:"nr", qty:2, price:910.35, _altKey:"rub_doccia_price"}
       ]}
     ]},
     { id:"massetto", title:"Rifacimento Massetti", subtitle:"Computo sezione 11 — fatturata a parte", color:"massetto", iva:10, active:true, sections:[
@@ -533,7 +533,7 @@ const DATA = {
     ]},
     { id:"arredi", title:"Arredi (informativo)", subtitle:"Non incluso nel contratto — IVA 22%", color:"arredi", iva:22, active:false, optional:true, sections:[
       {id:"AR1", name:"Ingresso", items:[
-        {cod:"1.1", desc:"Armadio 4 ante battenti Pianca, Seta Matt, maniglia Y110 Seta, interni Bon ton — 140x265x61,6.", um:"nr", qty:1, price:1819}
+        {cod:"1.1", desc:"Armadio 4 ante battenti ingresso, 140x265x61,6 (brand dal Configuratore Armadi Ingresso).", um:"nr", qty:1, price:1819, _altKey:"armadio_ingresso_price"}
       ]},
       {id:"AR2", name:"Living", items:[
         {cod:"2.1", desc:"Madia TV Pianca Dedalo 260x55 H42,5, laccato opaco cipria + top cotto.", um:"nr", qty:1, price:2499},
@@ -559,8 +559,8 @@ const DATA = {
       ]},
       {id:"AR7", name:"Camera Matrimoniale", items:[
         {cod:"7.1", desc:"Retroletto Baxar Wally 50+70+50 battenti doppia anta, top/frontali laccato rosa retrò H120.", um:"nr", qty:1, price:2321},
-        {cod:"7.2", desc:"Armadio Pianca Plana battente, anta centrale vetro Milano, push-pull, finitura Seta Matt H280.", um:"nr", qty:1, price:4448},
-        {cod:"7.3", desc:"Armadio Pianca Plana 2 moduli 45cm + 1 modulo 25cm, push-pull, Seta Matt H280.", um:"nr", qty:1, price:2973}
+        {cod:"7.2", desc:"Armadio principale H280 anta battente con anta centrale vetro (brand dal Configuratore Armadi Camera).", um:"nr", qty:1, price:4448, _altKey:"armadio_camera_main_price"},
+        {cod:"7.3", desc:"Armadio ausiliario H280 (2 moduli 45cm + 1 modulo 25cm) push-pull (brand dal Configuratore Armadi Camera).", um:"nr", qty:1, price:2973, _altKey:"armadio_camera_aux_price"}
       ]}
     ]},
     { id:"opzionali_lavori", title:"Opzionali — Lavori", subtitle:"Voci derivate dal Configuratore + 11 toggle indipendenti", color:"opz_lavori", iva:10, active:false, optional:true, sections:[
@@ -737,6 +737,113 @@ const ALTERNATIVES = [
       },
       { id:"philips", name:"Philips Hue Centura / WiZ — smart", sub:"€40/cad · 25 pz = €1.000", delta:-3620,
         effects:{ alt:{ faretti_cad:40 }, derived:[]}
+      }
+    ]
+  },
+  {
+    id:"brand_sanitari",
+    icon:"🚽",
+    title:"Brand sanitari (2 bagni)",
+    sub:"Vaso + bidet sospesi (×2) + 2 piatti doccia · default Globo MODE €2.785",
+    options:[
+      { id:"globo", name:"Globo MODE ⭐", sub:"Default preventivo · italiano, design pulito · €2.785 totali", default:true, delta:0,
+        effects:{ alt:{ san_vaso_price:428.4, san_bidet_price:293.25, san_doccia1_price:743.75, san_doccia2_price:598.4 }, derived:[]}
+      },
+      { id:"hatria", name:"Hatria G-Full / Erika Pro", sub:"Italiano · qualità simile · €2.089 (-25%)", delta:-696.36,
+        effects:{ alt:{ san_vaso_price:321.30, san_bidet_price:219.94, san_doccia1_price:557.81, san_doccia2_price:448.80 }, derived:[]}
+      },
+      { id:"catalano", name:"Catalano Sfera New Flush+", sub:"Italiano · sistema autopulente · €2.228 (-20%)", delta:-557.09,
+        effects:{ alt:{ san_vaso_price:342.72, san_bidet_price:234.60, san_doccia1_price:595.00, san_doccia2_price:478.72 }, derived:[]}
+      },
+      { id:"pozzi", name:"Pozzi Ginori Joy", sub:"Italiano storico · entry · €1.950 (-30%)", delta:-835.64,
+        effects:{ alt:{ san_vaso_price:299.88, san_bidet_price:205.28, san_doccia1_price:520.63, san_doccia2_price:418.88 }, derived:[]}
+      },
+      { id:"duravit", name:"Duravit D-Neo / Starck 3", sub:"DE · alta gamma · €3.203 (+15%)", delta:417.82,
+        effects:{ alt:{ san_vaso_price:492.66, san_bidet_price:337.24, san_doccia1_price:855.31, san_doccia2_price:688.16 }, derived:[]}
+      },
+      { id:"villeroy", name:"Villeroy & Boch O.novo / Subway", sub:"DE · premium design · €3.621 (+30%)", delta:835.64,
+        effects:{ alt:{ san_vaso_price:556.92, san_bidet_price:381.23, san_doccia1_price:966.88, san_doccia2_price:777.92 }, derived:[]}
+      }
+    ]
+  },
+  {
+    id:"brand_rubinetteria",
+    icon:"🚿",
+    title:"Brand rubinetteria (2 bagni)",
+    sub:"Lavabo + bidet + set doccia ×2 bagni · default Gessi Via Tortona €2.927",
+    options:[
+      { id:"gessi", name:"Gessi Via Tortona ⭐", sub:"Default preventivo · top di gamma italiano · €2.927 totali", default:true, delta:0,
+        effects:{ alt:{ rub_lavabo_price:317.05, rub_bidet_price:236.3, rub_doccia_price:910.35 }, derived:[]}
+      },
+      { id:"fantini", name:"Fantini Acquatre / Aboutwater", sub:"Italiano · design icona, garanzia 10 anni · €2.196 (-25%)", delta:-731.85,
+        effects:{ alt:{ rub_lavabo_price:237.79, rub_bidet_price:177.23, rub_doccia_price:682.76 }, derived:[]}
+      },
+      { id:"hansgrohe", name:"Hansgrohe Talis Select / Metropol", sub:"DE · qualità tecnica top, EcoSmart · €2.342 (-20%)", delta:-585.48,
+        effects:{ alt:{ rub_lavabo_price:253.64, rub_bidet_price:189.04, rub_doccia_price:728.28 }, derived:[]}
+      },
+      { id:"grohe", name:"Grohe Essence / Eurosmart Cosmopolitan", sub:"DE · qualità solida, ampia distribuzione · €2.196 (-25%)", delta:-731.85,
+        effects:{ alt:{ rub_lavabo_price:237.79, rub_bidet_price:177.23, rub_doccia_price:682.76 }, derived:[]}
+      },
+      { id:"paini", name:"Paini Cox / Cosmo", sub:"Italiano · ottimo q/p · €2.049 (-30%)", delta:-878.22,
+        effects:{ alt:{ rub_lavabo_price:221.94, rub_bidet_price:165.41, rub_doccia_price:637.25 }, derived:[]}
+      },
+      { id:"cromo", name:"Cromo (linea design entry)", sub:"Entry level italiano · €1.756 (-40%)", delta:-1170.96,
+        effects:{ alt:{ rub_lavabo_price:190.23, rub_bidet_price:141.78, rub_doccia_price:546.21 }, derived:[]}
+      },
+      { id:"dornbracht", name:"Dornbracht Tara / Vaia (upgrade)", sub:"DE · luxury minimalismo · €3.806 (+30%)", delta:878.22,
+        effects:{ alt:{ rub_lavabo_price:412.17, rub_bidet_price:307.19, rub_doccia_price:1183.46 }, derived:[]}
+      }
+    ]
+  },
+  {
+    id:"armadio_ingresso",
+    icon:"🚪",
+    title:"Armadio ingresso (4 ante battenti)",
+    sub:"140×265×61,6 cm · default Pianca Seta Matt €1.819",
+    options:[
+      { id:"pianca_setamatt", name:"Pianca Seta Matt ⭐", sub:"Default preventivo · maniglia Y110, interni Bon ton · €1.819", default:true, delta:0,
+        effects:{ alt:{ armadio_ingresso_price:1819 }, derived:[]}
+      },
+      { id:"lema_selecta", name:"Lema Selecta system (upgrade)", sub:"Top di gamma italiano · €2.183 (+20%)", delta:364,
+        effects:{ alt:{ armadio_ingresso_price:2183 }, derived:[]}
+      },
+      { id:"caccaro", name:"Caccaro AltoFreedom", sub:"Italiano · qualità simile a Pianca · €1.819 (=)", delta:0,
+        effects:{ alt:{ armadio_ingresso_price:1819 }, derived:[]}
+      },
+      { id:"novamobili", name:"Novamobili Plana", sub:"Italiano · finiture buone · €1.546 (-15%)", delta:-273,
+        effects:{ alt:{ armadio_ingresso_price:1546 }, derived:[]}
+      },
+      { id:"tomasella", name:"Tomasella Compact", sub:"Italiano · mid-range affidabile · €1.364 (-25%)", delta:-455,
+        effects:{ alt:{ armadio_ingresso_price:1364 }, derived:[]}
+      },
+      { id:"ikea_pax", name:"Ikea Pax / Lidingö (entry)", sub:"Soluzione economica modulare · €910 (-50%)", delta:-909,
+        effects:{ alt:{ armadio_ingresso_price:910 }, derived:[]}
+      }
+    ]
+  },
+  {
+    id:"armadi_camera",
+    icon:"🛏️",
+    title:"Armadi camera matrimoniale (principale + ausiliario)",
+    sub:"H280 · principale battente con vetro + ausiliario push-pull · default Pianca Plana €7.421",
+    options:[
+      { id:"pianca_plana", name:"Pianca Plana Seta Matt ⭐", sub:"Default preventivo · anta centrale vetro Milano · €4.448 + €2.973 = €7.421", default:true, delta:0,
+        effects:{ alt:{ armadio_camera_main_price:4448, armadio_camera_aux_price:2973 }, derived:[]}
+      },
+      { id:"lema_camera", name:"Lema Selecta / Materia (upgrade)", sub:"Top di gamma italiano · €5.338 + €3.568 = €8.906 (+20%)", delta:1485,
+        effects:{ alt:{ armadio_camera_main_price:5338, armadio_camera_aux_price:3568 }, derived:[]}
+      },
+      { id:"caccaro_camera", name:"Caccaro AltoFreedom", sub:"Italiano · qualità simile · €7.421 (=)", delta:0,
+        effects:{ alt:{ armadio_camera_main_price:4448, armadio_camera_aux_price:2973 }, derived:[]}
+      },
+      { id:"novamobili_master", name:"Novamobili Master / Plana", sub:"Italiano · finiture buone · €3.781 + €2.527 = €6.308 (-15%)", delta:-1113,
+        effects:{ alt:{ armadio_camera_main_price:3781, armadio_camera_aux_price:2527 }, derived:[]}
+      },
+      { id:"tomasella_camera", name:"Tomasella Compact", sub:"Italiano · mid-range · €3.336 + €2.230 = €5.566 (-25%)", delta:-1855,
+        effects:{ alt:{ armadio_camera_main_price:3336, armadio_camera_aux_price:2230 }, derived:[]}
+      },
+      { id:"mobiltesino", name:"Mobiltesino MT (entry IT)", sub:"Italiano entry · €3.114 + €2.081 = €5.195 (-30%)", delta:-2226,
+        effects:{ alt:{ armadio_camera_main_price:3114, armadio_camera_aux_price:2081 }, derived:[]}
       }
     ]
   }
