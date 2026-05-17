@@ -88,6 +88,20 @@
   .alt-opt .opt-delta.base{color:var(--muted)}
   .alt-opt.checked::before{content:"✓";position:absolute;top:8px;right:8px;color:var(--c-config);font-weight:800;font-size:14px}
 
+  /* PRESET SCENARI */
+  .presets-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+  .preset-card{background:#fff;border:1.5px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:all .15s}
+  .preset-card:hover{border-color:var(--line-2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(15,23,42,.06)}
+  .preset-head{padding:14px 14px 12px;color:#fff;display:flex;align-items:center;gap:10px}
+  .preset-ico{font-size:22px;line-height:1}
+  .preset-ti{flex:1;min-width:0}
+  .preset-name{font-weight:700;font-size:14px;line-height:1.25}
+  .preset-target{font-size:11.5px;opacity:.85;margin-top:3px;font-weight:500}
+  .preset-desc{padding:12px 14px;font-size:12.5px;color:var(--ink-2);line-height:1.5;flex:1;background:#f8fafc;border-top:1px solid rgba(0,0,0,.04);border-bottom:1px solid rgba(0,0,0,.04)}
+  .preset-apply{margin:0;padding:11px 14px;background:#0f172a;color:#fff;border:0;font-weight:700;font-size:13px;cursor:pointer;letter-spacing:.02em;transition:background .15s}
+  .preset-apply:hover{background:#1e293b}
+  .preset-apply:active{background:#020617}
+
   /* OPTIM (supplier swaps) */
   .swap-row{display:grid;grid-template-columns:auto 1fr auto auto;gap:10px;align-items:center;padding:10px 12px;background:#f8fafc;border:1px solid var(--line);border-radius:10px;margin-bottom:8px}
   .swap-row.on{background:#fffbeb;border-color:#fde68a}
@@ -265,6 +279,7 @@
 
 <nav class="tabnav" id="tabnav">
   <div class="tabnav-inner">
+    <a href="#presets" class="tab" data-tab="presets"><span class="dot" style="background:#f59e0b"></span>🎯 Preset</a>
     <a href="#configurator" class="tab" data-tab="configurator"><span class="dot" style="background:var(--c-config)"></span>⚙️ Configuratore</a>
     <a href="#riepilogo" class="tab" data-tab="riepilogo"><span class="dot" style="background:#0f172a"></span>📋 Riepilogo</a>
     <a href="#optimizations" class="tab" data-tab="optimizations"><span class="dot" style="background:var(--c-optim)"></span>💰 Ottimizzazioni</a>
@@ -294,6 +309,18 @@
 </section>
 
 <main class="container">
+
+  <!-- PRESET SCENARI -->
+  <section id="presets" class="panel">
+    <div class="panel-head" style="background:linear-gradient(135deg,#f59e0b,#b45309)">
+      <div class="ico">🎯</div>
+      <div class="ti">
+        <h2>Preset scenari</h2>
+        <div class="sub">Applica con un click una configurazione predefinita · sovrascrive Configuratore, swap fornitori, DIY e gruppi attivi (note preservate)</div>
+      </div>
+    </div>
+    <div class="panel-body" id="presets-body"></div>
+  </section>
 
   <!-- CONFIGURATORE -->
   <section id="configurator" class="panel">
@@ -664,6 +691,26 @@ const ALTERNATIVES = [
     ]
   },
   {
+    id:"brand_canalizzato",
+    icon:"🌬️",
+    title:"Brand canalizzato (attivo solo se CDZ = canalizzato)",
+    sub:"Modifica il prezzo della macchina canalizzata nel pacchetto P · stime di mercato — da verificare con CLM",
+    options:[
+      { id:"samsung", name:"Samsung 7kw — pacchetto P originale ⭐", sub:"Pacchetto attuale CLM (controsoffitto + canalizzato Samsung + botole + ass. muraria + progetto) · €18.876,25", default:true, delta:0,
+        effects:{ alt:{}, derived:[], canalizzato_price:18876.25, brand_label:"Samsung 7kw" }
+      },
+      { id:"toshiba", name:"Toshiba RAS-M Digital Inverter 7kw", sub:"Canalizzato Toshiba equivalente, macchina ~€3.000 più bassa · €15.876,25 (-€3.000)", delta:-3000,
+        effects:{ alt:{}, derived:[], canalizzato_price:15876.25, brand_label:"Toshiba RAS-M 7kw" }
+      },
+      { id:"mitsubishi", name:"Mitsubishi Electric PEAD-M 6/7kw", sub:"Canalizzato Mitsubishi base, brand affidabile · €14.376,25 (-€4.500)", delta:-4500,
+        effects:{ alt:{}, derived:[], canalizzato_price:14376.25, brand_label:"Mitsubishi PEAD-M" }
+      },
+      { id:"daikin_canal", name:"Daikin FBA-A canalizzato premium", sub:"Brand top, comfort/silenziosità migliori · €20.876,25 (+€2.000)", delta:2000,
+        effects:{ alt:{}, derived:[], canalizzato_price:20876.25, brand_label:"Daikin FBA-A" }
+      }
+    ]
+  },
+  {
     id:"porta_soggiorno",
     icon:"🚪",
     title:"Porta soggiorno",
@@ -896,6 +943,73 @@ const DIY_SCENARIOS = [
 ];
 
 /* ============================================================
+   PRESET SCENARIOS — configurazioni one-click
+   Ogni preset definisce uno stato target (alternatives, swaps, DIY,
+   groupsActive, priceOverrides, qtyOverrides, rebateActive).
+   applyPreset() sovrascrive lo state esistente sui campi indicati.
+   ============================================================ */
+const PRESET_SCENARIOS = [
+  {
+    id:"base_contratto",
+    icon:"📄",
+    color:"#0f172a",
+    name:"Base contratto · €220k",
+    target:"€220.200,87 IVA incl (con rimborso)",
+    desc:"Preventivo originale CLM 14/05/2026 senza opzionali, senza canalizzato, senza arredi. Solo lavori, materiali, massetto, serramenti. Rimborso progettazione attivo.",
+    apply:{
+      alternatives:{ parquet:"naturale_correre", cdz:"predisposizione", brand_canalizzato:"samsung", porta_soggiorno:"pivato", brand_serramenti:"internorm", brand_faretti:"oty", brand_sanitari:"globo", brand_rubinetteria:"gessi", armadio_ingresso:"pianca_setamatt", armadi_camera:"pianca_plana" },
+      swaps:{}, diyScenario:"none",
+      groupsActive:{ computo:true, materiali:true, massetto:true, serramenti:true, autoscale:false, tapparelle:false, arredi:false, opzionali_lavori:false, opzionali_arredi:false },
+      priceOverrides:{}, qtyOverrides:{}, rebateActive:true
+    }
+  },
+  {
+    id:"solo_lavori",
+    icon:"🛠️",
+    color:"#0d9488",
+    name:"Solo lavori — €230k (arredi a parte)",
+    target:"€229.943,91 IVA incl",
+    desc:"Scenario per chi vuole stare sotto €250k davvero: lavori completi + opzionali_lavori ON, CDZ canalizzato Mitsubishi, Catalano + Fantini + Reggiani faretti, DIY medio, swap fornitori tutti attivi. Gruppo ARREDI OFF — cucina, armadi, divano, termoarredi, sanitari, rubinetterie e madie li comprerai dopo, separatamente.",
+    apply:{
+      alternatives:{ parquet:"naturale_correre", cdz:"canalizzato", brand_canalizzato:"mitsubishi", porta_soggiorno:"pivato", brand_serramenti:"internorm", brand_faretti:"reggiani", brand_sanitari:"catalano", brand_rubinetteria:"fantini", armadio_ingresso:"novamobili", armadi_camera:"novamobili_master" },
+      swaps:{ assistenza:{on:true}, rubinetteria:{on:true}, sanitari:{on:true}, parquet:{on:true}, tavolati:{on:true}, gres:{on:true}, picozzatura:{on:true}, posa_parquet:{on:true}, elettrico:{on:true}, termoarredi:{on:true} },
+      diyScenario:"med",
+      groupsActive:{ computo:true, materiali:true, massetto:true, serramenti:true, autoscale:false, tapparelle:false, arredi:false, opzionali_lavori:true, opzionali_arredi:false },
+      priceOverrides:{}, qtyOverrides:{}, rebateActive:true
+    }
+  },
+  {
+    id:"alberto_top",
+    icon:"💎",
+    color:"#0891b2",
+    name:"Alberto · Qualità top — €312k",
+    target:"€312.255,95 IVA incl",
+    desc:"Pacchetto preferito di Alberto, qualità italiana top: tutto attivo (lavori + arredi + opzionali_lavori), DIY medio, CDZ canalizzato con macchina Mitsubishi (-€4.500 vs Samsung). Catalano sanitari, Fantini rubinetterie, Novamobili armadi (ingresso + camera), Reggiani faretti. Nessuna negoziazione fornitori.",
+    apply:{
+      alternatives:{ parquet:"naturale_correre", cdz:"canalizzato", brand_canalizzato:"mitsubishi", porta_soggiorno:"pivato", brand_serramenti:"internorm", brand_faretti:"reggiani", brand_sanitari:"catalano", brand_rubinetteria:"fantini", armadio_ingresso:"novamobili", armadi_camera:"novamobili_master" },
+      swaps:{}, diyScenario:"med",
+      groupsActive:{ computo:true, materiali:true, massetto:true, serramenti:true, autoscale:false, tapparelle:false, arredi:true, opzionali_lavori:true, opzionali_arredi:false },
+      priceOverrides:{}, qtyOverrides:{}, rebateActive:true
+    }
+  },
+  {
+    id:"alberto_negoziato",
+    icon:"🤝",
+    color:"#7c3aed",
+    name:"Alberto + Negoziazione — €295k",
+    target:"€295.018,71 IVA incl",
+    desc:"Come 'Qualità top' + tutti i 10 swap fornitori attivi (negoziazione tariffe CLM su assistenza muraria, rubinetteria, sanitari, parquet, tavolati, gres, picozzatura, posa parquet, elettrico, termoarredi). Stessa qualità materiali, solo markup ridotto. Risparmio totale ~€17k IVA incl rispetto al pacchetto Top.",
+    apply:{
+      alternatives:{ parquet:"naturale_correre", cdz:"canalizzato", brand_canalizzato:"mitsubishi", porta_soggiorno:"pivato", brand_serramenti:"internorm", brand_faretti:"reggiani", brand_sanitari:"catalano", brand_rubinetteria:"fantini", armadio_ingresso:"novamobili", armadi_camera:"novamobili_master" },
+      swaps:{ assistenza:{on:true}, rubinetteria:{on:true}, sanitari:{on:true}, parquet:{on:true}, tavolati:{on:true}, gres:{on:true}, picozzatura:{on:true}, posa_parquet:{on:true}, elettrico:{on:true}, termoarredi:{on:true} },
+      diyScenario:"med",
+      groupsActive:{ computo:true, materiali:true, massetto:true, serramenti:true, autoscale:false, tapparelle:false, arredi:true, opzionali_lavori:true, opzionali_arredi:false },
+      priceOverrides:{}, qtyOverrides:{}, rebateActive:true
+    }
+  }
+];
+
+/* ============================================================
    INSIGHTS (riassunti)
    ============================================================ */
 const INSIGHTS = [
@@ -1093,6 +1207,25 @@ function getDerivedItems(){
       });
     }
   });
+  // Override brand canalizzato sul derivato cdz_canalizzato (solo se CDZ = canalizzato attivo)
+  if(state.alternatives.cdz === "canalizzato"){
+    const brandAlt = ALTERNATIVES.find(a=>a.id==="brand_canalizzato");
+    if(brandAlt){
+      const brandOpt = brandAlt.options.find(o=>o.id===state.alternatives.brand_canalizzato);
+      if(brandOpt && brandOpt.effects && brandOpt.effects.canalizzato_price != null){
+        const idx = list.findIndex(d=>d.id==="cdz_canalizzato");
+        if(idx>=0){
+          const newPrice = brandOpt.effects.canalizzato_price;
+          const lbl = brandOpt.effects.brand_label || "—";
+          list[idx] = {
+            ...list[idx],
+            price: newPrice,
+            desc: `CDZ canalizzato ${lbl} (pacchetto P, brand override Configuratore): controsoffitto €570 + macchina canalizzata + botole €800 + ass. muraria CDZ €2.500 + progetto termotecnico €1.000 = ${eur(newPrice)}`
+          };
+        }
+      }
+    }
+  }
   return list;
 }
 function groupDerivedTotal(g){ return getDerivedItems().filter(d=>d.group===g.id).reduce((a,d)=>a+d.price,0); }
@@ -1119,8 +1252,10 @@ const configBody = document.getElementById("configurator-body");
 const optimBody = document.getElementById("optim-body");
 const fiscalBody = document.getElementById("fiscal-body");
 const diyBody = document.getElementById("diy-body");
+const presetsBody = document.getElementById("presets-body");
 
 function render(){
+  renderPresets();
   renderConfigurator();
   renderOptim();
   renderFiscal();
@@ -1130,6 +1265,63 @@ function render(){
   renderSummary();
   updateTotals(false);
   initScrollSpy();
+}
+
+function renderPresets(){
+  if(!presetsBody) return;
+  let html = `<p style="margin:0 0 14px;font-size:12.5px;color:var(--muted);line-height:1.55;"><b>Come funziona:</b> ogni preset definisce un set completo di scelte (Configuratore, swap fornitori, DIY, gruppi attivi, override prezzo cucina). Clicca <b>Applica</b> per impostare lo stato corrispondente. Le note di voce rimangono. I numeri di stima sono calcolati a posteriori; il totale reale appare nella barra in basso dopo l'applicazione.</p>`;
+  html += `<div class="presets-grid">`;
+  PRESET_SCENARIOS.forEach(p=>{
+    html += `<div class="preset-card" data-preset="${p.id}">
+      <div class="preset-head" style="background:linear-gradient(135deg,${p.color},${p.color}dd)">
+        <div class="preset-ico">${p.icon}</div>
+        <div class="preset-ti">
+          <div class="preset-name">${escapeHTML(p.name)}</div>
+          <div class="preset-target">${escapeHTML(p.target)}</div>
+        </div>
+      </div>
+      <div class="preset-desc">${escapeHTML(p.desc)}</div>
+      <button class="preset-apply" data-apply="${p.id}">Applica scenario</button>
+    </div>`;
+  });
+  html += `</div>`;
+  presetsBody.innerHTML = html;
+  presetsBody.querySelectorAll(".preset-apply").forEach(btn=>{
+    btn.addEventListener("click",()=>{ applyPreset(btn.dataset.apply); });
+  });
+}
+
+function applyPreset(presetId){
+  const p = PRESET_SCENARIOS.find(x=>x.id===presetId);
+  if(!p) return;
+  if(!confirm(`Applicare scenario "${p.name}"?\n\nLe tue modifiche correnti su Configuratore, swap fornitori, DIY e gruppi attivi verranno SOVRASCRITTE.\nLe note di voce e l'IVA personalizzata restano invariate.\n\nProseguire?`)) return;
+  const a = p.apply || {};
+  // 1) Reset selettori al default, poi applica
+  ALTERNATIVES.forEach(alt=>{
+    const def = alt.options.find(o=>o.default) || alt.options[0];
+    state.alternatives[alt.id] = def.id;
+  });
+  Object.entries(a.alternatives||{}).forEach(([k,v])=>{ state.alternatives[k] = v; });
+  // 2) Reset swap, poi applica
+  SUPPLIER_SWAPS.forEach(sw=>{ state.swaps[sw.id] = { on:false, discount:sw.discount }; });
+  Object.entries(a.swaps||{}).forEach(([k,v])=>{
+    if(!state.swaps[k]) state.swaps[k] = { on:false, discount:0 };
+    if(v.on != null) state.swaps[k].on = !!v.on;
+    if(v.discount != null) state.swaps[k].discount = v.discount;
+  });
+  // 3) DIY
+  if(a.diyScenario != null) state.diyScenario = a.diyScenario;
+  // 4) Gruppi attivi (merge: solo quelli specificati)
+  Object.entries(a.groupsActive||{}).forEach(([k,v])=>{ state.groupsActive[k] = !!v; });
+  // 5) PriceOverrides + QtyOverrides: SOSTITUISCI completamente
+  state.priceOverrides = Object.assign({}, a.priceOverrides||{});
+  state.qtyOverrides = Object.assign({}, a.qtyOverrides||{});
+  // 6) Rebate
+  if(a.rebateActive != null) state.rebateActive = !!a.rebateActive;
+  saveState();
+  render();
+  // Scroll alla barra totali (in basso) per far vedere subito il nuovo totale
+  try{ window.scrollTo({top:document.body.scrollHeight, behavior:"smooth"}); }catch(e){}
 }
 
 function renderConfigurator(){
