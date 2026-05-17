@@ -461,7 +461,7 @@ const DATA = {
         {cod:"8.3", desc:"Smontaggio e rimontaggio radiatori con valvole (2 soggiorno + 1 camera1).", um:"nr", qty:3, price:160},
         {cod:"8.4", desc:"Nuovi attacchi radiatori (2 scaldasalviette, 1 nicchia soggiorno, 2 camerette).", um:"nr", qty:5, price:420},
         {cod:"8.5", desc:"CDZ Split: smontaggio e smaltimento.", um:"nr", qty:1, price:825},
-        {cod:"8.6", desc:"Nuovi punti CDZ (predisposizione).", um:"nr", qty:7, price:420}
+        {cod:"8.6", desc:"Nuovi punti CDZ — predisposizione split (qty definita dal Configuratore CDZ).", um:"nr", qty:7, price:420, _altKey:"cdz_predisp_qty"}
       ]},
       {id:"9", name:"9. Impianto Elettrico", items:[
         {cod:"9.1", desc:"Serie civile Vimar Plana — impianto sottotraccia a norma: nuovo quadro 12 linee, colonna montante, punti, linea induzione, 5 split + 1 esterno, predisposizioni TV, campanello, citofono.", um:"nr", qty:1, price:13811.82},
@@ -469,7 +469,7 @@ const DATA = {
       ]},
       {id:"10", name:"10. Assistenza muraria", items:[
         {cod:"10.1", desc:"Assistenza muraria impianto idraulico (50% di 8.1).", um:"%", qty:0.5, price:11979},
-        {cod:"10.2", desc:"Assistenza muraria CDZ Split (50% di 3.765,00).", um:"%", qty:0.5, price:3765},
+        {cod:"10.2", desc:"Assistenza muraria CDZ Split (50% di 3.765,00) — qty definita dal Configuratore CDZ.", um:"%", qty:0.5, price:3765, _altKey:"cdz_assmur_qty"},
         {cod:"10.3", desc:"Assistenza muraria riscaldamento (50% di 2.100,00).", um:"%", qty:0.5, price:2100},
         {cod:"10.4", desc:"Assistenza muraria impianto elettrico (50% di 13.811,82).", um:"%", qty:0.5, price:13811.82}
       ]}
@@ -648,17 +648,17 @@ const ALTERNATIVES = [
     title:"CDZ — tipologia di climatizzazione",
     sub:"Predisposizione (base), split premium Daikin o canalizzato Samsung",
     options:[
-      { id:"predisposizione", name:"Solo predisposizione punti split ⭐", sub:"Default contratto base · Computo 8.6, nessun macchinario", default:true, delta:0,
-        effects:{ alt:{}, derived:[]}
+      { id:"predisposizione", name:"Solo predisposizione punti split ⭐", sub:"Default contratto base · 7 punti CDZ in Computo 8.6 + ass. muraria 10.2 · nessun macchinario", default:true, delta:0,
+        effects:{ alt:{ cdz_predisp_qty:7, cdz_assmur_qty:0.5 }, derived:[]}
       },
-      { id:"daikin_premium", name:"Daikin Trial+dual split premium", sub:"Sostituisce predisposizione · +€9.900", delta:9900,
-        effects:{ alt:{}, derived:[
+      { id:"daikin_premium", name:"Daikin Trial+dual split premium", sub:"Mantiene predisposizione 7 punti + ass. muraria · aggiunge macchinari split Daikin · +€9.900", delta:9900,
+        effects:{ alt:{ cdz_predisp_qty:7, cdz_assmur_qty:0.5 }, derived:[
           { id:"cdz_daikin", desc:"CDZ Daikin Trial+dual split premium (alternativa O1)", price:9900, group:"opzionali_lavori"}
         ]}
       },
-      { id:"canalizzato", name:"Canalizzato Samsung 7kw — pacchetto P 🟣 attivo nei tuoi opzionali", sub:"Controsoffitto + impianto + botole + ass. muraria + progetto -€4.635 · +€14.054", delta:14053.75,
-        effects:{ alt:{}, derived:[
-          { id:"cdz_canalizzato", desc:"CDZ canalizzato Samsung 7kw (pacchetto P)", price:14053.75, group:"opzionali_lavori"}
+      { id:"canalizzato", name:"Canalizzato Samsung 7kw — pacchetto P 🟣 attivo nei tuoi opzionali", sub:"Disattiva predisposizione 8.6 + ass. muraria 10.2 (non servono) · aggiunge pacchetto P €18.876 (controsoffitto + canalizzato Samsung + botole + ass. muraria + progetto) · delta netto +€14.054", delta:14053.75,
+        effects:{ alt:{ cdz_predisp_qty:0, cdz_assmur_qty:0 }, derived:[
+          { id:"cdz_canalizzato", desc:"CDZ canalizzato Samsung 7kw (pacchetto P): controsoffitto €570 + canalizzato Samsung €13.819 + botole €800 + ass. muraria CDZ €2.500 + progetto termotecnico €1.000", price:18876.25, group:"opzionali_lavori"}
         ]}
       }
     ]
