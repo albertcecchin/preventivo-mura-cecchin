@@ -628,6 +628,9 @@ const DATA = {
       ]},
       {id:"OL_S", name:"Illuminazione esterna", items:[
         {cod:"OL.S", desc:"4 punti filo applique + prese esterne + assistenza muraria.", um:"ac", qty:1, price:810}
+      ]},
+      {id:"OL_T", name:"Upgrade porta filo-muro Bagno 2", items:[
+        {cod:"OL.T", desc:"Upgrade da porta scorrevole standard (Scrigno Eclisse 4.1 €400 + posa 4.5 €200 + Pivato Innova 2.2 €444 = €1.044 preventivato) a porta scorrevole FILO-MURO a scomparsa (Eclisse SyntesisLine o equiv. + anta rasomuro su entrambi i lati, posa con stuccatura a livello intonaco). Stima delta: telaio +€250 + porta +€700 + posa/finitura +€250 = +€1.200. Da verificare con CLM listini reali Eclisse/Garofoli/Pivato.", um:"ac", qty:1, price:1200}
       ]}
     ]},
     { id:"opzionali_arredi", title:"Opzionali — Arredi", subtitle:"4 arredi aggiuntivi opzionali — IVA 22%", color:"opz_arredi", iva:22, active:false, optional:true, sections:[
@@ -767,10 +770,10 @@ const ALTERNATIVES = [
       { id:"linea_light", name:"Linea Light Gypsum", sub:"€150/cad · 25 pz = €3.750", delta:-870,
         effects:{ alt:{ faretti_cad:150 }, derived:[]}
       },
-      { id:"lucifero", name:"Lucifero's / Atelier Sedap (gesso)", sub:"€130/cad · 25 pz = €3.250", delta:-1370,
+      { id:"lucifero", name:"Lucifero's Step", sub:"€130/cad · 25 pz = €3.250 · italiano, design artistico unconventional", delta:-1370,
         effects:{ alt:{ faretti_cad:130 }, derived:[]}
       },
-      { id:"targetti", name:"Targetti CCT Tek", sub:"€120/cad · 25 pz = €3.000", delta:-1620,
+      { id:"targetti", name:"Targetti CCT Evo", sub:"€120/cad · 25 pz = €3.000 · serie architectural italiana dal 1928", delta:-1620,
         effects:{ alt:{ faretti_cad:120 }, derived:[]}
       },
       { id:"astro", name:"Astro Lighting Minima Round", sub:"€110/cad · 25 pz = €2.750", delta:-1870,
@@ -779,7 +782,7 @@ const ALTERNATIVES = [
       { id:"reggiani", name:"Reggiani Mood Mini / iGuzzini Reflex", sub:"€95/cad · 25 pz = €2.375", delta:-2245,
         effects:{ alt:{ faretti_cad:95 }, derived:[]}
       },
-      { id:"easycard", name:"Linea Light EasyCard / Beneito Faure", sub:"€55/cad · 25 pz = €1.375", delta:-3245,
+      { id:"easycard", name:"Beneito Faure Pulsar / Zio", sub:"€55/cad · 25 pz = €1.375 · spagnolo, entry GU10 e LED IP65 (Pulsar) o orientabili (Zio)", delta:-3245,
         effects:{ alt:{ faretti_cad:55 }, derived:[]}
       },
       { id:"philips", name:"Philips Hue Centura / WiZ — smart", sub:"€40/cad · 25 pz = €1.000", delta:-3620,
@@ -802,7 +805,7 @@ const ALTERNATIVES = [
       { id:"catalano", name:"Catalano Sfera New Flush+", sub:"Italiano · sistema autopulente · €2.228 (-20%)", delta:-557.09,
         effects:{ alt:{ san_vaso_price:342.72, san_bidet_price:234.60, san_doccia1_price:595.00, san_doccia2_price:478.72 }, derived:[]}
       },
-      { id:"pozzi", name:"Pozzi Ginori Joy", sub:"Italiano storico · entry · €1.950 (-30%)", delta:-835.64,
+      { id:"pozzi", name:"Pozzi Ginori Metrica", sub:"Italiano storico · serie Metrica design geometrico, Rimfree senza brida · €1.950 (-30%)", delta:-835.64,
         effects:{ alt:{ san_vaso_price:299.88, san_bidet_price:205.28, san_doccia1_price:520.63, san_doccia2_price:418.88 }, derived:[]}
       },
       { id:"duravit", name:"Duravit D-Neo / Starck 3", sub:"DE · alta gamma · €3.203 (+15%)", delta:417.82,
@@ -822,7 +825,7 @@ const ALTERNATIVES = [
       { id:"gessi", name:"Gessi Via Tortona ⭐", sub:"Default preventivo · top di gamma italiano · €2.927 totali", default:true, delta:0,
         effects:{ alt:{ rub_lavabo_price:317.05, rub_bidet_price:236.3, rub_doccia_price:910.35 }, derived:[]}
       },
-      { id:"fantini", name:"Fantini Acquatre / Aboutwater", sub:"Italiano · design icona, garanzia 10 anni · €2.196 (-25%)", delta:-731.85,
+      { id:"fantini", name:"Fantini Mare / Aboutwater", sub:"Italiano · serie Mare (Franco Sargiani, prisma a base ovale) o joint-venture Aboutwater con Boffi · €2.196 (-25%)", delta:-731.85,
         effects:{ alt:{ rub_lavabo_price:237.79, rub_bidet_price:177.23, rub_doccia_price:682.76 }, derived:[]}
       },
       { id:"hansgrohe", name:"Hansgrohe Talis Select / Metropol", sub:"DE · qualità tecnica top, EcoSmart · €2.342 (-20%)", delta:-585.48,
@@ -831,7 +834,7 @@ const ALTERNATIVES = [
       { id:"grohe", name:"Grohe Essence / Eurosmart Cosmopolitan", sub:"DE · qualità solida, ampia distribuzione · €2.196 (-25%)", delta:-731.85,
         effects:{ alt:{ rub_lavabo_price:237.79, rub_bidet_price:177.23, rub_doccia_price:682.76 }, derived:[]}
       },
-      { id:"paini", name:"Paini Cox / Cosmo", sub:"Italiano · ottimo q/p · €2.049 (-30%)", delta:-878.22,
+      { id:"paini", name:"Paini Cox", sub:"Italiano dal 1954 (Pogno NO) · serie Cox design rotondo moderno, leva sottile · €2.049 (-30%)", delta:-878.22,
         effects:{ alt:{ rub_lavabo_price:221.94, rub_bidet_price:165.41, rub_doccia_price:637.25 }, derived:[]}
       },
       { id:"cromo", name:"Cromo (linea design entry)", sub:"Entry level italiano · €1.756 (-40%)", delta:-1170.96,
@@ -848,19 +851,19 @@ const ALTERNATIVES = [
     title:"Armadio ingresso (4 ante battenti)",
     sub:"140×265×61,6 cm · default Pianca Seta Matt €1.819",
     options:[
-      { id:"pianca_setamatt", name:"Pianca Seta Matt ⭐", sub:"Default preventivo · maniglia Y110, interni Bon ton · €1.819", default:true, delta:0,
+      { id:"pianca_setamatt", name:"Pianca Plana finitura Seta Matt ⭐", sub:"Default preventivo · modello Plana, maniglia Y110, interni Bon Ton · €1.819", default:true, delta:0,
         effects:{ alt:{ armadio_ingresso_price:1819 }, derived:[]}
       },
-      { id:"lema_selecta", name:"Lema Selecta system (upgrade)", sub:"Top di gamma italiano · €2.183 (+20%)", delta:364,
+      { id:"lema_selecta", name:"Lema Selecta (sistema modulare, upgrade)", sub:"Top di gamma italiano, sistema bespoke dal 1995 · €2.183 (+20%)", delta:364,
         effects:{ alt:{ armadio_ingresso_price:2183 }, derived:[]}
       },
-      { id:"caccaro", name:"Caccaro AltoFreedom", sub:"Italiano · qualità simile a Pianca · €1.819 (=)", delta:0,
+      { id:"caccaro", name:"Caccaro Freedhome", sub:"Italiano · sistema modulare con LED integrati 3000K · €1.819 (=)", delta:0,
         effects:{ alt:{ armadio_ingresso_price:1819 }, derived:[]}
       },
-      { id:"novamobili", name:"Novamobili Plana", sub:"Italiano · finiture buone · €1.546 (-15%)", delta:-273,
+      { id:"novamobili", name:"Novamobili Plissé", sub:"Italiano (gruppo Battistella) · finiture buone, gioco di luce/ombra · €1.546 (-15%)", delta:-273,
         effects:{ alt:{ armadio_ingresso_price:1546 }, derived:[]}
       },
-      { id:"tomasella", name:"Tomasella Compact", sub:"Italiano · mid-range affidabile · €1.364 (-25%)", delta:-455,
+      { id:"tomasella", name:"Tomasella One", sub:"Italiano · modello battente liscio mid-range · €1.364 (-25%)", delta:-455,
         effects:{ alt:{ armadio_ingresso_price:1364 }, derived:[]}
       },
       { id:"ikea_pax", name:"Ikea Pax / Lidingö (entry)", sub:"Soluzione economica modulare · €910 (-50%)", delta:-909,
@@ -874,22 +877,22 @@ const ALTERNATIVES = [
     title:"Armadi camera matrimoniale (principale + ausiliario)",
     sub:"H280 · principale battente con vetro + ausiliario push-pull · default Pianca Plana €7.421",
     options:[
-      { id:"pianca_plana", name:"Pianca Plana Seta Matt ⭐", sub:"Default preventivo · anta centrale vetro Milano · €4.448 + €2.973 = €7.421", default:true, delta:0,
+      { id:"pianca_plana", name:"Pianca Plana finitura Seta Matt ⭐", sub:"Default preventivo · modello Plana, anta centrale vetro Milano · €4.448 + €2.973 = €7.421", default:true, delta:0,
         effects:{ alt:{ armadio_camera_main_price:4448, armadio_camera_aux_price:2973 }, derived:[]}
       },
-      { id:"lema_camera", name:"Lema Selecta / Materia (upgrade)", sub:"Top di gamma italiano · €5.338 + €3.568 = €8.906 (+20%)", delta:1485,
+      { id:"lema_camera", name:"Lema Selecta (sistema modulare, upgrade)", sub:"Top di gamma italiano, bespoke da 1995 con oltre 1500 elementi · €5.338 + €3.568 = €8.906 (+20%)", delta:1485,
         effects:{ alt:{ armadio_camera_main_price:5338, armadio_camera_aux_price:3568 }, derived:[]}
       },
-      { id:"caccaro_camera", name:"Caccaro AltoFreedom", sub:"Italiano · qualità simile · €7.421 (=)", delta:0,
+      { id:"caccaro_camera", name:"Caccaro Freedhome", sub:"Italiano · sistema modulare con LED integrati · €7.421 (=)", delta:0,
         effects:{ alt:{ armadio_camera_main_price:4448, armadio_camera_aux_price:2973 }, derived:[]}
       },
-      { id:"novamobili_master", name:"Novamobili Master / Plana", sub:"Italiano · finiture buone · €3.781 + €2.527 = €6.308 (-15%)", delta:-1113,
+      { id:"novamobili_master", name:"Novamobili Plissé / Liberty", sub:"Italiano (gruppo Battistella) · modelli battente con design contemporaneo · €3.781 + €2.527 = €6.308 (-15%)", delta:-1113,
         effects:{ alt:{ armadio_camera_main_price:3781, armadio_camera_aux_price:2527 }, derived:[]}
       },
-      { id:"tomasella_camera", name:"Tomasella Compact", sub:"Italiano · mid-range · €3.336 + €2.230 = €5.566 (-25%)", delta:-1855,
+      { id:"tomasella_camera", name:"Tomasella Drop", sub:"Italiano mid-range · modello battente confermato · €3.336 + €2.230 = €5.566 (-25%)", delta:-1855,
         effects:{ alt:{ armadio_camera_main_price:3336, armadio_camera_aux_price:2230 }, derived:[]}
       },
-      { id:"mobiltesino", name:"Mobiltesino MT (entry IT)", sub:"Italiano entry · €3.114 + €2.081 = €5.195 (-30%)", delta:-2226,
+      { id:"mobiltesino", name:"Doimo CityLine City", sub:"Industriale italiano entry-mid · sistema modulare modulare 10y garanzia · €3.114 + €2.081 = €5.195 (-30%). NB: id legacy 'mobiltesino' mantenuto per compatibilità preset, brand sostituito.", delta:-2226,
         effects:{ alt:{ armadio_camera_main_price:3114, armadio_camera_aux_price:2081 }, derived:[]}
       }
     ]
@@ -912,8 +915,10 @@ const SUPPLIER_SWAPS = [
     targets:["computo|3|3.3"]},
   { id:"gres", label:"Gres Keope 60×120 → Ragno/Marazzi 60×60", sub:"Materiali N.1", prio:"media", discount:0.20,
     targets:["materiali|M1|1.1","materiali|M1|1.2","materiali|M1|1.3","materiali|M1|1.4"]},
-  { id:"picozzatura", label:"Intonaci picozzatura ridotta", sub:"Computo 6.4-6.6", prio:"media", discount:0.20,
-    targets:["computo|6|6.4","computo|6|6.5","computo|6|6.6"]},
+  { id:"picozzatura", label:"Picozzatura pareti + soffitti ridotta", sub:"Computo 6.4 + 6.7 (solo picozzatura/aggrappante, escluse intonaco 6.5/6.8 e rasatura 6.6/6.9)", prio:"bassa", discount:0.20,
+    targets:["computo|6|6.4","computo|6|6.7"]},
+  { id:"rasatura_zone", label:"Rasatura pareti solo zone necessarie", sub:"Computo 6.6 · escluse pareti camera bimbi, dietro cucina, dietro armadi, disimpegno · stima ~50% pareti rasate finitura standard, le altre solo finitura grezza", prio:"alta", discount:0.30,
+    targets:["computo|6|6.6"]},
   { id:"posa_parquet", label:"Posa parquet 54/46 → 37 €/m²", sub:"Computo 5.4", prio:"media", discount:0.20,
     targets:["computo|5|5.4"]},
   { id:"elettrico", label:"Elettrico Vimar → BTicino Living Light", sub:"Computo 9.1", prio:"bassa", discount:0.10,
@@ -1099,12 +1104,14 @@ const INSIGHTS = [
         <li>NON impianti 2.1 (difficoltà 4/5)</li>
         <li>NON canna fumaria 2.13 (rischio amianto)</li>
       </ul>`},
-  { id:"i-punti", icon:"❗", color:"#dc2626", title:"Punti aperti", sub:"4 verifiche critiche prima della firma",
+  { id:"i-punti", icon:"❗", color:"#dc2626", title:"Punti aperti", sub:"Verifiche critiche prima della firma + upgrade da discutere",
     body:`<ul>
       <li><b>Ecobonus CDZ canalizzato</b> — guadagno potenziale €7.027: verificare con commercialista e CLM (asseverazione, fattura separata art. 14 DL 63/2013, APE)</li>
       <li><b>Decoro architettonico condominio</b> — Cassazione 18928/2020: serramenti esterni effetto rovere potrebbero stonare. Chiedere all'amministratore regolamento e delibere pregresse PRIMA della firma. Foto facciata.</li>
       <li><b>Più luce con alternative serramenti</b> — fino a +59% (Oknoplast Futural OC)</li>
       <li><b>Internorm doppio o triplo vetro?</b> — il preventivo dice doppio ma KF310 ha triplo di serie</li>
+      <li><b>Rasatura pareti — solo dove serve?</b> Computo 6.6 conta 140 m² pareti rasate a gesso (€29/m² = €4.060). Probabilmente NON servono: pareti camera bimbi, dietro cucina, dietro armadi (ingresso, camera matrimoniale), disimpegno. Stima ~50% pareti escludibili → risparmio potenziale ~€1.218 netti. <i>Da discutere con CLM (swap "Rasatura zone necessarie" già attivabile in Ottimizzazioni).</i></li>
+      <li><b>Upgrade porta scorrevole Bagno 2 a filo-muro</b> — preventivo include porta scorrevole standard (Scrigno Eclisse €400 + posa €200 + Pivato Innova €444 = €1.044 totale). Upgrade a porta FILO-MURO a scomparsa (Eclisse SyntesisLine + anta rasomuro biemissiva) costa stimati +€1.200 (telaio +€250, porta +€700, posa/finitura +€250). Resa estetica nettamente superiore: parete continua senza cornice visibile. <i>Già aggiunto come opzionale (Opz. Lavori → "Upgrade porta filo-muro Bagno 2"). Da chiedere a CLM listino reale Eclisse/Garofoli/Pivato per l'opzione filo-muro.</i></li>
       </ul>`}
 ];
 
