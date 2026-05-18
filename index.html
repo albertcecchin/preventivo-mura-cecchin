@@ -491,14 +491,14 @@ const DATA = {
         {cod:"8.6", desc:"Nuovi punti CDZ — predisposizione split (qty definita dal Configuratore CDZ).", um:"nr", qty:7, price:420, _altKey:"cdz_predisp_qty"}
       ]},
       {id:"9", name:"9. Impianto Elettrico", items:[
-        {cod:"9.1", desc:"Serie civile Vimar Plana — impianto sottotraccia a norma: nuovo quadro 12 linee, colonna montante, punti, linea induzione, 5 split + 1 esterno, predisposizioni TV, campanello, citofono.", um:"nr", qty:1, price:13811.82},
+        {cod:"9.1", desc:"Serie civile Vimar Plana — impianto sottotraccia a norma: nuovo quadro 12 linee, colonna montante, punti, linea induzione, 5 split + 1 esterno, predisposizioni TV, campanello, citofono. NB: prezzo modificato dal Configuratore CDZ (canalizzato → -€1.000 stimato per scorporo predisposizione 5 split + 1 esterno).", um:"nr", qty:1, price:13811.82, _altKey:"elettrico_predisp_price"},
         {cod:"9.2", desc:"Allacci cucina, luci LED sottopensile, 2 specchi retroilluminati, aspiratore bagno cieco, allaccio quadro di cantiere.", um:"nr", qty:1, price:825}
       ]},
       {id:"10", name:"10. Assistenza muraria", items:[
-        {cod:"10.1", desc:"Assistenza muraria impianto idraulico (50% di 8.1).", um:"%", qty:0.5, price:11979},
-        {cod:"10.2", desc:"Assistenza muraria CDZ Split (50% di 3.765,00) — qty definita dal Configuratore CDZ.", um:"%", qty:0.5, price:3765, _altKey:"cdz_assmur_qty"},
-        {cod:"10.3", desc:"Assistenza muraria riscaldamento (50% di 2.100,00).", um:"%", qty:0.5, price:2100},
-        {cod:"10.4", desc:"Assistenza muraria impianto elettrico (50% di 13.811,82).", um:"%", qty:0.5, price:13811.82}
+        {cod:"10.1", desc:"Assistenza muraria impianto idraulico (50% di 8.1 = 50% di €11.979).", um:"frazione", qty:0.5, price:11979},
+        {cod:"10.2", desc:"Assistenza muraria CDZ Split (50% di €3.765) — qty definita dal Configuratore CDZ.", um:"frazione", qty:0.5, price:3765, _altKey:"cdz_assmur_qty"},
+        {cod:"10.3", desc:"Assistenza muraria riscaldamento (50% di €2.100).", um:"frazione", qty:0.5, price:2100},
+        {cod:"10.4", desc:"Assistenza muraria impianto elettrico (50% di prezzo elettrico 9.1) — segue automaticamente lo scorporo predisposizione split se CDZ canalizzato.", um:"frazione", qty:0.5, price:13811.82, _altKey:"elettrico_predisp_price"}
       ]}
     ]},
     { id:"materiali", title:"Forniture Materiali e Finiture", subtitle:"Pavimenti, rivestimenti, porte, termoarredi, sanitari, rubinetterie", color:"materiali", iva:10, active:true, sections:[
@@ -678,17 +678,17 @@ const ALTERNATIVES = [
     title:"CDZ — tipologia di climatizzazione",
     sub:"Predisposizione (base), split premium Daikin o canalizzato Samsung",
     options:[
-      { id:"predisposizione", name:"Solo predisposizione punti split ⭐", sub:"Default contratto base · 7 punti CDZ in Computo 8.6 + ass. muraria 10.2 · nessun macchinario", default:true, delta:0,
-        effects:{ alt:{ cdz_predisp_qty:7, cdz_assmur_qty:0.5 }, derived:[]}
+      { id:"predisposizione", name:"Solo predisposizione punti split ⭐", sub:"Default contratto base · 7 punti CDZ in Computo 8.6 + ass. muraria 10.2 · predisposizione 5 split + 1 esterno inclusa nell'elettrico 9.1 · nessun macchinario", default:true, delta:0,
+        effects:{ alt:{ cdz_predisp_qty:7, cdz_assmur_qty:0.5, elettrico_predisp_price:13811.82 }, derived:[]}
       },
-      { id:"daikin_premium", name:"Daikin Trial+dual split premium", sub:"Mantiene predisposizione 7 punti + ass. muraria · aggiunge macchinari split Daikin · +€9.900", delta:9900,
-        effects:{ alt:{ cdz_predisp_qty:7, cdz_assmur_qty:0.5 }, derived:[
+      { id:"daikin_premium", name:"Daikin Trial+dual split premium", sub:"Mantiene predisposizione 7 punti + ass. muraria + 5 split nell'elettrico · aggiunge macchinari split Daikin · +€9.900", delta:9900,
+        effects:{ alt:{ cdz_predisp_qty:7, cdz_assmur_qty:0.5, elettrico_predisp_price:13811.82 }, derived:[
           { id:"cdz_daikin", desc:"CDZ Daikin Trial+dual split premium (alternativa O1)", price:9900, group:"opzionali_lavori"}
         ]}
       },
-      { id:"canalizzato", name:"Canalizzato Samsung 7kw — pacchetto P 🟣 attivo nei tuoi opzionali", sub:"Disattiva predisposizione 8.6 + ass. muraria 10.2 (non servono) · aggiunge pacchetto P €18.876 (controsoffitto + canalizzato Samsung + botole + ass. muraria + progetto) · delta netto +€14.054", delta:14053.75,
-        effects:{ alt:{ cdz_predisp_qty:0, cdz_assmur_qty:0 }, derived:[
-          { id:"cdz_canalizzato", desc:"CDZ canalizzato Samsung 7kw — pacchetto P €18.876 LORDO (controsoffitto €570 + canalizzato Samsung €13.819 + botole €800 + ass. muraria CDZ €2.500 + progetto termotecnico €1.000). NB: azzera voci Computo 8.6 (predisposizione 7 punti, -€2.940) e 10.2 (ass. muraria split, -€1.882,50) → DELTA NETTO sul totale +€14.053,75", price:18876.25, group:"opzionali_lavori"}
+      { id:"canalizzato", name:"Canalizzato Samsung 7kw — pacchetto P 🟣 attivo nei tuoi opzionali", sub:"Disattiva: 8.6 predisposizione punti (-€2.940), 10.2 ass. muraria split (-€1.882,50), e scorpora stima -€1.000 dalla 9.1 (predisposizione 5 split + 1 esterno nel pacchetto Vimar) + automaticamente -€500 dalla 10.4 (assistenza muraria elettrica, è 50% di 9.1). Aggiunge pacchetto P €18.876. Delta netto +€12.553,75 (era 14.054 prima dello scorporo elettrico)", delta:12553.75,
+        effects:{ alt:{ cdz_predisp_qty:0, cdz_assmur_qty:0, elettrico_predisp_price:12811.82 }, derived:[
+          { id:"cdz_canalizzato", desc:"CDZ canalizzato Samsung 7kw — pacchetto P €18.876 LORDO (controsoffitto €570 + canalizzato Samsung €13.819 + botole €800 + ass. muraria CDZ €2.500 + progetto termotecnico €1.000). NB: oltre ad azzerare 8.6 (-€2.940) e 10.2 (-€1.882,50), scorpora -€1.000 stimati dalla voce 9.1 elettrico (5 punti split + 1 esterno non più necessari) e -€500 dalla 10.4 (assistenza muraria elettrico segue 9.1 al 50%) → DELTA NETTO sul totale +€12.553,75", price:18876.25, group:"opzionali_lavori"}
         ]}
       }
     ]
@@ -972,8 +972,8 @@ const PRESET_SCENARIOS = [
     id:"solo_lavori",
     icon:"🛠️",
     color:"#0d9488",
-    name:"Solo lavori — €230k (arredi a parte)",
-    target:"€229.943,91 IVA incl",
+    name:"Solo lavori — €232k (arredi a parte)",
+    target:"€231.698,41 IVA incl",
     desc:"Scenario per chi vuole stare sotto €250k davvero: lavori completi + opzionali_lavori ON, CDZ canalizzato Mitsubishi, Catalano + Fantini + Reggiani faretti, DIY medio, swap fornitori tutti attivi. Gruppo ARREDI OFF — cucina, armadi, divano, termoarredi, sanitari, rubinetterie e madie li comprerai dopo, separatamente.",
     apply:{
       alternatives:{ parquet:"naturale_correre", cdz:"canalizzato", brand_canalizzato:"mitsubishi", porta_soggiorno:"pivato", brand_serramenti:"internorm", brand_faretti:"reggiani", brand_sanitari:"catalano", brand_rubinetteria:"fantini", armadio_ingresso:"novamobili", armadi_camera:"novamobili_master" },
@@ -988,7 +988,7 @@ const PRESET_SCENARIOS = [
     icon:"💎",
     color:"#0891b2",
     name:"Alberto · Qualità top — €312k",
-    target:"€312.255,95 IVA incl",
+    target:"€311.925,95 IVA incl",
     desc:"Pacchetto preferito di Alberto, qualità italiana top: tutto attivo (lavori + arredi + opzionali_lavori), DIY medio, CDZ canalizzato con macchina Mitsubishi (-€4.500 vs Samsung). Catalano sanitari, Fantini rubinetterie, Novamobili armadi (ingresso + camera), Reggiani faretti. Nessuna negoziazione fornitori.",
     apply:{
       alternatives:{ parquet:"naturale_correre", cdz:"canalizzato", brand_canalizzato:"mitsubishi", porta_soggiorno:"pivato", brand_serramenti:"internorm", brand_faretti:"reggiani", brand_sanitari:"catalano", brand_rubinetteria:"fantini", armadio_ingresso:"novamobili", armadi_camera:"novamobili_master" },
@@ -1001,8 +1001,8 @@ const PRESET_SCENARIOS = [
     id:"alberto_negoziato",
     icon:"🤝",
     color:"#7c3aed",
-    name:"Alberto + Negoziazione — €295k",
-    target:"€295.018,71 IVA incl",
+    name:"Alberto + Negoziazione — €297k",
+    target:"€296.773,21 IVA incl",
     desc:"Come 'Qualità top' + tutti i 10 swap fornitori attivi (negoziazione tariffe CLM su assistenza muraria, rubinetteria, sanitari, parquet, tavolati, gres, picozzatura, posa parquet, elettrico, termoarredi). Stessa qualità materiali, solo markup ridotto. Risparmio totale ~€17k IVA incl rispetto al pacchetto Top.",
     apply:{
       alternatives:{ parquet:"naturale_correre", cdz:"canalizzato", brand_canalizzato:"mitsubishi", porta_soggiorno:"pivato", brand_serramenti:"internorm", brand_faretti:"reggiani", brand_sanitari:"catalano", brand_rubinetteria:"fantini", armadio_ingresso:"novamobili", armadi_camera:"novamobili_master" },
@@ -1017,7 +1017,7 @@ const PRESET_SCENARIOS = [
     icon:"🏰",
     color:"#991b1b",
     name:"Tutto opzionale CLM (max) — €362k",
-    target:"€362.297,13 IVA incl",
+    target:"€361.967,13 IVA incl",
     desc:"Versione MASSIMA preventivata da CLM: tutti i gruppi opzionali ON (autoscale + tapparelle + arredi + opzionali_lavori + opzionali_arredi) e scelte Configuratore ai valori marcati nei fogli Opzionali Excel — parquet Alpaca spina italiana, CDZ canalizzato Samsung, porta rasomuro Woodco Alpaca. Brand sanitari/rubinetterie/armadi/faretti ai default originali (Globo, Gessi, Pianca, Oty). Nessun DIY, nessuna negoziazione. È il tetto massimo di spesa preventivato da CLM.",
     apply:{
       alternatives:{ parquet:"alpaca_spina", cdz:"canalizzato", brand_canalizzato:"samsung", porta_soggiorno:"rasomuro", brand_serramenti:"internorm", brand_faretti:"oty", brand_sanitari:"globo", brand_rubinetteria:"gessi", armadio_ingresso:"pianca_setamatt", armadi_camera:"pianca_plana" },
@@ -1112,6 +1112,7 @@ const INSIGHTS = [
       <li><b>Internorm doppio o triplo vetro?</b> — il preventivo dice doppio ma KF310 ha triplo di serie</li>
       <li><b>Rasatura pareti — solo dove serve?</b> Computo 6.6 conta 140 m² pareti rasate a gesso (€29/m² = €4.060). Probabilmente NON servono: pareti camera bimbi, dietro cucina, dietro armadi (ingresso, camera matrimoniale), disimpegno. Stima ~50% pareti escludibili → risparmio potenziale ~€1.218 netti. <i>Da discutere con CLM (swap "Rasatura zone necessarie" già attivabile in Ottimizzazioni).</i></li>
       <li><b>Upgrade porta scorrevole Bagno 2 a filo-muro</b> — preventivo include porta scorrevole standard (Scrigno Eclisse €400 + posa €200 + Pivato Innova €444 = €1.044 totale). Upgrade a porta FILO-MURO a scomparsa (Eclisse SyntesisLine + anta rasomuro biemissiva) costa stimati +€1.200 (telaio +€250, porta +€700, posa/finitura +€250). Resa estetica nettamente superiore: parete continua senza cornice visibile. <i>Già aggiunto come opzionale (Opz. Lavori → "Upgrade porta filo-muro Bagno 2"). Da chiedere a CLM listino reale Eclisse/Garofoli/Pivato per l'opzione filo-muro.</i></li>
+      <li><b>Scorporo predisposizione split nell'impianto elettrico se CDZ canalizzato</b> — il pacchetto Vimar Plana 9.1 (€13.811,82) include "5 split + 1 esterno" tra le predisposizioni. Con CDZ canalizzato questi 5 punti non servono (la macchina è una sola, comandata da termostato unico). Stima scorporo: <b>-€1.000 dalla 9.1</b> (cavi 220V, derivazioni quadro, scatole 503, tubi corrugati) <b>+ automaticamente -€500 dalla 10.4</b> (assistenza muraria elettrico, 50% di 9.1). Totale -€1.500 netti applicato in piattaforma quando canalizzato attivo. <i>Da confermare con CLM il valore reale dello scorporo — la stima €1.000 è prudente, potrebbe arrivare a €1.500.</i></li>
       </ul>`}
 ];
 
