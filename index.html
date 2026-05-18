@@ -1013,6 +1013,20 @@ const PRESET_SCENARIOS = [
     }
   },
   {
+    id:"compromessi_aa",
+    icon:"💍",
+    color:"#be185d",
+    name:"Compromessi AA — configurazione concordata",
+    target:"€306.847,56 IVA incl (vs €261.787 del PDF originale, vedi nota)",
+    desc:"Configurazione concordata Alberto + Angelica (esportata da PDF 17/05/2026). MODIFICHE proposte rispetto al base contratto: (1) Brand serramenti Internorm → Oknoplast Prolux Evolution (-€6.630, PL, vetri extra-light +22% luce). (2) DIY demolizioni: scenario MEDIO consigliato attivo (-€7.234 netti, 2-3 settimane su porte, battiscopa, sanitari, arredi, boiserie 138 m²). (3) Gruppo AUTOSCALE attivato (+€4.500 netti = €5.490 IVA, n.6 autoscale stimati). (4) Gruppo ARREDI attivato (+€37.895 netti = €46.232 IVA — cucina Armony + termoarredi + armadi Pianca + sanitari Globo + rubinetteria Gessi + faretti Oty). (5) Gruppo OPZIONALI LAVORI attivato (+€26.146 netti = €28.760 IVA — nicchia doccia, controsoffitti + faretti bagno1/bagno2/dis/lav/ingresso, applique soggiorno, strip LED, spostamento radiatore, parapetti vetro, motorizzazione tapparelle, illuminazione esterna, upgrade porta filo-muro). TUTTO IL RESTO = default contratto: parquet Woodco naturale a correre, CDZ solo predisposizione (no canalizzato/Daikin), porta Pivato Innova, brand sanitari/rubinetterie/armadi/faretti ai default originali. NESSUN swap fornitori attivo. Rimborso €7.076 applicato. Scenario fiscale A (Bonus 50%) di default.\n\nNOTA SULLA DISCREPANZA col PDF: il PDF mostrava €261.787, oggi la piattaforma calcola €306.847 (+€45k) per 3 motivi: (a) nuovo opzionale OL_T 'Upgrade porta filo-muro' aggiunto dopo l'export (+€1.320 IVA), (b) probabili modifiche manuali nel PDF su singole voci di opzionali_lavori che non sono replicabili in un preset (es. motorizzazione tapparelle €7.222 forse disattivata, alcuni faretti opzionali ridotti). Per replicare €261.787 esatti dal PDF, dopo aver applicato questo preset andare in 'Opz. Lavori' e disattivare/ridurre le voci individuali che erano state escluse manualmente.",
+    apply:{
+      alternatives:{ parquet:"naturale_correre", cdz:"predisposizione", brand_canalizzato:"samsung", porta_soggiorno:"pivato", brand_serramenti:"oknoplast", brand_faretti:"oty", brand_sanitari:"globo", brand_rubinetteria:"gessi", armadio_ingresso:"pianca_setamatt", armadi_camera:"pianca_plana" },
+      swaps:{}, diyScenario:"med",
+      groupsActive:{ computo:true, materiali:true, massetto:true, serramenti:true, autoscale:true, tapparelle:false, arredi:true, opzionali_lavori:true, opzionali_arredi:false },
+      priceOverrides:{}, qtyOverrides:{}, rebateActive:true
+    }
+  },
+  {
     id:"max_clm",
     icon:"🏰",
     color:"#991b1b",
