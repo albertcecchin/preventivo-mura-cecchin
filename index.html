@@ -1017,13 +1017,49 @@ const PRESET_SCENARIOS = [
     icon:"💍",
     color:"#be185d",
     name:"Compromessi AA — configurazione concordata",
-    target:"€306.847,56 IVA incl (vs €261.787 del PDF originale, vedi nota)",
-    desc:"Configurazione concordata Alberto + Angelica (esportata da PDF 17/05/2026). MODIFICHE proposte rispetto al base contratto: (1) Brand serramenti Internorm → Oknoplast Prolux Evolution (-€6.630, PL, vetri extra-light +22% luce). (2) DIY demolizioni: scenario MEDIO consigliato attivo (-€7.234 netti, 2-3 settimane su porte, battiscopa, sanitari, arredi, boiserie 138 m²). (3) Gruppo AUTOSCALE attivato (+€4.500 netti = €5.490 IVA, n.6 autoscale stimati). (4) Gruppo ARREDI attivato (+€37.895 netti = €46.232 IVA — cucina Armony + termoarredi + armadi Pianca + sanitari Globo + rubinetteria Gessi + faretti Oty). (5) Gruppo OPZIONALI LAVORI attivato (+€26.146 netti = €28.760 IVA — nicchia doccia, controsoffitti + faretti bagno1/bagno2/dis/lav/ingresso, applique soggiorno, strip LED, spostamento radiatore, parapetti vetro, motorizzazione tapparelle, illuminazione esterna, upgrade porta filo-muro). TUTTO IL RESTO = default contratto: parquet Woodco naturale a correre, CDZ solo predisposizione (no canalizzato/Daikin), porta Pivato Innova, brand sanitari/rubinetterie/armadi/faretti ai default originali. NESSUN swap fornitori attivo. Rimborso €7.076 applicato. Scenario fiscale A (Bonus 50%) di default.\n\nNOTA SULLA DISCREPANZA col PDF: il PDF mostrava €261.787, oggi la piattaforma calcola €306.847 (+€45k) per 3 motivi: (a) nuovo opzionale OL_T 'Upgrade porta filo-muro' aggiunto dopo l'export (+€1.320 IVA), (b) probabili modifiche manuali nel PDF su singole voci di opzionali_lavori che non sono replicabili in un preset (es. motorizzazione tapparelle €7.222 forse disattivata, alcuni faretti opzionali ridotti). Per replicare €261.787 esatti dal PDF, dopo aver applicato questo preset andare in 'Opz. Lavori' e disattivare/ridurre le voci individuali che erano state escluse manualmente.",
+    target:"€275.975,95 IVA incl (vs target ~€272k stimato)",
+    desc:"Configurazione concordata Alberto + Angelica, ricostruita fedelmente dal PDF 17/05/2026 + aggiunta CDZ canalizzato dimenticato nell'export.\n\n=== SELETTORI CONFIGURATORE ===\n• Parquet: Woodco 10mm Naturale a correre (default)\n• CDZ: CANALIZZATO Samsung 7kw (aggiunto, era dimenticato nel PDF — delta netto +€12.554)\n• Porta soggiorno: Pivato Innova (default)\n• Brand serramenti: OKNOPLAST Prolux Evolution (-€6.630 vs Internorm)\n• Brand faretti/sanitari/rubinetterie/armadi: tutti default originali (Oty, Globo, Gessi, Pianca)\n\n=== GRUPPI ATTIVI ===\nON: lavori, materiali, massetto, serramenti, autoscale (+€5.490 IVA), arredi (+€46k IVA), opzionali_lavori. OFF: tapparelle, opzionali_arredi.\n\n=== DIY ===\nMedio attivo (-€7.234 netti, 2-3 settimane).\n\n=== MODIFICHE MANUALI riprese dal PDF (priceOverrides/qtyOverrides) ===\n• Termoarredo BAGNO1 (M3 3.1): €888,25 → €250 (-€638)\n• Termoarredo BAGNO2 (M3 3.2): €730,55 → €300 (-€430)\n• Armadio camera principale (AR7 7.2): qty 1 → 0,5 (-€2.224, sconto 50%)\n• Armadio camera ausiliario (AR7 7.3): qty 1 → 0,5 (-€1.487, sconto 50%)\n• Nicchia doccia BAGNO2 (OL.F): €1.055 → €600 (-€455)\n• Controsoffitto+casseformi BAGNO1 (OL.G1): qty 0 — disattivato (-€1.218)\n• Controsoffitto+casseformi DIS/LAV (OL.I1): qty 0 — disattivato (-€1.944)\n• Faretti DIS/LAV (OL.I2): qty 0 — disattivato (-€1.320)\n• Strip LED SOGGIORNO (OL.N): qty 0 — disattivato (-€1.830)\n• Parapetti vetro (OL.R): qty 1 → 0,33 — ridotto 2/3 (-€1.219, ne resta 1 su 3)\n• Motorizzazione tapparelle (OL.R2): qty 0 — disattivato (-€7.223)\n• Upgrade porta filo-muro (OL.T): qty 0 — non ancora valutato (nuova voce aggiunta dopo l'export PDF)\n\nNESSUN swap fornitori attivo. Rimborso €7.076 applicato. Strategia fiscale A.",
     apply:{
-      alternatives:{ parquet:"naturale_correre", cdz:"predisposizione", brand_canalizzato:"samsung", porta_soggiorno:"pivato", brand_serramenti:"oknoplast", brand_faretti:"oty", brand_sanitari:"globo", brand_rubinetteria:"gessi", armadio_ingresso:"pianca_setamatt", armadi_camera:"pianca_plana" },
+      alternatives:{ parquet:"naturale_correre", cdz:"canalizzato", brand_canalizzato:"mitsubishi", porta_soggiorno:"pivato", brand_serramenti:"oknoplast", brand_faretti:"oty", brand_sanitari:"globo", brand_rubinetteria:"gessi", armadio_ingresso:"pianca_setamatt", armadi_camera:"pianca_plana" },
       swaps:{}, diyScenario:"med",
       groupsActive:{ computo:true, materiali:true, massetto:true, serramenti:true, autoscale:true, tapparelle:false, arredi:true, opzionali_lavori:true, opzionali_arredi:false },
-      priceOverrides:{}, qtyOverrides:{}, rebateActive:true
+      priceOverrides:{
+        "materiali|M3|3.1":250,
+        "materiali|M3|3.2":300,
+        "opzionali_lavori|OL_F|OL.F":600
+      },
+      qtyOverrides:{
+        "arredi|AR2|2.1":0,
+        "arredi|AR2|2.2":-1,
+        "arredi|AR2|2.3":0,
+        "arredi|AR7|7.2":0.5,
+        "arredi|AR7|7.3":0.5,
+        "opzionali_lavori|OL_G|OL.G1":0,
+        "opzionali_lavori|OL_I|OL.I1":0,
+        "opzionali_lavori|OL_I|OL.I2":0,
+        "opzionali_lavori|OL_N|OL.N":0,
+        "opzionali_lavori|OL_R|OL.R":0.33,
+        "opzionali_lavori|OL_R2|OL.R2":0,
+        "opzionali_lavori|OL_T|OL.T":0
+      },
+      itemNotes:{
+        "arredi|AR2|2.1":"🔖 Compromessi AA — qty=0 (voce DISATTIVATA). Madia TV Pianca Dedalo 260x55 esclusa: già presente / da comprare separatamente in futuro. Risparmio -€2.499.",
+        "arredi|AR2|2.2":"🔖 Compromessi AA — qty=-1 (voce SOTTRATTA dal totale, importo -€2.990). Modifica concordata Alberto+Angelica: madia nicchia Pianca Dedalo esclusa, riconoscimento sconto sul totale arredi. Da verificare con CLM la motivazione del segno negativo (probabile errore di battitura, o credito su altra voce).",
+        "arredi|AR2|2.3":"🔖 Compromessi AA — qty=0 (voce DISATTIVATA). Divano Pianca Asolo con chaise long L.280 escluso dal preventivo: comprato separatamente. Risparmio -€4.641.",
+        "materiali|M3|3.1":"🔖 Compromessi AA — prezzo ridotto da €888,25 a €250. Modifica concordata Alberto+Angelica: termoarredo BAGNO1 da Start Irsap a modello entry o sourcing alternativo. Da verificare con CLM listino reale del nuovo modello.",
+        "materiali|M3|3.2":"🔖 Compromessi AA — prezzo ridotto da €730,55 a €300. Modifica concordata Alberto+Angelica: termoarredo BAGNO2 da Start Irsap a modello entry o sourcing alternativo. Da verificare con CLM.",
+        "arredi|AR7|7.2":"🔖 Compromessi AA — qty ridotta da 1 a 0,5 (sconto 50%). Modifica concordata Alberto+Angelica: armadio camera principale Pianca Plana. Negoziazione 50% sul listino Pianca (-€2.224). Da confermare disponibilità dello sconto.",
+        "arredi|AR7|7.3":"🔖 Compromessi AA — qty ridotta da 1 a 0,5 (sconto 50%). Modifica concordata Alberto+Angelica: armadio camera ausiliario Pianca push-pull. Negoziazione 50% sul listino Pianca (-€1.487). Da confermare.",
+        "opzionali_lavori|OL_F|OL.F":"🔖 Compromessi AA — prezzo ridotto da €1.055 a €600. Modifica concordata Alberto+Angelica: nicchia doccia BAGNO2 + controparete predisposizione semplificata (-€455). Da rivedere dettaglio con CLM.",
+        "opzionali_lavori|OL_G|OL.G1":"🔖 Compromessi AA — qty=0 (voce DISATTIVATA). Modifica concordata: controsoffitto + casseformi BAGNO1 non realizzato (esclusi i faretti che restano). Risparmio -€1.218.",
+        "opzionali_lavori|OL_I|OL.I1":"🔖 Compromessi AA — qty=0 (voce DISATTIVATA). Modifica concordata: controsoffitto + casseformi DIS/LAVANDERIA non realizzato. Risparmio -€1.944.",
+        "opzionali_lavori|OL_I|OL.I2":"🔖 Compromessi AA — qty=0 (voce DISATTIVATA). Modifica concordata: faretti DIS/LAVANDERIA non installati (compresi nella scelta sopra di controsoffitto). Risparmio -€1.320.",
+        "opzionali_lavori|OL_N|OL.N":"🔖 Compromessi AA — qty=0 (voce DISATTIVATA). Modifica concordata: strip LED soggiorno esclusa, da valutare in futuro. Risparmio -€1.829,60.",
+        "opzionali_lavori|OL_R|OL.R":"🔖 Compromessi AA — qty ridotta da 1 a 0,33 (1 parapetto su 3). Modifica concordata: solo 1 parapetto vetro stratificato 5+5 (su 3 ipotizzati nel preventivo), gli altri 2 esclusi. Risparmio -€1.219,40.",
+        "opzionali_lavori|OL_R2|OL.R2":"🔖 Compromessi AA — qty=0 (voce DISATTIVATA). Modifica concordata: motorizzazione tapparelle ELIMINATA (gruppo tapparelle stesso disattivato). Risparmio -€7.222,50.",
+        "opzionali_lavori|OL_T|OL.T":"🔖 Compromessi AA — qty=0 (voce DISATTIVATA). Upgrade porta filo-muro Bagno 2 non ancora valutato — voce aggiunta alla piattaforma DOPO l'export del PDF originale 17/05/2026. Da decidere separatamente con CLM."
+      },
+      rebateActive:true
     }
   },
   {
@@ -1352,6 +1388,17 @@ function applyPreset(presetId){
   // 5) PriceOverrides + QtyOverrides: SOSTITUISCI completamente
   state.priceOverrides = Object.assign({}, a.priceOverrides||{});
   state.qtyOverrides = Object.assign({}, a.qtyOverrides||{});
+  // 5b) Note documentali per le voci modificate dal preset: scrivi una nota
+  // descrittiva accanto a ogni voce con override, così l'utente vede il "perché"
+  // della modifica. Le note del preset vengono scritte; eventuali note utente
+  // pre-esistenti per quelle stesse voci vengono sovrascritte (preset taglia
+  // priceOverrides e qtyOverrides comunque). Le note di voci NON toccate dal
+  // preset restano intatte.
+  if(a.itemNotes){
+    Object.entries(a.itemNotes).forEach(([k,note])=>{
+      state.notes[k] = note;
+    });
+  }
   // 6) Rebate
   if(a.rebateActive != null) state.rebateActive = !!a.rebateActive;
   saveState();
