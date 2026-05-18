@@ -1017,7 +1017,7 @@ const PRESET_SCENARIOS = [
     icon:"💍",
     color:"#be185d",
     name:"Compromessi AA — configurazione concordata",
-    target:"€284.573,75 IVA incl (Samsung canalizzato + AR2 madia nicchia corretta a qty=0)",
+    target:"€280.393,75 IVA incl (sincronizzato a c1: no portoncino, Leca 20,8 mq)",
     desc:"Configurazione concordata Alberto + Angelica, ricostruita fedelmente dal PDF 17/05/2026 + aggiunta CDZ canalizzato dimenticato nell'export.\n\n=== SELETTORI CONFIGURATORE ===\n• Parquet: Woodco 10mm Naturale a correre (default)\n• CDZ: CANALIZZATO Samsung 7kw — pacchetto P originale CLM (aggiunto, era dimenticato nel PDF — delta netto +€12.554). Brand pacchetto = Samsung come da preventivo originale, NON modificato.\n• Porta soggiorno: Pivato Innova (default)\n• Brand serramenti: OKNOPLAST Prolux Evolution (-€6.630 vs Internorm)\n• Brand faretti/sanitari/rubinetterie/armadi: tutti default originali (Oty, Globo, Gessi, Pianca)\n\n=== GRUPPI ATTIVI ===\nON: lavori, materiali, massetto, serramenti, autoscale (+€5.490 IVA), arredi (+€46k IVA), opzionali_lavori. OFF: tapparelle, opzionali_arredi.\n\n=== DIY ===\nMedio attivo (-€7.234 netti, 2-3 settimane).\n\n=== MODIFICHE MANUALI riprese dal PDF (priceOverrides/qtyOverrides) ===\n• Termoarredo BAGNO1 (M3 3.1): €888,25 → €250 (-€638)\n• Termoarredo BAGNO2 (M3 3.2): €730,55 → €300 (-€430)\n• Armadio camera principale (AR7 7.2): qty 1 → 0,5 (-€2.224, sconto 50%)\n• Armadio camera ausiliario (AR7 7.3): qty 1 → 0,5 (-€1.487, sconto 50%)\n• Nicchia doccia BAGNO2 (OL.F): €1.055 → €600 (-€455)\n• Controsoffitto+casseformi BAGNO1 (OL.G1): qty 0 — disattivato (-€1.218)\n• Controsoffitto+casseformi DIS/LAV (OL.I1): qty 0 — disattivato (-€1.944)\n• Faretti DIS/LAV (OL.I2): qty 0 — disattivato (-€1.320)\n• Strip LED SOGGIORNO (OL.N): qty 0 — disattivato (-€1.830)\n• Parapetti vetro (OL.R): qty 1 → 0,33 — ridotto 2/3 (-€1.219, ne resta 1 su 3)\n• Motorizzazione tapparelle (OL.R2): qty 0 — disattivato (-€7.223)\n• Upgrade porta filo-muro (OL.T): qty 0 — non ancora valutato (nuova voce aggiunta dopo l'export PDF)\n\nNESSUN swap fornitori attivo. Rimborso €7.076 applicato. Strategia fiscale A.",
     apply:{
       alternatives:{ parquet:"naturale_correre", cdz:"canalizzato", brand_canalizzato:"samsung", porta_soggiorno:"pivato", brand_serramenti:"oknoplast", brand_faretti:"oty", brand_sanitari:"globo", brand_rubinetteria:"gessi", armadio_ingresso:"pianca_setamatt", armadi_camera:"pianca_plana" },
@@ -1029,6 +1029,8 @@ const PRESET_SCENARIOS = [
         "opzionali_lavori|OL_F|OL.F":600
       },
       qtyOverrides:{
+        "serramenti|S1|1.1":0,
+        "massetto|11|11.5":20.8,
         "arredi|AR2|2.1":0,
         "arredi|AR2|2.2":0,
         "arredi|AR2|2.3":0,
@@ -1043,6 +1045,8 @@ const PRESET_SCENARIOS = [
         "opzionali_lavori|OL_T|OL.T":0
       },
       itemNotes:{
+        "serramenti|S1|1.1":"🔖 Compromessi AA — qty=0 (voce DISATTIVATA). Portoncino blindato Stark Style classe 3 ESCLUSO: portoncino esistente mantenuto / da rivedere separatamente con CLM. Sincronizzato a configurazione c1. Risparmio -€1.985.",
+        "massetto|11|11.5":"🔖 Compromessi AA — qty ridotta da 53,8 a 20,8 mq (sincronizzato a c1). Realizzazione gradino in Leca limitata alla zona realmente interessata (20,8 mq invece di 53,8 mq stimati). Risparmio -33 mq × €55 = -€1.815.",
         "arredi|AR2|2.1":"🔖 Compromessi AA — qty=0 (voce DISATTIVATA). Madia TV Pianca Dedalo 260x55 esclusa: già presente / da comprare separatamente in futuro. Risparmio -€2.499.",
         "arredi|AR2|2.2":"🔖 Compromessi AA — qty=0 (voce DISATTIVATA). Madia nicchia Pianca Dedalo 200x55 H93 esclusa dal preventivo: comprata separatamente o non necessaria. Risparmio -€2.990. (Nota: nel PDF originale 17/05/2026 era impostata erroneamente a qty=-1 per refuso, corretta a 0).",
         "arredi|AR2|2.3":"🔖 Compromessi AA — qty=0 (voce DISATTIVATA). Divano Pianca Asolo con chaise long L.280 escluso dal preventivo: comprato separatamente. Risparmio -€4.641.",
